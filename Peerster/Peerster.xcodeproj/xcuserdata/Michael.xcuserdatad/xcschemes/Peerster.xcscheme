@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C7CDC2017D27F6F006F8265"
-               BuildableName = "Peerster"
+               BlueprintIdentifier = "856CF5836FB6CF0CBEEFA0F6"
+               BuildableName = "Peerster.app"
                BlueprintName = "Peerster"
                ReferencedContainer = "container:Peerster.xcodeproj">
             </BuildableReference>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "856CF5836FB6CF0CBEEFA0F6"
+            BuildableName = "Peerster.app"
+            BlueprintName = "Peerster"
+            ReferencedContainer = "container:Peerster.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "856CF5836FB6CF0CBEEFA0F6"
+            BuildableName = "Peerster.app"
+            BlueprintName = "Peerster"
+            ReferencedContainer = "container:Peerster.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "856CF5836FB6CF0CBEEFA0F6"
+            BuildableName = "Peerster.app"
+            BlueprintName = "Peerster"
+            ReferencedContainer = "container:Peerster.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
