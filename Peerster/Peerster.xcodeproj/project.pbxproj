@@ -6,6 +6,11 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4C7CDC1917D27D7B006F8265 /* main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC1617D27D7B006F8265 /* main.cc */; };
+		4C7CDC1A17D27D7B006F8265 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC1817D27D7B006F8265 /* makefile */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		4C7CDC0017D27B32006F8265 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -20,6 +25,9 @@
 
 /* Begin PBXFileReference section */
 		4C7CDC0217D27B32006F8265 /* Peerster */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Peerster; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C7CDC1617D27D7B006F8265 /* main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = "<group>"; };
+		4C7CDC1717D27D7B006F8265 /* main.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = "<group>"; };
+		4C7CDC1817D27D7B006F8265 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +60,9 @@
 		4C7CDC0417D27B32006F8265 /* Peerster */ = {
 			isa = PBXGroup;
 			children = (
+				4C7CDC1617D27D7B006F8265 /* main.cc */,
+				4C7CDC1717D27D7B006F8265 /* main.hh */,
+				4C7CDC1817D27D7B006F8265 /* makefile */,
 			);
 			path = Peerster;
 			sourceTree = "<group>";
@@ -107,6 +118,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7CDC1917D27D7B006F8265 /* main.cc in Sources */,
+				4C7CDC1A17D27D7B006F8265 /* makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
