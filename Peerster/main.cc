@@ -7,8 +7,7 @@
 
 #include "main.hh"
 
-ChatDialog::ChatDialog()
-{
+ChatDialog::ChatDialog() {
 	setWindowTitle("Peerster");
 
 	// Read-only text box where we display messages from everyone.
@@ -36,6 +35,8 @@ ChatDialog::ChatDialog()
 	// so that we can send the message entered by the user.
 	connect(textline, SIGNAL(returnPressed()),
 		this, SLOT(gotReturnPressed()));
+    
+    textline->setFocus();
 }
 
 void ChatDialog::gotReturnPressed()
