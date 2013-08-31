@@ -33,7 +33,7 @@ ChatDialog::ChatDialog() {
 
 	// Register a callback on the textline's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textline, SIGNAL(returnPressed()),
+	connect(textline, SIGNAL(gotReturnPressed()),
 		this, SLOT(gotReturnPressed()));
     
     textline->setFocus();
