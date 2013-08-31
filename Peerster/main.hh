@@ -6,31 +6,30 @@
 #include <QLineEdit>
 #include <QUdpSocket>
 
-class ChatDialog : public QDialog
-{
+class ChatDialog : public QDialog {
 	Q_OBJECT
-
+    
 public:
 	ChatDialog();
-
-public slots:
+    
+    public slots:
 	void gotReturnPressed();
-
+    
 private:
 	QTextEdit *textview;
-	QLineEdit *textline;
+	QTextEdit *textline;
 };
 
 class NetSocket : public QUdpSocket
 {
 	Q_OBJECT
-
+    
 public:
 	NetSocket();
-
+    
 	// Bind this socket to a Peerster-specific default port.
 	bool bind();
-
+    
 private:
 	int myPortMin, myPortMax;
 };
