@@ -6,127 +6,56 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		4C7CDC1917D27D7B006F8265 /* main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC1617D27D7B006F8265 /* main.cc */; };
-		4C7CDC1A17D27D7B006F8265 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC1817D27D7B006F8265 /* makefile */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4C7CDC0017D27B32006F8265 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		4C7CDC0217D27B32006F8265 /* Peerster */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Peerster; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C7CDC1617D27D7B006F8265 /* main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = "<group>"; };
-		4C7CDC1717D27D7B006F8265 /* main.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = "<group>"; };
-		4C7CDC1817D27D7B006F8265 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		4C7CDBFF17D27B32006F8265 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXGroup section */
-		4C7CDBF917D27B32006F8265 = {
+		4C7CDC1B17D27F6F006F8265 = {
 			isa = PBXGroup;
 			children = (
-				4C7CDC0417D27B32006F8265 /* Peerster */,
-				4C7CDC0317D27B32006F8265 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		4C7CDC0317D27B32006F8265 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C7CDC0217D27B32006F8265 /* Peerster */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4C7CDC0417D27B32006F8265 /* Peerster */ = {
-			isa = PBXGroup;
-			children = (
-				4C7CDC1617D27D7B006F8265 /* main.cc */,
-				4C7CDC1717D27D7B006F8265 /* main.hh */,
-				4C7CDC1817D27D7B006F8265 /* makefile */,
-			);
-			path = Peerster;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
-		4C7CDC0117D27B32006F8265 /* Peerster */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4C7CDC0B17D27B32006F8265 /* Build configuration list for PBXNativeTarget "Peerster" */;
+/* Begin PBXLegacyTarget section */
+		4C7CDC2017D27F6F006F8265 /* Peerster */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 4C7CDC2317D27F6F006F8265 /* Build configuration list for PBXLegacyTarget "Peerster" */;
 			buildPhases = (
-				4C7CDBFE17D27B32006F8265 /* Sources */,
-				4C7CDBFF17D27B32006F8265 /* Frameworks */,
-				4C7CDC0017D27B32006F8265 /* CopyFiles */,
 			);
-			buildRules = (
-			);
+			buildToolPath = /usr/bin/make;
 			dependencies = (
 			);
 			name = Peerster;
+			passBuildSettingsInEnvironment = 1;
 			productName = Peerster;
-			productReference = 4C7CDC0217D27B32006F8265 /* Peerster */;
-			productType = "com.apple.product-type.tool";
 		};
-/* End PBXNativeTarget section */
+/* End PBXLegacyTarget section */
 
 /* Begin PBXProject section */
-		4C7CDBFA17D27B32006F8265 /* Project object */ = {
+		4C7CDC1C17D27F6F006F8265 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Michael Wu";
 			};
-			buildConfigurationList = 4C7CDBFD17D27B32006F8265 /* Build configuration list for PBXProject "Peerster" */;
+			buildConfigurationList = 4C7CDC1F17D27F6F006F8265 /* Build configuration list for PBXProject "Peerster" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 4C7CDBF917D27B32006F8265;
-			productRefGroup = 4C7CDC0317D27B32006F8265 /* Products */;
+			mainGroup = 4C7CDC1B17D27F6F006F8265;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4C7CDC0117D27B32006F8265 /* Peerster */,
+				4C7CDC2017D27F6F006F8265 /* Peerster */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		4C7CDBFE17D27B32006F8265 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C7CDC1917D27D7B006F8265 /* main.cc in Sources */,
-				4C7CDC1A17D27D7B006F8265 /* makefile in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
 /* Begin XCBuildConfiguration section */
-		4C7CDC0917D27B32006F8265 /* Debug */ = {
+		4C7CDC2117D27F6F006F8265 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -158,7 +87,7 @@
 			};
 			name = Debug;
 		};
-		4C7CDC0A17D27B32006F8265 /* Release */ = {
+		4C7CDC2217D27F6F006F8265 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -183,16 +112,23 @@
 			};
 			name = Release;
 		};
-		4C7CDC0C17D27B32006F8265 /* Debug */ = {
+		4C7CDC2417D27F6F006F8265 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		4C7CDC0D17D27B32006F8265 /* Release */ = {
+		4C7CDC2517D27F6F006F8265 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -200,24 +136,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4C7CDBFD17D27B32006F8265 /* Build configuration list for PBXProject "Peerster" */ = {
+		4C7CDC1F17D27F6F006F8265 /* Build configuration list for PBXProject "Peerster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C7CDC0917D27B32006F8265 /* Debug */,
-				4C7CDC0A17D27B32006F8265 /* Release */,
+				4C7CDC2117D27F6F006F8265 /* Debug */,
+				4C7CDC2217D27F6F006F8265 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C7CDC0B17D27B32006F8265 /* Build configuration list for PBXNativeTarget "Peerster" */ = {
+		4C7CDC2317D27F6F006F8265 /* Build configuration list for PBXLegacyTarget "Peerster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4C7CDC0C17D27B32006F8265 /* Debug */,
-				4C7CDC0D17D27B32006F8265 /* Release */,
+				4C7CDC2417D27F6F006F8265 /* Debug */,
+				4C7CDC2517D27F6F006F8265 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 4C7CDBFA17D27B32006F8265 /* Project object */;
+	rootObject = 4C7CDC1C17D27F6F006F8265 /* Project object */;
 }

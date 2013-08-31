@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C7CDC0117D27B32006F8265"
+               BlueprintIdentifier = "4C7CDC2017D27F6F006F8265"
                BuildableName = "Peerster"
                BlueprintName = "Peerster"
                ReferencedContainer = "container:Peerster.xcodeproj">
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C7CDC0117D27B32006F8265"
-            BuildableName = "Peerster"
-            BlueprintName = "Peerster"
-            ReferencedContainer = "container:Peerster.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,15 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C7CDC0117D27B32006F8265"
-            BuildableName = "Peerster"
-            BlueprintName = "Peerster"
-            ReferencedContainer = "container:Peerster.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -66,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C7CDC0117D27B32006F8265"
-            BuildableName = "Peerster"
-            BlueprintName = "Peerster"
-            ReferencedContainer = "container:Peerster.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
