@@ -13,7 +13,7 @@ ChatDialog::ChatDialog() {
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
 
-	textbox = (Textbox *) new QTextEdit(this);
+	textbox = new Textbox(this);
 
     // Set the height of the text box
     QFontMetrics m (textbox->font());
