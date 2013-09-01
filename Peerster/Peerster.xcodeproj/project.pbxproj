@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
+		1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
-		4C7CDC3517D2DB2F006F8265 /* Textbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC3317D2DB2F006F8265 /* Textbox.cc */; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
+		B3470EEF1B69CBC8CDF46E7E /* Textbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 39F21E01BF99D77BE75B0832 /* Textbox.cc */; settings = {ATTRIBUTES = (); }; };
 		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
+		37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Textbox.cpp; sourceTree = SOURCE_ROOT; };
+		39F21E01BF99D77BE75B0832 /* Textbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
-		4C7CDC2E17D2B8BD006F8265 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C7CDC3317D2DB2F006F8265 /* Textbox.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
-		4C7CDC3417D2DB2F006F8265 /* Textbox.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
+		4C4FBF5817D2EE66004BC9BC /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		790A68ED394F84241507598D /* Textbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
 		AA9D9004ACE84CD1D55FED5F /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtGui.framework; sourceTree = "<absolute>"; };
 		D759577E53E2CE061239002D /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = SOURCE_ROOT; };
@@ -51,7 +53,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4C7CDC2F17D2B8BD006F8265 /* Products */,
+				4C4FBF5917D2EE66004BC9BC /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -60,14 +62,15 @@
 			isa = PBXGroup;
 			children = (
 				F41053476CF4B2C49EF187F7 /* moc_main.cpp */,
+				37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */,
 			);
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4C7CDC2F17D2B8BD006F8265 /* Products */ = {
+		4C4FBF5917D2EE66004BC9BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C7CDC2E17D2B8BD006F8265 /* Peerster.app */,
+				4C4FBF5817D2EE66004BC9BC /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				000F2A1E9067A79452CB9855 /* main.hh */,
-				4C7CDC3417D2DB2F006F8265 /* Textbox.hh */,
+				790A68ED394F84241507598D /* Textbox.hh */,
 			);
 			name = Headers;
 			sourceTree = "<Group>";
@@ -103,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D759577E53E2CE061239002D /* main.cc */,
-				4C7CDC3317D2DB2F006F8265 /* Textbox.cc */,
+				39F21E01BF99D77BE75B0832 /* Textbox.cc */,
 			);
 			name = Sources;
 			sourceTree = "<Group>";
@@ -127,7 +130,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4C7CDC2E17D2B8BD006F8265 /* Peerster.app */;
+			productReference = 4C4FBF5817D2EE66004BC9BC /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -146,7 +149,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4C7CDC2F17D2B8BD006F8265 /* Products */;
+			productRefGroup = 4C4FBF5917D2EE66004BC9BC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -195,8 +198,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */,
+				B3470EEF1B69CBC8CDF46E7E /* Textbox.cc in Build Sources */,
 				D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */,
-				4C7CDC3517D2DB2F006F8265 /* Textbox.cc in Build Sources */,
+				1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */,
 			);
 			name = "Build Sources";
 			runOnlyForDeploymentPostprocessing = 0;

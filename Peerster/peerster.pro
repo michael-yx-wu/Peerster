@@ -10,4 +10,6 @@ QT += network
 
 # Input
 HEADERS += main.hh
+HEADERS += Textbox.hh
 SOURCES += main.cc
+SOURCES += Textbox.cc
