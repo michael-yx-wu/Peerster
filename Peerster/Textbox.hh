@@ -12,15 +12,16 @@
 #include <iostream>
 #include <QWidget>
 #include <QTextEdit>
+#include <QKeyEvent>
 
 class Textbox : public QTextEdit {
     Q_OBJECT
     
 public:
     Textbox(QWidget *parent = 0) : QTextEdit(parent) {};
-Q_SIGNALS:
-    void returnPressed();
     void keyPressEvent(QKeyEvent *event);
+signals:
+    void enterPressed();
 };
 
 #endif /* defined(__Peerster__Textbox__) */

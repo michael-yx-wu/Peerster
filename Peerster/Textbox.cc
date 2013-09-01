@@ -7,3 +7,12 @@
 //
 
 #include "Textbox.hh"
+
+void Textbox::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_Return) {
+        emit enterPressed();
+    }
+    else {
+        QTextEdit::keyPressEvent(event);
+    }
+}

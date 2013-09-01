@@ -30,7 +30,7 @@ ChatDialog::ChatDialog() {
 
 	// Register a callback on the textbox's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textbox, SIGNAL(returnPressed()), this, SLOT(gotReturnPressed()));
+	connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
     
     textbox->setFocus();
 }
