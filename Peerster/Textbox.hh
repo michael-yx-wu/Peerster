@@ -17,9 +17,13 @@
 class Textbox : public QTextEdit {
     Q_OBJECT
     
+private:
+    bool shift = false;
+    
 public:
     Textbox(QWidget *parent = 0) : QTextEdit(parent) {};
     void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 signals:
     void enterPressed();
 };
