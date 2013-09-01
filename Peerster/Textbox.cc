@@ -12,7 +12,7 @@ void Textbox::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Shift ) {
         Textbox::shift = true;
     }
-    else if(event->key() == Qt::Key_Return && Textbox::shift == false) {
+    if(event->key() == Qt::Key_Return && Textbox::shift == false) {
         emit enterPressed();
     }
     else {
