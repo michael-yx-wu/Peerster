@@ -26,7 +26,7 @@ ChatDialog::ChatDialog() {
     // Set the height of the text box
     QFontMetrics m (textline->font());
     int rowHeight = m.lineSpacing();
-    textline->setFixedHeight(2*rowHeight);
+    textline->setFixedHeight(3*rowHeight);
 
 	// Lay out the widgets to appear in the main window.
 	// For Qt widget and layout concepts see:
