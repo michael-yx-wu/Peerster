@@ -10,48 +10,39 @@
 ChatDialog::ChatDialog() {
 	setWindowTitle("Peerster");
 
-	// Read-only text box where we display messages from everyone.
-	// This widget expands both horizontally and vertically.
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
 
-	// Small text-entry box the user can enter messages.
-	// This widget normally expands only horizontally,
-	// leaving extra vertical space for the textview widget.
-	//
-	// You might change this into a read/write QTextEdit,
-	// so that the user can easily enter multi-line messages.
-	textline = new QTextEdit(this);
-    
+	textbox = (Textbox *) new QTextEdit(this);
+
     // Set the height of the text box
-    QFontMetrics m (textline->font());
+    QFontMetrics m (textbox->font());
     int rowHeight = m.lineSpacing();
-    textline->setFixedHeight(3*rowHeight);
+    textbox->setFixedHeight(3*rowHeight);
 
 	// Lay out the widgets to appear in the main window.
 	// For Qt widget and layout concepts see:
 	// http://doc.qt.nokia.com/4.7-snapshot/widgets-and-layouts.html
 	QVBoxLayout *layout = new QVBoxLayout();
 	layout->addWidget(textview);
-	layout->addWidget(textline);
+	layout->addWidget(textbox);
 	setLayout(layout);
 
-	// Register a callback on the textline's returnPressed signal
+	// Register a callback on the textbox's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textline, SIGNAL(textChanged()), 
-		this, SLOT(gotReturnPressed()));
+	connect(textbox, SIGNAL(returnPressed()), this, SLOT(gotReturnPressed()));
     
-    textline->setFocus();
+    textbox->setFocus();
 }
 
 void ChatDialog::gotReturnPressed() {
 	// Initially, just echo the string locally.
 	// Insert some networking code here...
-	qDebug() << "FIX: send message to other peers: " << textline->toPlainText();
-	textview->append(textline->toPlainText());
+	qDebug() << "FIX: send message to other peers: " << textbox->toPlainText();
+	textview->append(textbox->toPlainText());
 
-	// Clear the textline to get ready for the next input message.
-	textline->clear();
+	// Clear the textbox to get ready for the next input message.
+	textbox->clear();
 }
 
 NetSocket::NetSocket() {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
+		4C7CDC3517D2DB2F006F8265 /* Textbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 4C7CDC3317D2DB2F006F8265 /* Textbox.cc */; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
 		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -18,6 +19,8 @@
 		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4C7CDC2E17D2B8BD006F8265 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C7CDC3317D2DB2F006F8265 /* Textbox.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
+		4C7CDC3417D2DB2F006F8265 /* Textbox.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
 		AA9D9004ACE84CD1D55FED5F /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtGui.framework; sourceTree = "<absolute>"; };
 		D759577E53E2CE061239002D /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = SOURCE_ROOT; };
@@ -81,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				000F2A1E9067A79452CB9855 /* main.hh */,
+				4C7CDC3417D2DB2F006F8265 /* Textbox.hh */,
 			);
 			name = Headers;
 			sourceTree = "<Group>";
@@ -99,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				D759577E53E2CE061239002D /* main.cc */,
+				4C7CDC3317D2DB2F006F8265 /* Textbox.cc */,
 			);
 			name = Sources;
 			sourceTree = "<Group>";
@@ -191,6 +196,7 @@
 			files = (
 				0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */,
 				D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */,
+				4C7CDC3517D2DB2F006F8265 /* Textbox.cc in Build Sources */,
 			);
 			name = "Build Sources";
 			runOnlyForDeploymentPostprocessing = 0;

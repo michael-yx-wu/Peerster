@@ -3,21 +3,21 @@
 
 #include <QDialog>
 #include <QTextEdit>
-#include <QLineEdit>
 #include <QUdpSocket>
+#include "Textbox.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT
     
-public:
-	ChatDialog();
+    public:
+        ChatDialog();
     
     public slots:
-	void gotReturnPressed();
+        void gotReturnPressed();
     
-private:
-	QTextEdit *textview;
-	QTextEdit *textline;
+    private:
+        QTextEdit *textview;
+        Textbox *textbox;
 };
 
 class NetSocket : public QUdpSocket
