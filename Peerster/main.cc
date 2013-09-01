@@ -22,6 +22,11 @@ ChatDialog::ChatDialog() {
 	// You might change this into a read/write QTextEdit,
 	// so that the user can easily enter multi-line messages.
 	textline = new QTextEdit(this);
+    
+    // Set the height of the text box
+    QFontMetrics m (textline->font());
+    int rowHeight = m.lineSpacing();
+    textline->setFixedHeight(2*rowHeight);
 
 	// Lay out the widgets to appear in the main window.
 	// For Qt widget and layout concepts see:
@@ -33,7 +38,7 @@ ChatDialog::ChatDialog() {
 
 	// Register a callback on the textline's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textline, SIGNAL(gotReturnPressed()),
+	connect(textline, SIGNAL(keyPressEvent()),
 		this, SLOT(gotReturnPressed()));
     
     textline->setFocus();
