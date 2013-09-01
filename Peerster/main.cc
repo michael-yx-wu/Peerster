@@ -38,14 +38,13 @@ ChatDialog::ChatDialog() {
 
 	// Register a callback on the textline's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textline, SIGNAL(keyPressEvent()),
+	connect(textline, SIGNAL(textChanged()),
 		this, SLOT(gotReturnPressed()));
     
     textline->setFocus();
 }
 
-void ChatDialog::gotReturnPressed()
-{
+void ChatDialog::gotReturnPressed() {
 	// Initially, just echo the string locally.
 	// Insert some networking code here...
 	qDebug() << "FIX: send message to other peers: " << textline->toPlainText();
@@ -55,8 +54,7 @@ void ChatDialog::gotReturnPressed()
 	textline->clear();
 }
 
-NetSocket::NetSocket()
-{
+NetSocket::NetSocket() {
 	// Pick a range of four UDP ports to try to allocate by default,
 	// computed based on my Unix user ID.
 	// This makes it trivial for up to four Peerster instances per user
@@ -68,8 +66,7 @@ NetSocket::NetSocket()
 	myPortMax = myPortMin + 3;
 }
 
-bool NetSocket::bind()
-{
+bool NetSocket::bind() {
 	// Try to bind to each of the range myPortMin..myPortMax in turn.
 	for (int p = myPortMin; p <= myPortMax; p++) {
 		if (QUdpSocket::bind(p)) {
@@ -83,8 +80,7 @@ bool NetSocket::bind()
 	return false;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
 
