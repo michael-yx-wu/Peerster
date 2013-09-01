@@ -9,7 +9,7 @@
 #include "Textbox.hh"
 
 void Textbox::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_Return) {
+    if(event->key() == Qt::Key_Return && event->key() != Qt::Key_Shift) {
         emit enterPressed();
     }
     else {
