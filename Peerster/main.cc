@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QDebug>
+#include <QTextCodec>
 #include <sys/time.h>
 
 #include "main.hh"
@@ -70,20 +71,30 @@ void ChatDialog::processPendingDatagrams() {
         QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(datagram.data(), datagram.size());
+        QString message = datagram;
+        textview->append(message);
     }
 }
 
 void ChatDialog::gotReturnPressed() {
 	// Echo the string locally.
-	textview->append(textbox->toPlainText());
+//	textview->append(textbox->toPlainText());
     
 	// Clear the textbox to get ready for the next input message.
-	textbox->clear();
+//	textbox->clear();
     
-    // Send the message to peers
+    // Serialize the message now
+    QByteArray datagram = QByteArray::number(messageNo)+": ";
+    datagram.append(textbox->toPlainText());
     
+    // Send message to all peers
+    for (int p = minport; p <= maxport; p++) {
+        socket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, p);
+    }
     
-    
+    // Clear textbox and increment message number
+    messageNo++;
+    textbox->clear();
 }
 
 int main(int argc, char **argv) {
