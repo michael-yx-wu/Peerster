@@ -5,8 +5,11 @@
 #include <QHostInfo>
 #include <QTextEdit>
 #include <QUdpSocket>
+
 #include <iostream>
 #include <string>
+
+#include "Socket.hh"
 #include "Textbox.hh"
 
 class ChatDialog : public QDialog {
@@ -14,6 +17,7 @@ class ChatDialog : public QDialog {
     
 public:
     ChatDialog();
+    QString hostname;
     
     public slots:
     void gotReturnPressed();
@@ -21,22 +25,22 @@ public:
 private:
     QTextEdit *textview;
     Textbox *textbox;
-    QString hostname;
+
 };
 
-class NetSocket : public QUdpSocket {
-	Q_OBJECT
-    
-public:
-	NetSocket();
-    
-	// Bind this socket to a Peerster-specific default port.
-	bool bind();
-    public slots:
-    void readPendingDatagrams();
-    
-private:
-	int myPortMin, myPortMax;
-};
+//class NetSocket : public QUdpSocket {
+//	Q_OBJECT
+//    
+//public:
+//	NetSocket();
+//    
+//	// Bind this socket to a Peerster-specific default port.
+//	bool bind();
+//    public slots:
+//    void readPendingDatagrams();
+//    
+//private:
+//	int myPortMin, myPortMax;
+//};
 
 #endif // PEERSTER_MAIN_HH

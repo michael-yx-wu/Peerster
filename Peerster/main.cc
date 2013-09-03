@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <sys/time.h>
+
 #include "main.hh"
 
 ChatDialog::ChatDialog() {
@@ -54,30 +55,6 @@ void ChatDialog::gotReturnPressed() {
     
 }
 
-NetSocket::NetSocket() {
-    // Select 4 UDP ports
-	myPortMin = 32768 + (getuid() % 4096)*4;
-	myPortMax = myPortMin + 3;
-}
-
-bool NetSocket::bind() {
-	// Try to bind to each of the range myPortMin..myPortMax in turn.
-	for (int p = myPortMin; p <= myPortMax; p++) {
-		if (QUdpSocket::bind(p)) {
-			qDebug() << "bound to UDP port " << p;
-			return true;
-		}
-	}
-
-	qDebug() << "Oops, no ports in my default range " << myPortMin
-		<< "-" << myPortMax << " available";
-	return false;
-}
-
-void NetSocket::readPendingDatagrams() {
-    
-}
-
 int main(int argc, char **argv) {
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
@@ -87,9 +64,7 @@ int main(int argc, char **argv) {
 	dialog.show();
 
 	// Create a UDP network socket
-	NetSocket sock;
-	if (!sock.bind())
-		exit(1);
+    qDebug() << dialog.hostname;
     
     
 	// Enter the Qt main loop; everything else is event driven

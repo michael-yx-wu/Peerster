@@ -11,5 +11,7 @@ QT += network
 # Input
 HEADERS += main.hh
 HEADERS += Textbox.hh
+HEADERS += Socket.hh
 SOURCES += main.cc
 SOURCES += Textbox.cc
+SOURCES += Socket.cc
