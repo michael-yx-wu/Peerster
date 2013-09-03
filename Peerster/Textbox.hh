@@ -18,10 +18,12 @@ class Textbox : public QTextEdit {
     Q_OBJECT
     
 private:
-    bool shift = false;
+    bool shift;
     
 public:
-    Textbox(QWidget *parent = 0) : QTextEdit(parent) {};
+    Textbox(QWidget *parent = 0) : QTextEdit(parent) {
+        shift = false;
+    };
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 signals:

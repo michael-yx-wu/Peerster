@@ -2,26 +2,29 @@
 #define PEERSTER_MAIN_HH
 
 #include <QDialog>
+#include <QHostInfo>
 #include <QTextEdit>
 #include <QUdpSocket>
+#include <iostream>
+#include <string>
 #include "Textbox.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT
     
-    public:
-        ChatDialog();
+public:
+    ChatDialog();
     
     public slots:
-        void gotReturnPressed();
+    void gotReturnPressed();
     
-    private:
-        QTextEdit *textview;
-        Textbox *textbox;
+private:
+    QTextEdit *textview;
+    Textbox *textbox;
+    QString hostname;
 };
 
-class NetSocket : public QUdpSocket
-{
+class NetSocket : public QUdpSocket {
 	Q_OBJECT
     
 public:
@@ -29,6 +32,8 @@ public:
     
 	// Bind this socket to a Peerster-specific default port.
 	bool bind();
+    public slots:
+    void readPendingDatagrams();
     
 private:
 	int myPortMin, myPortMax;

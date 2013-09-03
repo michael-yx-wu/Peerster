@@ -1,13 +1,18 @@
-
 #include <unistd.h>
 
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QDebug>
-
+#include <sys/time.h>
 #include "main.hh"
 
 ChatDialog::ChatDialog() {
+    // Establish hostname as localhostname + startup time in ms
+    timeval time;
+    gettimeofday(&time, NULL);
+    long msecs = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+    hostname = QHostInfo::localHostName() + QString::number(msecs);
+    
 	setWindowTitle("Peerster");
 
 	textview = new QTextEdit(this);
@@ -30,29 +35,27 @@ ChatDialog::ChatDialog() {
 
 	// Register a callback on the textbox's returnPressed signal
 	// so that we can send the message entered by the user.
-	connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
+	connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));    
     
+    // Focus textbox when setup is done
     textbox->setFocus();
 }
 
 void ChatDialog::gotReturnPressed() {
-	// Initially, just echo the string locally.
-	// Insert some networking code here...
-	qDebug() << "FIX: send message to other peers: " << textbox->toPlainText();
+	// Echo the string locally.
 	textview->append(textbox->toPlainText());
 
 	// Clear the textbox to get ready for the next input message.
 	textbox->clear();
+    
+    // Send the message to peers
+    
+    
+    
 }
 
 NetSocket::NetSocket() {
-	// Pick a range of four UDP ports to try to allocate by default,
-	// computed based on my Unix user ID.
-	// This makes it trivial for up to four Peerster instances per user
-	// to find each other on the same host,
-	// barring UDP port conflicts with other applications
-	// (which are quite possible).
-	// We use the range from 32768 to 49151 for this purpose.
+    // Select 4 UDP ports
 	myPortMin = 32768 + (getuid() % 4096)*4;
 	myPortMax = myPortMin + 3;
 }
@@ -71,6 +74,10 @@ bool NetSocket::bind() {
 	return false;
 }
 
+void NetSocket::readPendingDatagrams() {
+    
+}
+
 int main(int argc, char **argv) {
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
@@ -83,7 +90,8 @@ int main(int argc, char **argv) {
 	NetSocket sock;
 	if (!sock.bind())
 		exit(1);
-
+    
+    
 	// Enter the Qt main loop; everything else is event driven
 	return app.exec();
 }
