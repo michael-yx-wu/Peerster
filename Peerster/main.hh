@@ -18,29 +18,21 @@ class ChatDialog : public QDialog {
 public:
     ChatDialog();
     QString hostname;
+//    Socket socket;
+    QUdpSocket *socket;
     
     public slots:
     void gotReturnPressed();
+    void processPendingDatagrams();
     
 private:
     QTextEdit *textview;
     Textbox *textbox;
-
+    int minport, maxport;
+    int messageNo;
+    
+    // Attempt to bind to a UDP port in range
+    bool bind();
 };
-
-//class NetSocket : public QUdpSocket {
-//	Q_OBJECT
-//    
-//public:
-//	NetSocket();
-//    
-//	// Bind this socket to a Peerster-specific default port.
-//	bool bind();
-//    public slots:
-//    void readPendingDatagrams();
-//    
-//private:
-//	int myPortMin, myPortMax;
-//};
 
 #endif // PEERSTER_MAIN_HH

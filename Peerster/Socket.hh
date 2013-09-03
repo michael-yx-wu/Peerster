@@ -14,14 +14,15 @@
 class Socket : public QUdpSocket {
     Q_OBJECT
     
+private:
+    int minport, maxport;
+
 public:
     Socket(QObject *parent) : QUdpSocket(parent) { };
     
     // Attempt to bind to a UDP port in range
     bool bind();
     
-private:
-    int minport, maxport;
 };
 
 
