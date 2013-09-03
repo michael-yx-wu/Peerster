@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QTextCodec>
+#include <QMap>
 #include <sys/time.h>
 
 #include "main.hh"
@@ -71,22 +72,26 @@ void ChatDialog::processPendingDatagrams() {
         QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(datagram.data(), datagram.size());
-        QString message = datagram;
-        textview->append(message);
+//        QString message = datagram;
+//        textview->append(message);
+        QMap<QString, QVariant> datapacket;
+        QDataStream stream(&datagram, QIODevice::ReadOnly);
+        stream >> datapacket;
+        QString key = datapacket.keys().first();
+        textview->append(datapacket.value(key).toString());
     }
 }
 
 void ChatDialog::gotReturnPressed() {
-	// Echo the string locally.
-//	textview->append(textbox->toPlainText());
-    
-	// Clear the textbox to get ready for the next input message.
-//	textbox->clear();
-    
     // Serialize the message now
-    QByteArray datagram = QByteArray::number(messageNo)+": ";
-    datagram.append(textbox->toPlainText());
-    
+    QString key = QString::number(messageNo) + "@" + hostname;
+    QVariant message = QVariant(textbox->toPlainText());
+    QMap<QString, QVariant> datapacket;
+    datapacket.insert(key, message);
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+
     // Send message to all peers
     for (int p = minport; p <= maxport; p++) {
         socket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::LocalHost, p);
