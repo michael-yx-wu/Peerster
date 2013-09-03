@@ -89,7 +89,7 @@ void ChatDialog::gotReturnPressed() {
     
     // Send message to all peers
     for (int p = minport; p <= maxport; p++) {
-        socket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, p);
+        socket->writeDatagram(datagram.data(), datagram.size(), QHostAddress::LocalHost, p);
     }
     
     // Clear textbox and increment message number
