@@ -90,7 +90,7 @@ void ChatDialog::processPendingDatagrams() {
         QString message = datapacket.value("ChatText").toString();
         textview->append(message);
         
-        // Update the map of seen messages
+        // Update the map of seen message
         seenMessages.insert(origin, seqno);
     }
 }
