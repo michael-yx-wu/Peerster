@@ -11,7 +11,7 @@
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
-    // Establish hostname as localhostname + startup time in ms
+    // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number((quint32)getpid());
     
 	setWindowTitle("Peerster");
@@ -71,17 +71,27 @@ void ChatDialog::processPendingDatagrams() {
         datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(datagram.data(), datagram.size());
         
-        // Deserialize the message
+        // Deserialize the datapacket
         QMap<QString, QVariant> datapacket;
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
         
-        
-        QString message = datapacket.value("ChatText").toString();
+        // Check to see if we have already seen this message
         QString origin = datapacket.value("Origin").toString();
         quint32 seqno = datapacket.value("SeqNo").toUInt();
+        if (seenMessages.contains(origin)) {
+            if (seenMessages.key(origin).toUInt() == seqno) {
+                // We have already seen this message, do not display again
+                continue;
+            }
+        }
         
+        // Display the new message
+        QString message = datapacket.value("ChatText").toString();
         textview->append(message);
+        
+        // Update the map of seen messages
+        seenMessages.insert(origin, seqno);
     }
 }
 
