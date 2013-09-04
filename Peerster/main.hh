@@ -5,6 +5,7 @@
 #include <QHostInfo>
 #include <QTextEdit>
 #include <QUdpSocket>
+#include <QByteArray>
 
 #include <iostream>
 #include <string>
@@ -30,6 +31,7 @@ private:
     Textbox *textbox;
     int minport, maxport;
     int messageNo;
+    QByteArray serializeMessage();
     
     // Attempt to bind to a UDP port in range
     bool bind();

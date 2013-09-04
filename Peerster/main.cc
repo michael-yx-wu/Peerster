@@ -9,6 +9,7 @@
 
 #include "main.hh"
 
+// Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + startup time in ms
     timeval time;
@@ -20,7 +21,7 @@ ChatDialog::ChatDialog() {
     
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
-    
+        
 	textbox = new Textbox(this);
     
     // Set the height of the text box
@@ -72,8 +73,8 @@ void ChatDialog::processPendingDatagrams() {
         QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(datagram.data(), datagram.size());
-//        QString message = datagram;
-//        textview->append(message);
+        
+        // Deserialize the message
         QMap<QString, QVariant> datapacket;
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
@@ -82,8 +83,7 @@ void ChatDialog::processPendingDatagrams() {
     }
 }
 
-void ChatDialog::gotReturnPressed() {
-    // Serialize the message now
+QByteArray ChatDialog::serializeMessage() {
     QString key = QString::number(messageNo) + "@" + hostname;
     QVariant message = QVariant(textbox->toPlainText());
     QMap<QString, QVariant> datapacket;
@@ -91,6 +91,19 @@ void ChatDialog::gotReturnPressed() {
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
+    return datagram;
+}
+
+void ChatDialog::gotReturnPressed() {
+    // Serialize the message
+//    QString key = QString::number(messageNo) + "@" + hostname;
+//    QVariant message = QVariant(textbox->toPlainText());
+//    QMap<QString, QVariant> datapacket;
+//    datapacket.insert(key, message);
+//    QByteArray datagram;
+//    QDataStream stream(&datagram, QIODevice::WriteOnly);
+//    stream << datapacket;
+    QByteArray datagram = ChatDialog::serializeMessage();
 
     // Send message to all peers
     for (int p = minport; p <= maxport; p++) {
