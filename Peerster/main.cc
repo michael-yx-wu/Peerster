@@ -12,10 +12,7 @@
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + startup time in ms
-    timeval time;
-    gettimeofday(&time, NULL);
-    long msecs = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-    hostname = QHostInfo::localHostName() + QString::number(msecs);
+    hostname = QHostInfo::localHostName() + QString::number((quint32)getpid());
     
 	setWindowTitle("Peerster");
     
@@ -78,7 +75,13 @@ void ChatDialog::processPendingDatagrams() {
         QMap<QString, QVariant> datapacket;
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
-        textview->append(datapacket.value("ChatText").toString());
+        
+        
+        QString message = datapacket.value("ChatText").toString();
+        QString origin = datapacket.value("Origin").toString();
+        quint32 seqno = datapacket.value("SeqNo").toUInt();
+        
+        textview->append(message);
     }
 }
 
@@ -120,8 +123,7 @@ int main(int argc, char **argv) {
     
     // Display hostname
     qDebug() << dialog.hostname;
-    
-    
+
 	// Enter the Qt main loop; everything else is event driven
 	return app.exec();
 }

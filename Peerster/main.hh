@@ -26,10 +26,15 @@ public:
     void processPendingDatagrams();
     
 private:
+    int minport, maxport;
+    quint32 messageNo;
     QTextEdit *textview;
     Textbox *textbox;
-    int minport, maxport;
-    int messageNo;
+    
+    // Map to keep track of latest unseen messages from peers
+    QMap<QString, QVariant> status;
+
+    // Serialize textbox text into a QByteArray
     QByteArray serializeMessage();
     
     // Attempt to bind to a UDP port in range
