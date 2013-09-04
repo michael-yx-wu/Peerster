@@ -31,8 +31,8 @@ private:
     QTextEdit *textview;
     Textbox *textbox;
     
-    // Map to keep track of latest unseen messages from peers
-    QMap<QString, QVariant> status;
+    // Map to keep track of latest seen messages from peers
+    QMap<QString, QVariant> seenMessages;
 
     // Serialize textbox text into a QByteArray
     QByteArray serializeMessage();
