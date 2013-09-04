@@ -7,8 +7,7 @@
 #include <QUdpSocket>
 #include <QByteArray>
 #include <QTimer>
-#include <iostream>
-#include <string>
+#include <QVector>
 
 #include "Socket.hh"
 #include "Peer.hh"

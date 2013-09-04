@@ -172,7 +172,7 @@ void ChatDialog::gotReturnPressed() {
     textbox->clear();
     
     // RumorMonger!
-//    rumorMonger(datagram);
+    rumorMonger(datagram);
 }
 
 #pragma mark - Rumor Mongering 
@@ -202,13 +202,15 @@ void ChatDialog::sendStatusMessage(QHostAddress address, int port) {
 
 void ChatDialog::rumorMonger(QByteArray datagram) {
     int size, selectRand, neighborPort;
+    QHostAddress address;
     
     shouldContinueMongering = true;
     while (shouldContinueMongering) {
-//        size = neighbors.size();
-//        selectRand = rand() % size;
-//        neighborPort = neighbors.at(selectRand);
-//        ChatDialog::sendChatMessage(datagram, QHostAddress::LocalHost, neighborPort);
+        size = peers.size();
+        selectRand = rand() % size;
+        address = peers.at(selectRand).address;
+        neighborPort = peers.at(selectRand).port;
+        ChatDialog::sendChatMessage(datagram, address, neighborPort);
 
         // Start the status message timer
         mongerTimer->start(5000);
@@ -239,8 +241,8 @@ int main(int argc, char **argv) {
     dialog.show();
     
     // Display hostname
-    qDebug() << "My Hostname: " + dialog.hostname + "\n";
-    qDebug() << "My Port: " + QString::number(dialog.myport) + "\n";
+    qDebug() << "My Hostname: " + dialog.hostname;
+    qDebug() << "My Port: " + QString::number(dialog.myport);
 
 	// Enter the Qt main loop; everything else is event driven
 	return app.exec();

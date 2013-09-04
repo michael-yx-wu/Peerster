@@ -15,11 +15,10 @@
 #include <QVariant>
 
 class Peer {
-private:
-    QHostAddress address;
-    quint32 port;
     
 public:
+    QHostAddress address;
+    quint32 port;
     Peer(QHostAddress a, quint32 p);
 };
 
