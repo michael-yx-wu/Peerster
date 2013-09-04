@@ -19,7 +19,6 @@ class ChatDialog : public QDialog {
 public:
     ChatDialog();
     QString hostname;
-//    Socket socket;
     QUdpSocket *socket;
     
     public slots:
