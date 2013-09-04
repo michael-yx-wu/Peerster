@@ -78,16 +78,17 @@ void ChatDialog::processPendingDatagrams() {
         QMap<QString, QVariant> datapacket;
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
-        QString key = datapacket.keys().first();
-        textview->append(datapacket.value(key).toString());
+        textview->append(datapacket.value("ChatText").toString());
     }
 }
 
+// Serialize textbox text into a QByteArray
 QByteArray ChatDialog::serializeMessage() {
-    QString key = QString::number(messageNo) + "@" + hostname;
     QVariant message = QVariant(textbox->toPlainText());
     QMap<QString, QVariant> datapacket;
-    datapacket.insert(key, message);
+    datapacket.insert("ChatText", message);
+    datapacket.insert("Origin", hostname);
+    datapacket.insert("SeqNo", messageNo);
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
@@ -96,13 +97,6 @@ QByteArray ChatDialog::serializeMessage() {
 
 void ChatDialog::gotReturnPressed() {
     // Serialize the message
-//    QString key = QString::number(messageNo) + "@" + hostname;
-//    QVariant message = QVariant(textbox->toPlainText());
-//    QMap<QString, QVariant> datapacket;
-//    datapacket.insert(key, message);
-//    QByteArray datagram;
-//    QDataStream stream(&datagram, QIODevice::WriteOnly);
-//    stream << datapacket;
     QByteArray datagram = ChatDialog::serializeMessage();
 
     // Send message to all peers
