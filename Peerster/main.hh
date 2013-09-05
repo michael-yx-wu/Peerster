@@ -24,10 +24,10 @@ public:
     QUdpSocket *socket;
     
     public slots:
+    void antiEntropyTimeout();
     void gotReturnPressed();
     void processPendingDatagrams();
     void mongerTimeout();
-    void antiEntropyTimeout();
     
 private:
     // Chat Dialog Constants
@@ -55,7 +55,8 @@ private:
 
     // Rumor Mongering methods
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
-    void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
+//    void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
+    void sendChatMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     bool processRumorMessage(QMap<QString, QVariant> datapacket);
     void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);

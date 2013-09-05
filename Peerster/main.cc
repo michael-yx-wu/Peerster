@@ -231,8 +231,14 @@ void ChatDialog::gotReturnPressed() {
 
 #pragma mark - Rumor Mongering
 
-void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
+//void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
+//    qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
+//    socket->writeDatagram(datagram.data(), datagram.size(), address, port);
+//}
+
+void ChatDialog::sendChatMessage(Message message, QHostAddress address, quint16 port) {
     qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
+    QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
@@ -258,12 +264,11 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 }
 
 void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
-    QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
-    qDebug() << "Message Contents: " << message;
-    ChatDialog::sendChatMessage(datagram, address, port);
+    Message rumorMessage = Message(origin, seqno, message);
+    ChatDialog::sendChatMessage(rumorMessage, address, port);
     
     // Update the last sent messages to my peers
-    lastSentMessages[address.toString()] = Message(origin, seqno, message);
+    lastSentMessages[address.toString()] = rumorMessage;
     lastTarget = Peer(address, port);
     
     mongerTimer->start(2000);
