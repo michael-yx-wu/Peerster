@@ -27,6 +27,7 @@ public:
     void gotReturnPressed();
     void processPendingDatagrams();
     void mongerTimeout();
+    void antiEntropyTimeout();
     
 private:
     // Chat Dialog Constants
@@ -38,10 +39,14 @@ private:
     Messages messages;
     quint32 messageNo;
     
+    // Rumor Mongering
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
     QMap<QString, Message> lastSentMessages; // <host, Message>
     Peer lastTarget;
+    
+    // Anti-Entropy
+    QTimer *antiEntropyTimer;
     
     void updatePeerList(QHostAddress address, quint16 port);
     

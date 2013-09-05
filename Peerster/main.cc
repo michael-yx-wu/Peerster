@@ -48,12 +48,15 @@ ChatDialog::ChatDialog() {
     
     // Create timers
     mongerTimer = new QTimer(this);
+    antiEntropyTimer = new QTimer(this);
+    antiEntropyTimer->start(5000);
     mongerTimer->setSingleShot(true);
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
+    connect(antiEntropyTimer, SIGNAL(timeout), this, SLOT(antiEntropyTimeout()));
 
     // Get neighbors below and above -- this will change
     if (myport + 1 <= maxport) {
@@ -263,16 +266,25 @@ void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHo
     lastSentMessages[address.toString()] = Message(origin, seqno, message);
     lastTarget = Peer(address, port);
     
-    mongerTimer->start(5000);
+    mongerTimer->start(2000);
 }
 
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger again
-    qDebug() << "Monger Timeout!!!";
+    qDebug() << "Monger Timeout";
     if (rand() % 2 == 1) {
+        qDebug() << "Trying to monger again";
         Message m = lastSentMessages.value(lastTarget.address.toString());
         rumorMonger(m.getOrigin(), m.getSeqno(), m.getMessage(), lastTarget.address, lastTarget.port);
     }
+}
+
+#pragma mark - Anti-entropy 
+
+void ChatDialog::antiEntropyTimeout() {
+    qDebug() << "Anti-Entropy timeout";
+    Peer p = peers.at(rand() % peers.size());
+    ChatDialog::sendStatusMessage(p.address, p.port);
 }
 
 #pragma mark
