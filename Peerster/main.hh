@@ -40,7 +40,7 @@ private:
     
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
-    QMap<QString, Message> lastSentMessages; // <host, Message>
+    QMap<QString, Message*> lastSentMessages; // <host, Message>
     QString lastTarget;
     
     void updatePeerList(QHostAddress address, quint16 port);

@@ -258,7 +258,7 @@ void ChatDialog::rumorMonger(QByteArray datagram, QHostAddress peer, quint16 por
 void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
     QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
     ChatDialog::sendChatMessage(datagram, address, port);
-    Message m = Message(origin, seqno, message);
+    Message *m = new Message(origin, seqno, message);
     lastSentMessages[origin] = m;
     lastTarget = origin;
     mongerTimer->start();
