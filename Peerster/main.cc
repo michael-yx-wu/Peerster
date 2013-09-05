@@ -86,6 +86,7 @@ void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
             return;
         }
     }
+    qDebug() << "Adding peer: " << port;
     peers.push_back(Peer(address, port));
 }
 
