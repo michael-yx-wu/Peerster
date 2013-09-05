@@ -165,7 +165,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         // Peer does not have a message that I have
         if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
             origin = it.key();
-            seqno = status.value(origin).toUInt();
+            seqno = peerStatus.value(origin).toUInt()+1;
             message = messages.getMessage(origin, seqno);
             mongerRumor = true;
             break;
@@ -183,7 +183,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         // I do not have a message that peer does
         if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
             origin = it.key();
-            seqno = peerStatus.value(origin).toUInt();
+            seqno = status.value(origin).toUInt()+1;
             message = messages.getMessage(origin, seqno);
             mongerRumor = true;
             break;
