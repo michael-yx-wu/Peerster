@@ -183,7 +183,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
 
     if (mongerRumor) {
-        qDebug() << "Message requested";
+        qDebug() << "Message requested: " << origin << " " << seqno;
         QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
         rumorMonger(rumor, sender, senderPort);
     }
