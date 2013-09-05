@@ -49,14 +49,14 @@ ChatDialog::ChatDialog() {
     // Create timers
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
-    antiEntropyTimer->start(5000);
     mongerTimer->setSingleShot(true);
+    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
-    connect(antiEntropyTimer, SIGNAL(timeout), this, SLOT(antiEntropyTimeout()));
+    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
 
     // Get neighbors below and above -- this will change
     if (myport + 1 <= maxport) {
