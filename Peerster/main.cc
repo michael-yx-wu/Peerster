@@ -135,11 +135,6 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
     // Update status and save the message
     status[origin] = seqno+1;
     messages.addMessage(origin, seqno, message);
-    
-    QMap<QString, QVariant>::iterator it;
-    for (it = status.begin(); it != status.end(); it++) {
-        qDebug() << it.key() << ": " << it.value();
-    }
 
     return true;
 }
@@ -186,7 +181,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
 
     if (mongerRumor) {
-        qDebug() << "Message requested: " << origin << " " << seqno;
+        qDebug() << "Message requested: " << origin << " " << seqno << " " << message;
         QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
         rumorMonger(rumor, sender, senderPort);
     }
