@@ -111,7 +111,7 @@ void ChatDialog::processPendingDatagrams() {
             if (processRumorMessage(datapacket)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                rumorMonger(datagram, p.address, p.port);
+//                rumorMonger(datagram, p.address, p.port);
             }
         }
         else {
@@ -186,7 +186,6 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         rumorMonger(rumor, sender, senderPort);
     }
     else if (sendStatus) {
-        qDebug() << "Key: " << it.key() << " Seqno: " << seqno;
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
@@ -209,17 +208,11 @@ QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint32
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
     QString message = textbox->toPlainText();
-    
-    // Serialize the message
-    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
-    
-    // Copy the message into my own chatbox
-    // Update status and messages
+        QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
     textview->append(message);
     messages.addMessage(hostname, messageNo, message);
     status[hostname] = ++messageNo;
 
-    // Clear textbox and increment message number
     textbox->clear();
     
     // Rumor monger at a random peer
