@@ -201,6 +201,7 @@ void ChatDialog::gotReturnPressed() {
 #pragma mark - Rumor Mongering
 
 void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
+    qDebug() << "Sending Chat Message to: " + address.toString() + " Port: " + QString::number(port);
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
@@ -215,6 +216,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     stream << statusMessage;
     
     // Send the message
+    qDebug() << "Sending Status Message to: " + address.toString() + " Port: " + QString::number(port);
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
