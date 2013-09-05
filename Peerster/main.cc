@@ -50,7 +50,7 @@ ChatDialog::ChatDialog() {
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
     mongerTimer->setSingleShot(true);
-    antiEntropyTimer->start(5000);
+//    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
@@ -189,7 +189,6 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 
     if (mongerRumor) {
         qDebug() << "Message requested: " << origin << " " << seqno << " " << message;
-        QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
         rumorMonger(origin, seqno, message, sender, senderPort);
     }
     else if (sendStatus) {
@@ -200,25 +199,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 
 #pragma mark -
 
-// Serialize rumor message into a QByteArray
-QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint32 seqno) {
-    QMap<QString, QVariant> datapacket;
-    datapacket.insert("ChatText", message);
-    datapacket.insert("Origin", origin);
-    datapacket.insert("SeqNo", seqno);
-    QByteArray datagram;
-    QDataStream stream(&datagram, QIODevice::WriteOnly);
-    stream << datapacket;
-    return datagram;
-}
-
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
     QString origin = hostname;
     quint32 seqno = messageNo;
     QString message = textbox->toPlainText();
     
-    QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
     textview->append(message);
     messages.addMessage(origin, seqno, message);
     status[hostname] = ++messageNo;
@@ -270,7 +256,7 @@ void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHo
     // Update the last sent messages to my peers
     lastSentMessages[address.toString()] = rumorMessage;
     lastTarget = Peer(address, port);
-    
+        
     mongerTimer->start(2000);
 }
 

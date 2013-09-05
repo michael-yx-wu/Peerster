@@ -51,8 +51,7 @@ private:
     void updatePeerList(QHostAddress address, quint16 port);
     
     bool bind();
-    QByteArray serializeMessage(QString message, QString origin, quint32 seqno);
-
+    
     // Rumor Mongering methods
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
 //    void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
