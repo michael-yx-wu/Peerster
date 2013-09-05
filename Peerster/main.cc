@@ -115,7 +115,7 @@ void ChatDialog::processPendingDatagrams() {
             if (processRumorMessage(datapacket)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                rumorMonger(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString(), sender, senderPort);
+                rumorMonger(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString(), p.address, p.port);
             }
         }
         else {
