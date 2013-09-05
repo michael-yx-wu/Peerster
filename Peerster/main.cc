@@ -150,7 +150,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
     QMap<QString, QVariant>::iterator it;
     for (it = status.begin(); it != status.end(); it++) {
-        // Peer does not know about a host
+        // Peer does not know about an origin
         if (!peerStatus.contains(it.key())) {
             origin = it.key();
             seqno = 1;
@@ -160,15 +160,17 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         }
         // Peer does not have a message that I have
         else if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
+            qDebug() << windowTitle()+" MyKey: " << it.key() << "Value: " << status.value(it.key());
+            qDebug() << windowTitle()+" PeerKey: " << it.key() << "Value: " << peerStatus.value(it.key());
             origin = it.key();
             seqno = peerStatus.value(origin).toUInt()+1;
-            message = messages.getMessage(origin, seqno);
+            message = messages.getMessage(origin, seqno);   
             mongerRumor = true;
             break;
         }
     }
     for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
-        // I do not know about a host
+        // I do not know about an origin
         if (!status.contains(it.key())) {
             sendStatus = true;
             break;
