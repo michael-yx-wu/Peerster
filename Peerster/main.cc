@@ -160,6 +160,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         
         // If a peer has new messages that I have not seen - send status message to peer
         if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
+            qDebug() << "Key: " << it.key() << " Seqno: " << peerStatus.value(it.key());
             qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
             ChatDialog::sendStatusMessage(sender, senderPort);
         }
