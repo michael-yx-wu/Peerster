@@ -149,8 +149,6 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
     QMap<QString, QVariant>::iterator it;
-    
-    
     for (it = status.begin(); it != status.end(); it++) {
         // Peer does not know about a host
         if (!peerStatus.contains(it.key())) {
