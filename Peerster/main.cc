@@ -112,10 +112,11 @@ void ChatDialog::processPendingDatagrams() {
         
         // Check to see if datagram is a status or chat message
         if (datapacket.contains("Origin")) {
-            if (processRumorMessage(datapacket)) {
+            if (processRumorMessage(datapacket, sender, senderPort)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                rumorMonger(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString(), p.address, p.port);
+                Message message = Message(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString());
+                rumorMonger(message, p.address, p.port);
             }
         }
         else {
@@ -124,11 +125,18 @@ void ChatDialog::processPendingDatagrams() {
     }
 }
 
-bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
+bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Check to see if we have already seen this message
     QString origin = datapacket.value("Origin").toString();
     quint32 seqno = datapacket.value("SeqNo").toUInt();
     if (messages.hasMessage(origin, seqno)) {
+        return false;
+    }
+    
+    // We have not seen this message, but there is another message that should come
+    // before it
+    if (status.value(origin).toUInt() != seqno) {
+        ChatDialog::sendStatusMessage(sender, senderPort);
         return false;
     }
     
@@ -146,10 +154,11 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Received a status message -- stop the timer
     mongerTimer->stop();
-    qDebug() << "Stopping timer... ";
+    qDebug() << "Stopping monger timer... ";
     QString origin;
     quint32 seqno;
-    QString message;
+    QString chatText;
+    Message message;
     bool mongerRumor = false, sendStatus = false;
     
     QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
@@ -159,7 +168,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         if (!peerStatus.contains(it.key())) {
             origin = it.key();
             seqno = 1;
-            message = messages.getMessage(origin, seqno);
+            chatText = messages.getMessage(origin, seqno);
             mongerRumor = true;
             break;
         }
@@ -169,7 +178,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             qDebug() << windowTitle()+" PeerKey: " << it.key() << "Value: " << peerStatus.value(it.key());
             origin = it.key();
             seqno = peerStatus.value(origin).toUInt();
-            message = messages.getMessage(origin, seqno);   
+            chatText = messages.getMessage(origin, seqno);
             mongerRumor = true;
             break;
         }
@@ -188,39 +197,34 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
 
     if (mongerRumor) {
-        qDebug() << "Message requested: " << origin << " " << seqno << " " << message;
-        rumorMonger(origin, seqno, message, sender, senderPort);
+        qDebug() << "Message requested: " << origin << " " << seqno << " " << chatText;
+        message = Message(origin, seqno, chatText);
+        rumorMonger(message, sender, senderPort);
     }
     else if (sendStatus) {
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
+    
 }
 
 #pragma mark -
 
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
-    QString origin = hostname;
-    quint32 seqno = messageNo;
-    QString message = textbox->toPlainText();
+    Message message = Message(hostname, messageNo, textbox->toPlainText());
     
-    textview->append(message);
-    messages.addMessage(origin, seqno, message);
+    textview->append(message.getMessage());
+    messages.addMessage(message.getOrigin(), message.getSeqno(), message.getMessage());
     status[hostname] = ++messageNo;
     textbox->clear();
     
     // Rumor monger at a random peer
     Peer p = peers.at(rand() % peers.size());
-    rumorMonger(origin, seqno, message, p.address, p.port);
+    rumorMonger(message, p.address, p.port);
 }
 
 #pragma mark - Rumor Mongering
-
-//void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
-//    qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
-//    socket->writeDatagram(datagram.data(), datagram.size(), address, port);
-//}
 
 void ChatDialog::sendChatMessage(Message message, QHostAddress address, quint16 port) {
     qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
@@ -249,14 +253,11 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
-void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
-    Message rumorMessage = Message(origin, seqno, message);
-    ChatDialog::sendChatMessage(rumorMessage, address, port);
-    
+void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
+    ChatDialog::sendChatMessage(message, address, port);
     // Update the last sent messages to my peers
-    lastSentMessages[address.toString()] = rumorMessage;
+    lastSentMessages[address.toString()] = message;
     lastTarget = Peer(address, port);
-        
     mongerTimer->start(2000);
 }
 
@@ -265,8 +266,8 @@ void ChatDialog::mongerTimeout() {
     qDebug() << "Monger Timeout";
     if (rand() % 2 == 1) {
         qDebug() << "Trying to monger again";
-        Message m = lastSentMessages.value(lastTarget.address.toString());
-        rumorMonger(m.getOrigin(), m.getSeqno(), m.getMessage(), lastTarget.address, lastTarget.port);
+        Message message = lastSentMessages.value(lastTarget.address.toString());
+        rumorMonger(message, lastTarget.address, lastTarget.port);
     }
 }
 
