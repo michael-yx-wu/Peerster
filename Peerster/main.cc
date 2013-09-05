@@ -153,6 +153,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             quint32 seqno = peerStatus.value(origin).toUInt();
             QString message = messages.getMessage(origin, seqno);
             QByteArray rumor = serializeMessage(message, origin, seqno);
+            qDebug() << "Got a new message";
             rumorMonger(rumor, sender, senderPort);
         }
         
