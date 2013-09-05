@@ -10,6 +10,7 @@
 #include <QVector>
 
 #include "Messages.hh"
+#include "Message.hh"
 #include "Peer.hh"
 #include "Textbox.hh"
 
@@ -39,6 +40,8 @@ private:
     
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
+    QMap<QString, Message> lastSentMessages; // <host, Message>
+    QString lastTarget;
     
     void updatePeerList(QHostAddress address, quint16 port);
     
@@ -47,6 +50,7 @@ private:
 
     // Rumor Mongering methods
     void rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port);
+    void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
     void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     bool processRumorMessage(QMap<QString, QVariant> datapacket);

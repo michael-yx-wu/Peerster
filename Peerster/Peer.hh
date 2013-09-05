@@ -1,11 +1,3 @@
-//
-//  Peer.h
-//  Peerster
-//
-//  Created by Michael Wu on 9/4/13.
-//
-//
-
 #ifndef __Peerster__Peer__
 #define __Peerster__Peer__
 

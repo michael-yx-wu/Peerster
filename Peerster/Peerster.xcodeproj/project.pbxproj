@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
 		1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */; settings = {ATTRIBUTES = (); }; };
+		3055D3F18102CDB806A05B7F /* Message.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 86B358F2BF0DDAE13C0D59AB /* Message.cc */; settings = {ATTRIBUTES = (); }; };
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
@@ -25,10 +26,12 @@
 		37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Textbox.cpp; sourceTree = SOURCE_ROOT; };
 		39F21E01BF99D77BE75B0832 /* Textbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
-		4CDCADD917D772230023E18A /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C29474217D8C5F700AC255C /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		790A68ED394F84241507598D /* Textbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
+		86B358F2BF0DDAE13C0D59AB /* Message.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cc; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
+		A08683E53D9B2519B1313D9E /* Message.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hh; sourceTree = SOURCE_ROOT; };
 		AA9D9004ACE84CD1D55FED5F /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtGui.framework; sourceTree = "<absolute>"; };
 		D759577E53E2CE061239002D /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = SOURCE_ROOT; };
 		D98F638C7798CC1DDA980D9A /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtCore.framework; sourceTree = "<absolute>"; };
@@ -59,7 +62,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4CDCADDA17D772230023E18A /* Products */,
+				4C29474317D8C5F700AC255C /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -73,10 +76,10 @@
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4CDCADDA17D772230023E18A /* Products */ = {
+		4C29474317D8C5F700AC255C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CDCADD917D772230023E18A /* Peerster.app */,
+				4C29474217D8C5F700AC255C /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +99,7 @@
 				790A68ED394F84241507598D /* Textbox.hh */,
 				12CE19638E6C844EFEBA5234 /* Peer.hh */,
 				4F2C0F4C926D8A65CB56838D /* Messages.hh */,
+				A08683E53D9B2519B1313D9E /* Message.hh */,
 			);
 			name = Headers;
 			sourceTree = "<Group>";
@@ -117,6 +121,7 @@
 				39F21E01BF99D77BE75B0832 /* Textbox.cc */,
 				2E3BA334344441BCDAAC8724 /* Peer.cc */,
 				E0BBC85E7EBD497B22D3B33E /* Messages.cc */,
+				86B358F2BF0DDAE13C0D59AB /* Message.cc */,
 			);
 			name = Sources;
 			sourceTree = "<Group>";
@@ -140,7 +145,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4CDCADD917D772230023E18A /* Peerster.app */;
+			productReference = 4C29474217D8C5F700AC255C /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -148,15 +153,18 @@
 /* Begin PBXProject section */
 		91B15E841AA80083484172DE /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
 			buildConfigurationList = CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Peerster" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4CDCADDA17D772230023E18A /* Products */;
+			productRefGroup = 4C29474317D8C5F700AC255C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -208,6 +216,7 @@
 				B3470EEF1B69CBC8CDF46E7E /* Textbox.cc in Build Sources */,
 				D33B1E115874F491151176CF /* Peer.cc in Build Sources */,
 				899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */,
+				3055D3F18102CDB806A05B7F /* Message.cc in Build Sources */,
 				D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */,
 				1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */,
 			);
@@ -286,6 +295,7 @@
 		8C7174830A1E4DCBA0332EC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PRODUCT_NAME = Peerster;
@@ -295,6 +305,7 @@
 		BEC09A62E69C3553534FF35E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;

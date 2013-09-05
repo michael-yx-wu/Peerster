@@ -210,7 +210,7 @@ QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint32
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
     QString message = textbox->toPlainText();
-        QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
+    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
     textview->append(message);
     messages.addMessage(hostname, messageNo, message);
     status[hostname] = ++messageNo;
@@ -255,12 +255,20 @@ void ChatDialog::rumorMonger(QByteArray datagram, QHostAddress peer, quint16 por
     mongerTimer->start(5000);
 }
 
+void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
+    QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
+    ChatDialog::sendChatMessage(datagram, address, port);
+    Message m = Message(origin, seqno, message);
+    lastSentMessages[origin] = m;
+    lastTarget = origin;
+    mongerTimer->start();
+}
+
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger a 
     if (rand() % 2 == 1) {
         
     }
-    
 }
 
 #pragma mark
