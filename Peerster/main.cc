@@ -50,7 +50,7 @@ ChatDialog::ChatDialog() {
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
     mongerTimer->setSingleShot(true);
-//    antiEntropyTimer->start(5000);
+    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
