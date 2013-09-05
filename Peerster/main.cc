@@ -135,7 +135,8 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     
     // We have not seen this message, but there is another message that should come
     // before it
-    if (status.value(origin).toUInt() != seqno) {
+    if (status.contains(origin) && status.value(origin).toUInt() != seqno) {
+        qDebug() << "I want message #: " << status.value(origin).toUInt() << "from " << origin << " I got message #: " << seqno;
         ChatDialog::sendStatusMessage(sender, senderPort);
         return false;
     }
@@ -163,6 +164,8 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
     QMap<QString, QVariant>::iterator it;
+    
+    // Compare my status against the peer status
     for (it = status.begin(); it != status.end(); it++) {
         // Peer does not know about an origin
         if (!peerStatus.contains(it.key())) {
@@ -183,6 +186,8 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             break;
         }
     }
+    
+    // Compare peer status against my status
     for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
         // I do not know about an origin
         if (!status.contains(it.key())) {
