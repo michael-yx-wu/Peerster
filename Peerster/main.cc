@@ -47,8 +47,7 @@ ChatDialog::ChatDialog() {
     // Focus textbox when setup is done
     textbox->setFocus();
     
-    // No messages sent yet!
-    messageNo = 1;
+    status[hostname] = 1;
     
     // Create timers
     mongerTimer = new QTimer(this);
@@ -168,7 +167,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 #pragma mark -
 
 // Serialize rumor message into a QByteArray
-QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint16 seqno) {
+QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint32 seqno) {
     QMap<QString, QVariant> datapacket;
     datapacket.insert("ChatText", message);
     datapacket.insert("Origin", origin);
@@ -184,13 +183,13 @@ void ChatDialog::gotReturnPressed() {
     QString message = textbox->toPlainText();
     
     // Serialize the message
-    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
+    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, status[hostname].toUInt());
     
     // Copy the message into my own chatbox
     // Update status and messages
     textview->append(message);
-    messages.addMessage(hostname, messageNo, message);
-    status[hostname] = ++messageNo;
+    messages.addMessage(hostname, status[hostname].toUInt(), message);
+    status[hostname] = status[hostname].toUInt() + 1;
 
     // Clear textbox and increment message number
     textbox->clear();
@@ -203,7 +202,7 @@ void ChatDialog::gotReturnPressed() {
 #pragma mark - Rumor Mongering
 
 void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
-    qDebug() << "Sending Chat Message to: " + address.toString() + " Port: " + QString::number(port);
+    qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 

@@ -35,7 +35,6 @@ private:
     
     std::vector<Peer> peers;
     Messages messages;
-    quint32 messageNo;
     
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
@@ -43,7 +42,7 @@ private:
     void updatePeerList(QHostAddress address, quint16 port);
     
     bool bind();
-    QByteArray serializeMessage(QString message, QString origin, quint16 seqno);
+    QByteArray serializeMessage(QString message, QString origin, quint32 seqno);
 
     // Rumor Mongering methods
     void rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port);
