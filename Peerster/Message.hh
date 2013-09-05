@@ -12,8 +12,12 @@ private:
     QString message;
     QByteArray serializedMessage;
     QByteArray serializeMessage();
+    
 public:
-    Message(const QString origin, const quint32 seqno, const QString message);
+    Message() {};
+    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) : origin(someOrigin), seqno(someSeqno), message(someMessage) {
+        serializedMessage = serializeMessage();
+    };
     QString getOrigin();
     quint32 getSeqno();
     QString getMessage();

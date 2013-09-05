@@ -11,6 +11,7 @@ class Peer {
 public:
     QHostAddress address;
     quint16 port;
+    Peer() {};
     Peer(QHostAddress a, quint16 p);
 };
 

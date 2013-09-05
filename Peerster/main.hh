@@ -40,8 +40,8 @@ private:
     
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
-    QMap<QString, Message*> lastSentMessages; // <host, Message>
-    QString lastTarget;
+    QMap<QString, Message> lastSentMessages; // <host, Message>
+    Peer lastTarget;
     
     void updatePeerList(QHostAddress address, quint16 port);
     
@@ -49,7 +49,6 @@ private:
     QByteArray serializeMessage(QString message, QString origin, quint32 seqno);
 
     // Rumor Mongering methods
-    void rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port);
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
     void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);

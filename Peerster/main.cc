@@ -111,7 +111,7 @@ void ChatDialog::processPendingDatagrams() {
             if (processRumorMessage(datapacket)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                rumorMonger(datagram, p.address, p.port);
+                rumorMonger(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString(), sender, senderPort);
             }
         }
         else {
@@ -185,7 +185,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     if (mongerRumor) {
         qDebug() << "Message requested: " << origin << " " << seqno << " " << message;
         QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
-        rumorMonger(rumor, sender, senderPort);
+        rumorMonger(origin, seqno, message, sender, senderPort);
     }
     else if (sendStatus) {
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
@@ -209,17 +209,19 @@ QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint32
 
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
+    QString origin = hostname;
+    quint32 seqno = messageNo;
     QString message = textbox->toPlainText();
-    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
+    
+    QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
     textview->append(message);
-    messages.addMessage(hostname, messageNo, message);
+    messages.addMessage(origin, seqno, message);
     status[hostname] = ++messageNo;
-
     textbox->clear();
     
     // Rumor monger at a random peer
     Peer p = peers.at(rand() % peers.size());
-    rumorMonger(datagram, p.address, p.port);
+    rumorMonger(origin, seqno, message, p.address, p.port);
 }
 
 #pragma mark - Rumor Mongering
@@ -250,24 +252,23 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
-void ChatDialog::rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port) {
-    ChatDialog::sendChatMessage(datagram, peer, port);
-    mongerTimer->start(5000);
-}
-
 void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
     QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
+    qDebug() << "Mesage Contents: " << message;
     ChatDialog::sendChatMessage(datagram, address, port);
-    Message *m = new Message(origin, seqno, message);
-    lastSentMessages[origin] = m;
-    lastTarget = origin;
+    
+    // Update the last sent messages to my peers
+    lastSentMessages[address.toString()] = Message(origin, seqno, message);
+    lastTarget = Peer(address, port);
+    
     mongerTimer->start();
 }
 
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger a 
     if (rand() % 2 == 1) {
-        
+        Message m = lastSentMessages.value(lastTarget.address.toString());
+        rumorMonger(m.getOrigin(), m.getSeqno(), m.getMessage(), lastTarget.address, lastTarget.port);
     }
 }
 

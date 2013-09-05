@@ -1,12 +1,5 @@
 #include "Message.hh"
 
-Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) {
-    origin = someOrigin;
-    seqno = someSeqno;
-    message = someMessage;
-    serializedMessage = Message::serializeMessage();
-}
-
 QByteArray Message::serializeMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert("ChatText", message);
