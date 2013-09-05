@@ -221,6 +221,12 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     
     // Send the message
     qDebug() << "Sending Status Message to: " + address.toString() + " Port: " + QString::number(port);
+    
+    QMap<QString, QVariant>::iterator it;
+    for (it = status.begin(); it != status.end(); it++) {
+        qDebug() << it.key() << ": " << it.value();
+    }
+    
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
