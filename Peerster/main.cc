@@ -48,6 +48,7 @@ ChatDialog::ChatDialog() {
     
     // Create timers
     mongerTimer = new QTimer(this);
+    mongerTimer->setSingleShot(true);
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
@@ -262,7 +263,7 @@ void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHo
     lastSentMessages[address.toString()] = Message(origin, seqno, message);
     lastTarget = Peer(address, port);
     
-    mongerTimer->start();
+    mongerTimer->start(5000);
 }
 
 void ChatDialog::mongerTimeout() {
