@@ -136,6 +136,11 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
     status[origin] = seqno+1;
     messages.addMessage(origin, seqno, message);
     
+    QMap<QString, QVariant>::iterator it;
+    for (it = status.begin(); it != status.end(); it++) {
+        qDebug() << it.key() << ": " << it.value();
+    }
+
     return true;
 }
 
@@ -186,7 +191,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         rumorMonger(rumor, sender, senderPort);
     }
     else if (sendStatus) {
-        qDebug() << "Key: " << it.key() << " Seqno: " << peerStatus.value(it.key());
+        qDebug() << "Key: " << it.key() << " Seqno: " << seqno;
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
