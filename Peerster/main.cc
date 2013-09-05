@@ -142,6 +142,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Received a status message -- stop the timer
     mongerTimer->stop();
+    qDebug() << "Stopping timer... ";
     QString origin;
     quint32 seqno;
     QString message;
@@ -254,7 +255,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 
 void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port) {
     QByteArray datagram = ChatDialog::serializeMessage(message, origin, seqno);
-    qDebug() << "Mesage Contents: " << message;
+    qDebug() << "Message Contents: " << message;
     ChatDialog::sendChatMessage(datagram, address, port);
     
     // Update the last sent messages to my peers
@@ -265,7 +266,7 @@ void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHo
 }
 
 void ChatDialog::mongerTimeout() {
-    // If "heads", rumor monger a 
+    // If "heads", rumor monger again
     if (rand() % 2 == 1) {
         Message m = lastSentMessages.value(lastTarget.address.toString());
         rumorMonger(m.getOrigin(), m.getSeqno(), m.getMessage(), lastTarget.address, lastTarget.port);
