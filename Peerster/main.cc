@@ -109,7 +109,7 @@ void ChatDialog::processPendingDatagrams() {
         // Check to see if datagram is a status or chat message
         if (datapacket.contains("Origin")) {
             if (processRumorMessage(datapacket)) {
-                ChatDialog::sendStatusMessage(sender, senderPort);
+//                ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
 //                rumorMonger(datagram, p.address, p.port);
             }
