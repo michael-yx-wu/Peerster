@@ -12,6 +12,7 @@ private:
 public:
     Messages() {};
     void addMessage(QString origin, quint32 seqno, QString message);
+    bool hasMessage(QString origin, quint32 seqno);
     QString getMessage(QString origin, quint32 seqno);
 };
 

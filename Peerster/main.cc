@@ -126,11 +126,8 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
     // Check to see if we have already seen this message
     QString origin = datapacket.value("Origin").toString();
     quint32 seqno = datapacket.value("SeqNo").toUInt();
-    if (status.contains(origin)) {
-        if (status.key(origin).toUInt() == seqno) {
-            // We have already seen this message, do not display again
-            return false;
-        }
+    if (messages.hasMessage(origin, seqno)) {
+        return false;
     }
     
     // Display the new message
