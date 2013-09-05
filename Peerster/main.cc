@@ -112,6 +112,7 @@ void ChatDialog::processPendingDatagrams() {
         // Check to see if datagram is a status or chat message
         if (datapacket.contains("Origin")) {
             if (processRumorMessage(datapacket)) {
+                ChatDialog::sendStatusMessage(sender, senderPort);
                 rumorMonger(datagram, sender, senderPort);
             }
         }
@@ -182,15 +183,18 @@ QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint16
 
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
-    // Serialize the message
-    QByteArray datagram = ChatDialog::serializeMessage(textbox->toPlainText(), hostname, messageNo);
+    QString message = textbox->toPlainText();
     
-    // Copy the message into my own chatbox and update status
-    textview->append(textbox->toPlainText());
-    status[hostname] = messageNo;
+    // Serialize the message
+    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
+    
+    // Copy the message into my own chatbox
+    // Update status and messages
+    textview->append(message);
+    messages.addMessage(hostname, messageNo, message);
+    status[hostname] = ++messageNo;
 
     // Clear textbox and increment message number
-    messageNo++;
     textbox->clear();
     
     // Rumor monger at a random peer
