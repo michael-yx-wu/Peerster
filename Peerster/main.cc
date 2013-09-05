@@ -15,12 +15,9 @@
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number((quint32)getpid());
-    
-	setWindowTitle("Peerster");
-    
+	setWindowTitle(hostname);
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
-        
 	textbox = new Textbox(this);
     
     // Set the height of the text box
@@ -44,10 +41,10 @@ ChatDialog::ChatDialog() {
         exit(1);
     }
     
+    messageNo = 1;
+    
     // Focus textbox when setup is done
     textbox->setFocus();
-    
-    status[hostname] = 1;
     
     // Create timers
     mongerTimer = new QTimer(this);
@@ -185,7 +182,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
 
     if (mongerRumor) {
-        qDebug() << "Got a new message";
+        qDebug() << "Message requested";
         QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
         rumorMonger(rumor, sender, senderPort);
     }
@@ -215,13 +212,13 @@ void ChatDialog::gotReturnPressed() {
     QString message = textbox->toPlainText();
     
     // Serialize the message
-    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, status[hostname].toUInt());
+    QByteArray datagram = ChatDialog::serializeMessage(message, hostname, messageNo);
     
     // Copy the message into my own chatbox
     // Update status and messages
     textview->append(message);
-    messages.addMessage(hostname, status[hostname].toUInt(), message);
-    status[hostname] = status[hostname].toUInt() + 1;
+    messages.addMessage(hostname, messageNo, message);
+    status[hostname] = ++messageNo;
 
     // Clear textbox and increment message number
     textbox->clear();

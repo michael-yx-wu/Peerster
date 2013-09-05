@@ -35,6 +35,7 @@ private:
     
     std::vector<Peer> peers;
     Messages messages;
+    int messageNo;
     
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
