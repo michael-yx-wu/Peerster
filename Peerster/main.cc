@@ -267,6 +267,7 @@ void ChatDialog::rumorMonger(QString origin, quint32 seqno, QString message, QHo
 
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger again
+    qDebug() << "Monger Timeout!!!"
     if (rand() % 2 == 1) {
         Message m = lastSentMessages.value(lastTarget.address.toString());
         rumorMonger(m.getOrigin(), m.getSeqno(), m.getMessage(), lastTarget.address, lastTarget.port);
