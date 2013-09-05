@@ -144,27 +144,63 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Received a status message -- stop the timer
     mongerTimer->stop();
+    QString origin;
+    quint32 seqno;
+    QString message;
+    bool mongerRumor = false, sendStatus = false;
     
     QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
     QMap<QString, QVariant>::iterator it;
-    for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
-        // If I have new messages that a peer has not seen - send one of those messages
-        if (peerStatus.value(it.key()).toUInt() < status.value(it.key()).toUInt()) {
-            QString origin = it.key();
-            quint32 seqno = peerStatus.value(origin).toUInt();
-            QString message = messages.getMessage(origin, seqno);
-            QByteArray rumor = serializeMessage(message, origin, seqno);
-            qDebug() << "Got a new message";
-            rumorMonger(rumor, sender, senderPort);
+    
+    
+    for (it = status.begin(); it != status.end(); it++) {
+        // Peer does not know about a host
+        if (!peerStatus.contains(it.key())) {
+            origin = it.key();
+            seqno = 1;
+            message = messages.getMessage(origin, seqno);
+            mongerRumor = true;
+            break;
         }
-        
-        // If a peer has new messages that I have not seen - send status message to peer
-        if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
-            qDebug() << "Key: " << it.key() << " Seqno: " << peerStatus.value(it.key());
-            qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
-            ChatDialog::sendStatusMessage(sender, senderPort);
+        // Peer does not have a message that I have
+        if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
+            origin = it.key();
+            seqno = status.value(origin).toUInt();
+            message = messages.getMessage(origin, seqno);
+            mongerRumor = true;
+            break;
         }
     }
+    for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
+        // I do not know about a host
+        if (!status.contains(it.key())) {
+            origin = it.key();
+            seqno = 1;
+            message = messages.getMessage(origin, seqno);
+            mongerRumor = true;
+            break;
+        }
+        // I do not have a message that peer does
+        if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
+            origin = it.key();
+            seqno = peerStatus.value(origin).toUInt();
+            message = messages.getMessage(origin, seqno);
+            mongerRumor = true;
+            break;
+        }
+    }
+
+    if (mongerRumor) {
+        qDebug() << "Got a new message";
+        QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
+        rumorMonger(rumor, sender, senderPort);
+    }
+    if (sendStatus) {
+        qDebug() << "Key: " << it.key() << " Seqno: " << peerStatus.value(it.key());
+        qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
+        ChatDialog::sendStatusMessage(sender, senderPort);
+    }
+
 }
 
 #pragma mark -
