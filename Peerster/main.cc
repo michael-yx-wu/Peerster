@@ -40,7 +40,7 @@ ChatDialog::ChatDialog() {
     if (!bind()) {
         exit(1);
     }
-    
+    setWindowTitle(QString::number(myport));
     messageNo = 1;
     
     // Focus textbox when setup is done
