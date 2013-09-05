@@ -186,7 +186,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         QByteArray rumor = ChatDialog::serializeMessage(message, origin, seqno);
         rumorMonger(rumor, sender, senderPort);
     }
-    if (sendStatus) {
+    else if (sendStatus) {
         qDebug() << "Key: " << it.key() << " Seqno: " << peerStatus.value(it.key());
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
