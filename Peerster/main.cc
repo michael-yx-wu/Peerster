@@ -174,18 +174,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
         // I do not know about a host
         if (!status.contains(it.key())) {
-            origin = it.key();
-            seqno = 1;
-            message = messages.getMessage(origin, seqno);
-            mongerRumor = true;
+            sendStatus = true;
             break;
         }
         // I do not have a message that peer does
         if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
-            origin = it.key();
-            seqno = status.value(origin).toUInt()+1;
-            message = messages.getMessage(origin, seqno);
-            mongerRumor = true;
+            sendStatus = true;
             break;
         }
     }
@@ -200,7 +194,6 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
-
 }
 
 #pragma mark -
