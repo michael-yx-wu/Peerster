@@ -110,7 +110,8 @@ void ChatDialog::processPendingDatagrams() {
         if (datapacket.contains("Origin")) {
             if (processRumorMessage(datapacket)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
-                rumorMonger(datagram, sender, senderPort);
+                Peer p = peers.at(rand() % peers.size());
+                rumorMonger(datagram, p.address, p.port);
             }
         }
         else {
