@@ -163,7 +163,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             qDebug() << windowTitle()+" MyKey: " << it.key() << "Value: " << status.value(it.key());
             qDebug() << windowTitle()+" PeerKey: " << it.key() << "Value: " << peerStatus.value(it.key());
             origin = it.key();
-            seqno = peerStatus.value(origin).toUInt()+1;
+            seqno = peerStatus.value(origin).toUInt();
             message = messages.getMessage(origin, seqno);   
             mongerRumor = true;
             break;
