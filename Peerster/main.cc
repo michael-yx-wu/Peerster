@@ -111,7 +111,7 @@ void ChatDialog::processPendingDatagrams() {
             if (processRumorMessage(datapacket)) {
 //                ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-//                rumorMonger(datagram, p.address, p.port);
+                rumorMonger(datagram, p.address, p.port);
             }
         }
         else {
@@ -159,7 +159,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             break;
         }
         // Peer does not have a message that I have
-        if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
+        else if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
             origin = it.key();
             seqno = peerStatus.value(origin).toUInt()+1;
             message = messages.getMessage(origin, seqno);
@@ -174,7 +174,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             break;
         }
         // I do not have a message that peer does
-        if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
+        else if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
             sendStatus = true;
             break;
         }
