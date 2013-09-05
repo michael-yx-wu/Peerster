@@ -52,7 +52,6 @@ ChatDialog::ChatDialog() {
     
     // Create timers
     mongerTimer = new QTimer(this);
-    timeout = false;
     
 	// Connect signals to their appropriate slots
     connect(textbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
@@ -61,10 +60,10 @@ ChatDialog::ChatDialog() {
 
     // Get neighbors below and above -- this will change
     if (myport + 1 <= maxport) {
-        peers.push_back(Peer(QHostAddress::LocalHost, myport+1));
+        ChatDialog::updatePeerList(QHostAddress::LocalHost, myport+1);
     }
     if (myport - 1 >= minport) {
-        peers.push_back(Peer(QHostAddress::LocalHost, myport-1));
+        ChatDialog::updatePeerList(QHostAddress::LocalHost, myport-1);
     }
 }
 
@@ -81,8 +80,14 @@ bool ChatDialog::bind() {
 	return false;
 }
 
-void ChatDialog::addPeer(QHostAddress address, quint32 p) {
-    peers.push_back(Peer(address, p));
+void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
+    std::vector<Peer>::iterator it;
+    for (it = peers.begin(); it != peers.end(); it++) {
+        if ((*it).address == address && (*it).port == port) {
+            return;
+        }
+    }
+    peers.push_back(Peer(address, port));
 }
 
 # pragma mark - Process Incoming Datagrams
@@ -92,7 +97,12 @@ void ChatDialog::processPendingDatagrams() {
     while (socket->hasPendingDatagrams()) {
         QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
-        socket->readDatagram(datagram.data(), datagram.size());
+        QHostAddress sender;
+        quint16 senderPort;
+        socket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        
+        // Update peer list if necessary
+        ChatDialog::updatePeerList(sender, senderPort);
         
         // Deserialize the datapacket
         QMap<QString, QVariant> datapacket;
@@ -101,22 +111,24 @@ void ChatDialog::processPendingDatagrams() {
         
         // Check to see if datagram is a status or chat message
         if (datapacket.contains("Origin")) {
-            processRumorMessage(datapacket);
+            if (processRumorMessage(datapacket)) {
+                rumorMonger(datagram, sender, senderPort);
+            }
         }
         else {
-            processStatusMessage(datapacket);
+            processStatusMessage(datapacket, sender, senderPort);
         }
     }
 }
 
-void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
+bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
     // Check to see if we have already seen this message
     QString origin = datapacket.value("Origin").toString();
     quint32 seqno = datapacket.value("SeqNo").toUInt();
     if (status.contains(origin)) {
         if (status.key(origin).toUInt() == seqno) {
             // We have already seen this message, do not display again
-            return;
+            return false;
         }
     }
     
@@ -124,34 +136,44 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket) {
     QString message = datapacket.value("ChatText").toString();
     textview->append(message);
 
-    // Save the message to peers3
-    
-    // Update status and messages maps
+    // Update status and save the message
     status[origin] = seqno+1;
+    messages.addMessage(origin, seqno, message);
+    
+    return true;
 }
 
-void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket) {
-//    QMap<QString, QVariant> unstatus = datapacket.value("Want").toMap();
-//    QMap<QString, QVariant>::iterator it;
-//    for (it = unstatus.begin(); it != unstatus.end(); it++) {
-//        
-//    }
+void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
+    // Received a status message -- stop the timer
+    mongerTimer->stop();
     
-    
-    
-    // Allow rumor mongering to proceed
-    timeout = true;
+    QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
+    QMap<QString, QVariant>::iterator it;
+    for (it = peerStatus.begin(); it != peerStatus.end(); it++) {
+        // If I have new messages that a peer has not seen - send one of those messages
+        if (peerStatus.value(it.key()).toUInt() < status.value(it.key()).toUInt()) {
+            QString origin = it.key();
+            quint32 seqno = peerStatus.value(origin).toUInt();
+            QString message = messages.getMessage(origin, seqno);
+            QByteArray rumor = serializeMessage(message, origin, seqno);
+            rumorMonger(rumor, sender, senderPort);
+        }
+        
+        // If a peer has new messages that I have not seen - send status message to peer
+        if (peerStatus.value(it.key()).toUInt() > status.value(it.key()).toUInt()) {
+            ChatDialog::sendStatusMessage(sender, senderPort);
+        }
+    }
 }
 
 #pragma mark -
 
-// Serialize textbox text into a QByteArray
-QByteArray ChatDialog::serializeMessage() {
-    QVariant message = QVariant(textbox->toPlainText());
+// Serialize rumor message into a QByteArray
+QByteArray ChatDialog::serializeMessage(QString message, QString origin, quint16 seqno) {
     QMap<QString, QVariant> datapacket;
     datapacket.insert("ChatText", message);
-    datapacket.insert("Origin", hostname);
-    datapacket.insert("SeqNo", messageNo);
+    datapacket.insert("Origin", origin);
+    datapacket.insert("SeqNo", seqno);
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
@@ -161,7 +183,7 @@ QByteArray ChatDialog::serializeMessage() {
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressed() {
     // Serialize the message
-    QByteArray datagram = ChatDialog::serializeMessage();
+    QByteArray datagram = ChatDialog::serializeMessage(textbox->toPlainText(), hostname, messageNo);
     
     // Copy the message into my own chatbox and update status
     textview->append(textbox->toPlainText());
@@ -171,25 +193,21 @@ void ChatDialog::gotReturnPressed() {
     messageNo++;
     textbox->clear();
     
-    // RumorMonger!
-    rumorMonger(datagram);
+    // Rumor monger at a random peer
+    Peer p = peers.at(rand() % peers.size());
+    rumorMonger(datagram, p.address, p.port);
 }
 
-#pragma mark - Rumor Mongering 
+#pragma mark - Rumor Mongering
 
-void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, int port) {
+void ChatDialog::sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port) {
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
-void ChatDialog::sendStatusMessage(QHostAddress address, int port) {
+void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     // Create the message
     QMap<QString, QVariant> statusMessage;
-    QMap<QString, QVariant> wantMessages;
-    QMap<QString, QVariant>::iterator it;
-    for (it = status.begin(); it != status.end(); it++) {
-        wantMessages.insert(it.key(), it.value().toUInt()+1);
-    }
-    statusMessage.insert("Want", wantMessages);
+    statusMessage.insert("Want", status);
     
     // Serialize the message
     QByteArray datagram;
@@ -200,33 +218,17 @@ void ChatDialog::sendStatusMessage(QHostAddress address, int port) {
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
-void ChatDialog::rumorMonger(QByteArray datagram) {
-    int size, selectRand, neighborPort;
-    QHostAddress address;
-    
-    shouldContinueMongering = true;
-    while (shouldContinueMongering) {
-        size = peers.size();
-        selectRand = rand() % size;
-        address = peers.at(selectRand).address;
-        neighborPort = peers.at(selectRand).port;
-        ChatDialog::sendChatMessage(datagram, address, neighborPort);
-
-        // Start the status message timer
-        mongerTimer->start(5000);
-        
-        // Wait for status message or timeout
-        while (!timeout);
-        
-        timeout = false;
-    }
+void ChatDialog::rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port) {
+    ChatDialog::sendChatMessage(datagram, peer, port);
+    mongerTimer->start(5000);
 }
 
 void ChatDialog::mongerTimeout() {
-    shouldContinueMongering = (rand() % 2 == 1);
+    // If "heads", rumor monger a 
+    if (rand() % 2 == 1) {
+        
+    }
     
-    // Allow rumor mongering to proceed
-    timeout = true;
 }
 
 #pragma mark
@@ -241,6 +243,7 @@ int main(int argc, char **argv) {
     dialog.show();
     
     // Display hostname
+    qDebug();
     qDebug() << "My Hostname: " + dialog.hostname;
     qDebug() << "My Port: " + QString::number(dialog.myport);
 

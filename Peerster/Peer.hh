@@ -18,8 +18,8 @@ class Peer {
     
 public:
     QHostAddress address;
-    quint32 port;
-    Peer(QHostAddress a, quint32 p);
+    quint16 port;
+    Peer(QHostAddress a, quint16 p);
 };
 
 #endif /* defined(__Peerster__Peer__) */

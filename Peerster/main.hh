@@ -9,7 +9,7 @@
 #include <QTimer>
 #include <QVector>
 
-#include "Socket.hh"
+#include "Messages.hh"
 #include "Peer.hh"
 #include "Textbox.hh"
 
@@ -19,7 +19,7 @@ class ChatDialog : public QDialog {
 public:
     ChatDialog();
     QString hostname;
-    int myport;
+    quint16 myport;
     QUdpSocket *socket;
     
     public slots:
@@ -28,26 +28,29 @@ public:
     void mongerTimeout();
     
 private:
-    int minport, maxport;
-    bool shouldContinueMongering, timeout;
-    std::vector<Peer> peers;
-    quint32 messageNo;
+    // Chat Dialog Constants
+    quint16 minport, maxport;
     QTextEdit *textview;
     Textbox *textbox;
+    
+    std::vector<Peer> peers;
+    Messages messages;
+    quint32 messageNo;
+    
     QTimer *mongerTimer;
     QMap<QString, QVariant> status;
-    QMap<QString, QVariant> messages;
     
-    void addPeer(QHostAddress address, quint32 p);
+    void updatePeerList(QHostAddress address, quint16 port);
     
     bool bind();
-    QByteArray serializeMessage();
-    void rumorMonger(QByteArray datagram);
-    
-    void sendChatMessage(QByteArray datagram, QHostAddress address, int port);
-    void sendStatusMessage(QHostAddress address, int port);
-    void processRumorMessage(QMap<QString, QVariant> datapacket);
-    void processStatusMessage(QMap<QString, QVariant> datapacket);
+    QByteArray serializeMessage(QString message, QString origin, quint16 seqno);
+
+    // Rumor Mongering methods
+    void rumorMonger(QByteArray datagram, QHostAddress peer, quint16 port);
+    void sendChatMessage(QByteArray datagram, QHostAddress address, quint16 port);
+    void sendStatusMessage(QHostAddress address, quint16 port);
+    bool processRumorMessage(QMap<QString, QVariant> datapacket);
+    void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     
 };
 

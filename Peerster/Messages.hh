@@ -10,8 +10,9 @@ private:
     QMap<QString, QMap<quint32, QString> > seenMessages;
     
 public:
-    Messages();
-    void addMessage(QString origin, quint32 messageNo, QString message);
+    Messages() {};
+    void addMessage(QString origin, quint32 seqno, QString message);
+    QString getMessage(QString origin, quint32 seqno);
 };
 
 #endif /* defined(__Peerster__Messages__) */
