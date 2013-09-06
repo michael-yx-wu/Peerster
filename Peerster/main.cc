@@ -15,8 +15,8 @@
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
-    qDebug() << QHostInfo::localDomainName();
-    QHostInfo::lookupHost(QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
+//    qDebug() << QHostInfo::localDomainName();
+    QHostInfo::lookupHost(QHostInfo::localHostName()+QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
     sleep(5);
 	
     // Create and add widgets to our ChatDialog
