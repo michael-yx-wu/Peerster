@@ -14,7 +14,6 @@
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
-    srand(time(NULL));
     hostname = QHostInfo::localHostName(); QString::number(rand()) + QString::number(rand());
 
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
@@ -348,6 +347,7 @@ void ChatDialog::antiEntropyTimeout() {
 #pragma mark
 
 int main(int argc, char **argv) {
+    srand(time(NULL));
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
     
