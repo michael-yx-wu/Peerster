@@ -29,6 +29,7 @@ public:
     public slots:
     void antiEntropyTimeout();
     void gotReturnPressed();
+    void gotReturnPressedHostBox();
     void mongerTimeout();
     void processPendingDatagrams();
     void lookupHostResults(const QHostInfo &host);
@@ -41,6 +42,7 @@ private:
     quint16 minport, maxport;
     QTextEdit *textview;
     Textbox *chatbox;
+    Textbox *addHostBox;
     
     std::vector<Peer> peers;
     std::vector<QHostAddress> foundAddresses;

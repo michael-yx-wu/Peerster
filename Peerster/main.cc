@@ -17,6 +17,7 @@ ChatDialog::ChatDialog() {
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
     
+    // 
     QEventLoop loop;
     connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
     QHostInfo::lookupHost(QHostInfo::localHostName()+"."+QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
@@ -28,9 +29,11 @@ ChatDialog::ChatDialog() {
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
 	chatbox = new Textbox(this);
+    addHostBox = new Textbox(this);
 	QVBoxLayout *layout = new QVBoxLayout();
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
+    layout->addWidget(addHostBox);
 	setLayout(layout);
     chatbox->setFocus();
     
@@ -48,20 +51,21 @@ ChatDialog::ChatDialog() {
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
     mongerTimer->setSingleShot(true);
-//    antiEntropyTimer->start(5000);
+    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
+    connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
     connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
 
     // Add the ports in my port range to my peer list
-//    for (int i = minport; i <= maxport; i++) {
-//        if (i != myport) {
-//            ChatDialog::updatePeerList(QHostAddress::LocalHost, i);
-//        }
-//    }
+    for (int i = minport; i <= maxport; i++) {
+        if (i != myport) {
+            ChatDialog::updatePeerList(QHostAddress::LocalHost, i);
+        }
+    }
 }
 
 // Attempt to bind to a UDP port in range
@@ -124,7 +128,7 @@ void ChatDialog::myIPResults(const QHostInfo &host) {
         qDebug() << "Found address: " << address;
         myIP.setAddress(address.toIPv4Address());
         emit lookupDone();
-        return;
+        break;
     }
 }
 
@@ -303,6 +307,10 @@ void ChatDialog::gotReturnPressed() {
     if (peers.size() == 0) return;
     Peer p = peers.at(rand() % peers.size());
     rumorMonger(message, p.address, p.port);
+}
+
+void ChatDialog::gotReturnPressedHostBox() {
+    resolvePeer(chatbox->toPlainText());
 }
 
 #pragma mark - Rumor Mongering
