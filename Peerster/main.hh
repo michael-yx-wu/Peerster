@@ -23,6 +23,8 @@ public:
     quint16 myport;
     QUdpSocket *socket;
     
+    void resolvePeer(QString hostPort);
+    
     public slots:
     void antiEntropyTimeout();
     void gotReturnPressed();
@@ -33,7 +35,7 @@ private:
     // Chat Dialog Constants
     quint16 minport, maxport;
     QTextEdit *textview;
-    Textbox *textbox;
+    Textbox *chatbox;
     
     std::vector<Peer> peers;
     Messages messages;
@@ -48,17 +50,14 @@ private:
     // Anti-Entropy
     QTimer *antiEntropyTimer;
     
-    void updatePeerList(QHostAddress address, quint16 port);
-    
     bool bind();
-    
-    // Rumor Mongering methods
+    bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
+    void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
     void rumorMonger(Message message, QHostAddress address, quint16 port);
     void sendChatMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
-    bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
-    void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
+    void updatePeerList(QHostAddress address, quint16 port);
     
 };
 

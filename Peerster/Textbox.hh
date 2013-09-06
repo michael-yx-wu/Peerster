@@ -1,11 +1,3 @@
-//
-//  Textbox.h
-//  Peerster
-//
-//  Created by Michael Wu on 8/31/13.
-//
-//
-
 #ifndef __Peerster__Textbox__
 #define __Peerster__Textbox__
 
@@ -22,6 +14,9 @@ private:
     
 public:
     Textbox(QWidget *parent = 0) : QTextEdit(parent) {
+        QFontMetrics m (font());
+        int rowHeight = m.lineSpacing();
+        setFixedHeight(3*rowHeight);
         shift = false;
     };
     void keyPressEvent(QKeyEvent *event);
