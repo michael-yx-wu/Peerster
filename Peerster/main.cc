@@ -277,6 +277,7 @@ void ChatDialog::gotReturnPressed() {
     chatbox->clear();
     
     // Rumor monger at a random peer
+    if (peers.size() == 0) return;
     Peer p = peers.at(rand() % peers.size());
     rumorMonger(message, p.address, p.port);
 }
@@ -305,6 +306,7 @@ void ChatDialog::mongerTimeout() {
 
 void ChatDialog::antiEntropyTimeout() {
     qDebug() << "Anti-Entropy timeout";
+    if (peers.size() == 0) return;
     Peer p = peers.at(rand() % peers.size());
     ChatDialog::sendStatusMessage(p.address, p.port);
 }
