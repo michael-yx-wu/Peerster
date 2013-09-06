@@ -90,6 +90,8 @@ void ChatDialog::resolvePeer(QString hostPort) {
         connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
         QHostInfo::lookupHost(host, this, SLOT(lookupHostResults(QHostInfo)));
         loop.exec();
+        updatePeerList(foundAddresses.front(), port);
+        foundAddresses.clear();
     }
 }
 
