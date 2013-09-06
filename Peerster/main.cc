@@ -86,19 +86,23 @@ void ChatDialog::resolvePeer(QString hostPort) {
     }
     else {
         qDebug() << "Doing DNS lookup";
-        QHostInfo::lookupHost(host, this, SLOT(lookupHostResults(QHostInfo, port)));
+        QEventLoop loop;
+        connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
+        QHostInfo::lookupHost(host, this, SLOT(lookupHostResults(QHostInfo)));
+        loop.exec();
     }
 }
 
-void ChatDialog::lookupHostResults(const QHostInfo &host, const quint16 port) {
+void ChatDialog::lookupHostResults(const QHostInfo &host) {
     if (host.error() != QHostInfo::NoError) {
         qDebug() << "Lookup failed: " << host.errorString();
         return;
     }
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;
-        updatePeerList(address, port);
+        foundAddresses.push_back(address);
     }
+    emit ChatDialog::lookupDone();
 }
 
 void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {

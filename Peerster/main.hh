@@ -30,7 +30,9 @@ public:
     void gotReturnPressed();
     void mongerTimeout();
     void processPendingDatagrams();
-    void lookupHostResults(const QHostInfo &host, const quint16 port);
+    void lookupHostResults(const QHostInfo &host);
+signals:
+    void lookupDone();
     
 private:
     // Chat Dialog Constants
@@ -39,6 +41,7 @@ private:
     Textbox *chatbox;
     
     std::vector<Peer> peers;
+    std::vector<QHostAddress> foundAddresses;
     Messages messages;
     quint32 messageNo;
     
