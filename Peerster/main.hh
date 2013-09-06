@@ -21,6 +21,7 @@ public:
     ChatDialog();
     QString hostname;
     quint16 myport;
+    QHostAddress myIP;
     QUdpSocket *socket;
     
     void resolvePeer(QString hostPort);
@@ -31,6 +32,7 @@ public:
     void mongerTimeout();
     void processPendingDatagrams();
     void lookupHostResults(const QHostInfo &host);
+    void myIPResults(const QHostInfo &host);
 signals:
     void lookupDone();
     

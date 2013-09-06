@@ -14,7 +14,9 @@
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
-    hostname = QHostInfo::localHostName() + QString::number((quint32)getpid());
+    hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
+    QHostInfo::lookupHost(QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
+    sleep(4);
 	
     // Create and add widgets to our ChatDialog
     setWindowTitle(hostname);
@@ -60,9 +62,8 @@ ChatDialog::ChatDialog() {
 // Attempt to bind to a UDP port in range
 bool ChatDialog::bind() {
     for (int p = minport; p <= maxport; p++) {
-        if (socket->bind(QHostAddress::LocalHost, p)) {
-            QHostAddress a = QHostAddress::LocalHost;
-            qDebug() << "My IP:" << a.toString();
+        if (socket->bind(myIP, p)) {
+            qDebug() << "My IP:" << myIP;
             myport = p;
             return true;
         }
@@ -83,7 +84,6 @@ void ChatDialog::resolvePeer(QString hostPort) {
     QString host = hostPort.left(indexOfColon);
     QHostAddress hostIP = QHostAddress(host);
     quint16 port = hostPort.mid(indexOfColon+1).toUInt();
-    qDebug() << "Adding: " << hostIP << "Port: " << port;
     if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
         updatePeerList(hostIP, port);
     }
@@ -108,6 +108,18 @@ void ChatDialog::lookupHostResults(const QHostInfo &host) {
         foundAddresses.push_back(address);
     }
     emit ChatDialog::lookupDone();
+}
+
+void ChatDialog::myIPResults(const QHostInfo &host) {
+    if (host.error() != QHostInfo::NoError) {
+        qDebug() << "Lookup failed: " << host.errorString();
+        return;
+    }
+    foreach (const QHostAddress &address, host.addresses()) {
+        qDebug() << "Found address: " << address;
+        myIP = address;
+        return;
+    }
 }
 
 void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
