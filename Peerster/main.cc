@@ -68,7 +68,7 @@ bool ChatDialog::bind() {
             return true;
         }
     }
-    
+    qDebug() << "My IP:" << myIP;    
     qDebug() << "Oops, no ports in my default range " << minport << "-" << maxport << " available";
 	return false;
 }
