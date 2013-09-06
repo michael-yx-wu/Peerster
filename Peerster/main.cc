@@ -61,6 +61,7 @@ ChatDialog::ChatDialog() {
 bool ChatDialog::bind() {
     for (int p = minport; p <= maxport; p++) {
         if (socket->bind(QHostAddress::LocalHost, p)) {
+            qDebug() << "My IP:" << QHostAddress::LocalHost;
             myport = p;
             return true;
         }
