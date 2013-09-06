@@ -310,7 +310,8 @@ void ChatDialog::gotReturnPressed() {
 }
 
 void ChatDialog::gotReturnPressedHostBox() {
-    resolvePeer(chatbox->toPlainText());
+    resolvePeer(addHostBox->toPlainText());
+    addHostBox->clear();
 }
 
 #pragma mark - Rumor Mongering
