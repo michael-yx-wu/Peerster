@@ -15,9 +15,13 @@
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
-    qDebug() << QHostInfo::localDomainName();
+    qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
+    
+    QEventLoop loop;
+    connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
     QHostInfo::lookupHost(QHostInfo::localHostName()+"."+QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
-    sleep(5);
+    loop.exec();
+    while (loop.isRunning());
 	
     // Create and add widgets to our ChatDialog
     setWindowTitle(hostname);
@@ -119,6 +123,7 @@ void ChatDialog::myIPResults(const QHostInfo &host) {
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;
         myIP.setAddress(address.toIPv4Address());
+        emit lookupDone();
         return;
     }
 }
