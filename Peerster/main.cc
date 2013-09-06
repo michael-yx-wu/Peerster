@@ -77,7 +77,7 @@ void ChatDialog::resolvePeer(QString hostPort) {
         return;
     }
     
-    QString host = hostPort.left(indexOfColon+1);
+    QString host = hostPort.left(indexOfColon);
     QHostAddress hostIP = QHostAddress(host);
     qDebug() << "Host: " << host;
     if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
