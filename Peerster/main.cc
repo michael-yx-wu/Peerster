@@ -50,11 +50,11 @@ ChatDialog::ChatDialog() {
     connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
 
     // Add the ports in my port range to my peer list
-    for (int i = minport; i <= maxport; i++) {
-        if (i != myport) {
-            ChatDialog::updatePeerList(QHostAddress::LocalHost, i);
-        }
-    }
+//    for (int i = minport; i <= maxport; i++) {
+//        if (i != myport) {
+//            ChatDialog::updatePeerList(QHostAddress::LocalHost, i);
+//        }
+//    }
 }
 
 // Attempt to bind to a UDP port in range
@@ -81,11 +81,9 @@ void ChatDialog::resolvePeer(QString hostPort) {
     QHostAddress hostIP = QHostAddress(host);
     quint16 port = hostPort.mid(indexOfColon+1).toUInt();
     if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
-        qDebug() << "Adding to peer list: " << hostIP << ":" << QString::number(port);
         updatePeerList(hostIP, port);
     }
     else {
-        qDebug() << "Doing DNS lookup";
         QEventLoop loop;
         connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
         QHostInfo::lookupHost(host, this, SLOT(lookupHostResults(QHostInfo)));
@@ -114,7 +112,7 @@ void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
             return;
         }
     }
-    qDebug() << "Adding peer: " << port;
+    qDebug() << "Adding : " << address << " port: " << port;
     peers.push_back(Peer(address, port));
 }
 
