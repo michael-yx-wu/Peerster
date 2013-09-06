@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QTextCodec>
 #include <QMap>
-#include <sys/time.h>
+#include <time.h>
 
 #include "main.hh"
 
