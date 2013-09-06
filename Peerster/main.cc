@@ -16,7 +16,7 @@ ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
     QHostInfo::lookupHost(QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
-    sleep(4);
+    sleep(5);
 	
     // Create and add widgets to our ChatDialog
     setWindowTitle(hostname);
@@ -117,7 +117,7 @@ void ChatDialog::myIPResults(const QHostInfo &host) {
     }
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;
-        myIP = address;
+        myIP.setAddress(address.toIPv4Address());
         return;
     }
 }
