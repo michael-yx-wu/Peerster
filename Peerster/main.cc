@@ -41,7 +41,7 @@ ChatDialog::ChatDialog() {
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
     mongerTimer->setSingleShot(true);
-    antiEntropyTimer->start(5000);
+//    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
@@ -82,6 +82,7 @@ void ChatDialog::resolvePeer(QString hostPort) {
     QString host = hostPort.left(indexOfColon);
     QHostAddress hostIP = QHostAddress(host);
     quint16 port = hostPort.mid(indexOfColon+1).toUInt();
+    qDebug() << "Adding: " << hostIP << "Port: " << port;
     if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
         updatePeerList(hostIP, port);
     }
