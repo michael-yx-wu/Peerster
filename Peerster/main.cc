@@ -183,9 +183,9 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     // Received a status message -- stop the timer
     mongerTimer->stop();
     qDebug() << "Stopping monger timer... ";
-    QString origin;
-    quint32 seqno;
-    QString chatText;
+    QString origin = "";
+    quint32 seqno = -1;
+    QString chatText = "";
     Message message;
     bool mongerRumor = false, sendStatus = false;
     
