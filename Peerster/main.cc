@@ -81,8 +81,8 @@ void ChatDialog::resolvePeer(QString hostPort) {
     QHostAddress hostIP = QHostAddress(host);
     qDebug() << "Host: " << host;
     if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
-        qDebug() << "Valid IP address. Adding to peer list: " << hostIP << ":" << host.mid(indexOfColon);
-        updatePeerList(hostIP, host.mid(indexOfColon).toUInt());
+        qDebug() << "Valid IP address. Adding to peer list: " << hostIP << ":" << hostPort.mid(indexOfColon+1);
+        updatePeerList(hostIP, hostPort.mid(indexOfColon+1).toUInt());
     }
     else {
         qDebug() << "Not a valid IP address. Doing DNS lookup";
