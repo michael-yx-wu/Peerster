@@ -28,8 +28,9 @@ public:
     public slots:
     void antiEntropyTimeout();
     void gotReturnPressed();
-    void processPendingDatagrams();
     void mongerTimeout();
+    void processPendingDatagrams();
+    void lookupHostResults(const QHostInfo &host, const quint16 port);
     
 private:
     // Chat Dialog Constants
