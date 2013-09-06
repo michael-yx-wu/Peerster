@@ -78,8 +78,9 @@ void ChatDialog::resolvePeer(QString hostPort) {
     }
     
     QString host = hostPort.left(indexOfColon+1);
-    QHostAddress hostIP;
-    if (hostIP.setAddress(host)) {
+    QHostAddress hostIP = QHostAddress(host);
+    qDebug() << "Host: " << host;
+    if (QAbstractSocket::IPv4Protocol == hostIP.protocol()) {
         qDebug() << "Valid IP address. Adding to peer list: " << hostIP << ":" << host.mid(indexOfColon);
         updatePeerList(hostIP, host.mid(indexOfColon).toUInt());
     }
