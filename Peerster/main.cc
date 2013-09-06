@@ -14,7 +14,7 @@
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
-    hostname = QHostInfo::localHostName(); QString::number(rand()) + QString::number(rand());
+    hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
 
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
     
