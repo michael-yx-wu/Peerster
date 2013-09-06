@@ -73,6 +73,7 @@ bool ChatDialog::bind() {
 }
 
 void ChatDialog::resolvePeer(QString hostPort) {
+    qDebug() << "Starting resolving process";
     int indexOfColon = hostPort.indexOf(":");
     if (indexOfColon == -1) {
         qDebug() << "Not adding peer. Bad format: " << hostPort;
