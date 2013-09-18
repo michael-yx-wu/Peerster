@@ -16,4 +16,4 @@ public:
     QString getMessage(QString origin, quint32 seqno);
 };
 
-#endif /* defined(__Peerster__Messages__) */
+#endif

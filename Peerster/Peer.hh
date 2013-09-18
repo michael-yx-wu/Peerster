@@ -15,4 +15,4 @@ public:
     Peer(QHostAddress a, quint16 p);
 };
 
-#endif /* defined(__Peerster__Peer__) */
+#endif

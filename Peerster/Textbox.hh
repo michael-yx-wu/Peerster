@@ -25,4 +25,4 @@ signals:
     void enterPressed();
 };
 
-#endif /* defined(__Peerster__Textbox__) */
+#endif

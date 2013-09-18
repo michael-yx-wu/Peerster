@@ -18,7 +18,6 @@ ChatDialog::ChatDialog() {
 
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
     
-    // 
     QEventLoop loop;
     connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
     QHostInfo::lookupHost(QHostInfo::localHostName()+"."+QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
@@ -117,7 +116,7 @@ void ChatDialog::lookupHostResults(const QHostInfo &host) {
         qDebug() << "Found address: " << address;
         foundAddresses.push_back(address);
     }
-    emit ChatDialog::lookupDone();
+    emit lookupDone();
 }
 
 void ChatDialog::myIPResults(const QHostInfo &host) {
@@ -193,6 +192,9 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         ChatDialog::sendStatusMessage(sender, senderPort);
         return false;
     }
+    
+    // Update my DSDV routing table
+    updateRoutingTable(origin, sender, senderPort);
     
     // Display the new message
     QString message = datapacket.value("ChatText").toString();
@@ -344,10 +346,18 @@ void ChatDialog::antiEntropyTimeout() {
     ChatDialog::sendStatusMessage(p.address, p.port);
 }
 
+#pragma mark - Routing
+
+void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint16 port) {
+    qDebug() << "Updating Routing Table - Origin: " << origin << "Sender & Port: " << address << " " << port;
+    routingTable.insert(origin, qMakePair(address, port));
+}
+
 #pragma mark
 
 int main(int argc, char **argv) {
     srand(time(NULL));
+
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
     

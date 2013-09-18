@@ -19,9 +19,9 @@ class ChatDialog : public QDialog {
     
 public:
     ChatDialog();
-    QString hostname;
     quint16 myport;
     QHostAddress myIP;
+    QString hostname;
     QUdpSocket *socket;
     
     void resolvePeer(QString hostPort);
@@ -30,10 +30,11 @@ public:
     void antiEntropyTimeout();
     void gotReturnPressed();
     void gotReturnPressedHostBox();
-    void mongerTimeout();
-    void processPendingDatagrams();
     void lookupHostResults(const QHostInfo &host);
+    void mongerTimeout();
     void myIPResults(const QHostInfo &host);
+    void processPendingDatagrams();
+
 signals:
     void lookupDone();
     
@@ -41,8 +42,8 @@ private:
     // Chat Dialog Constants
     quint16 minport, maxport;
     QTextEdit *textview;
-    Textbox *chatbox;
     Textbox *addHostBox;
+    Textbox *chatbox;
     
     std::vector<Peer> peers;
     std::vector<QHostAddress> foundAddresses;
@@ -58,6 +59,9 @@ private:
     // Anti-Entropy
     QTimer *antiEntropyTimer;
     
+    // Routing
+    QMap<QString, QPair<QHostAddress, quint16> > routingTable;
+    
     bool bind();
     bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
@@ -66,7 +70,7 @@ private:
     void sendChatMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
-    
+    void updateRoutingTable(QString origin, QHostAddress address, quint16 port);
 };
 
-#endif // PEERSTER_MAIN_HH
+#endif

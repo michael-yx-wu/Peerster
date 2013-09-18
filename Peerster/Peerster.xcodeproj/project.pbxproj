@@ -26,7 +26,7 @@
 		37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Textbox.cpp; sourceTree = SOURCE_ROOT; };
 		39F21E01BF99D77BE75B0832 /* Textbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
-		4C29474217D8C5F700AC255C /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C3173A717E93AED002ABADC /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		790A68ED394F84241507598D /* Textbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
 		86B358F2BF0DDAE13C0D59AB /* Message.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cc; sourceTree = SOURCE_ROOT; };
@@ -62,7 +62,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4C29474317D8C5F700AC255C /* Products */,
+				4C3173A817E93AED002ABADC /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -76,10 +76,10 @@
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4C29474317D8C5F700AC255C /* Products */ = {
+		4C3173A817E93AED002ABADC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C29474217D8C5F700AC255C /* Peerster.app */,
+				4C3173A717E93AED002ABADC /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,7 +145,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4C29474217D8C5F700AC255C /* Peerster.app */;
+			productReference = 4C3173A717E93AED002ABADC /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -164,7 +164,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4C29474317D8C5F700AC255C /* Products */;
+			productRefGroup = 4C3173A817E93AED002ABADC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

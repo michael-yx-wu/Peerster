@@ -25,4 +25,4 @@ public:
     
 };
 
-#endif /* defined(__Peerster__Message__) */
+#endif
