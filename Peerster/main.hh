@@ -41,10 +41,10 @@ signals:
     
 private:
     // Standard Map Keys
-    const QString xOrigin = "Origin";
-    const QString xSeqNo = "SeqNo";
-    const QString xChatText = "ChatText";
-    const QString xWant = "Want";
+    static const QString xOrigin;
+    static const QString xSeqNo;
+    static const QString xChatText;
+    static const QString xWant;
     
     // Chat Dialog Constants
     quint16 minport, maxport;

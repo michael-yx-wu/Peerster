@@ -11,6 +11,11 @@
 
 #pragma mark - Setup
 
+const QString ChatDialog::xOrigin = "Origin";
+const QString ChatDialog::xSeqNo = "SeqNo";
+const QString ChatDialog::xChatText = "ChatText";
+const QString ChatDialog::xWant = "Want";
+
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
