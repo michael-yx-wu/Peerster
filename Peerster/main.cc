@@ -268,8 +268,13 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
 }
 
-void ChatDialog::sendChatMessage(Message message, QHostAddress address, quint16 port) {
-    qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
+void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
+    if (message.getMessage() != NULL) {
+        qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
+    }
+    else {
+        qDebug() << "Rumor Message to: " + address.toString() + " Port: " + QString::number(port);
+    }
     QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
@@ -320,7 +325,7 @@ void ChatDialog::gotReturnPressedHostBox() {
 #pragma mark - Rumor Mongering
 
 void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
-    ChatDialog::sendChatMessage(message, address, port);
+    ChatDialog::sendMessage(message, address, port);
     // Update the last sent messages to my peers
     lastSentMessages[address.toString()] = message;
     lastTarget = Peer(address, port);
@@ -347,6 +352,11 @@ void ChatDialog::antiEntropyTimeout() {
 }
 
 #pragma mark - Routing
+
+//void ChatDialog::sendRouteMessage(Message message, QHostAddress address, quint16 port) {
+//    qDebug() << "Route Message to: " + address.toString() + " Port: " + QString::number(port);
+//    QByteArray
+//}
 
 void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "Updating Routing Table - Origin: " << origin << "Sender & Port: " << address << " " << port;

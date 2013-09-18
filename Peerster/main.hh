@@ -67,7 +67,7 @@ private:
     void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
     void rumorMonger(Message message, QHostAddress address, quint16 port);
-    void sendChatMessage(Message message, QHostAddress address, quint16 port);
+    void sendMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
     void updateRoutingTable(QString origin, QHostAddress address, quint16 port);

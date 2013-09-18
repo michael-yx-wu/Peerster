@@ -1,8 +1,18 @@
 #include "Message.hh"
 
-QByteArray Message::serializeMessage() {
+QByteArray Message::serializeChatMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert("ChatText", message);
+    datapacket.insert("Origin", origin);
+    datapacket.insert("SeqNo", seqno);
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+    return datagram;
+}
+
+QByteArray Message::serializeRouteMessage() {
+    QMap<QString, QVariant> datapacket;
     datapacket.insert("Origin", origin);
     datapacket.insert("SeqNo", seqno);
     QByteArray datagram;

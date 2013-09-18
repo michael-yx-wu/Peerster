@@ -11,12 +11,18 @@ private:
     quint32 seqno;
     QString message;
     QByteArray serializedMessage;
-    QByteArray serializeMessage();
+    QByteArray serializeChatMessage();
+    QByteArray serializeRouteMessage();
     
 public:
     Message() {};
-    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) : origin(someOrigin), seqno(someSeqno), message(someMessage) {
-        serializedMessage = serializeMessage();
+    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage = NULL) : origin(someOrigin), seqno(someSeqno), message(someMessage) {
+        if (someMessage != NULL) {
+            serializedMessage = serializeChatMessage();
+        }
+        else {
+            serializedMessage = serializeRouteMessage();
+        }
     };
     QString getOrigin();
     quint32 getSeqno();
@@ -25,4 +31,4 @@ public:
     
 };
 
-#endif
+#endif /* defined(__Peerster__Message__) */
