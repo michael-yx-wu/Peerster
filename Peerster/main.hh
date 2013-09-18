@@ -34,11 +34,18 @@ public:
     void mongerTimeout();
     void myIPResults(const QHostInfo &host);
     void processPendingDatagrams();
+    void routeMonger();
 
 signals:
     void lookupDone();
     
 private:
+    // Standard Map Keys
+    QString xOrigin = "Origin";
+    QString xSeqNo = "SeqNo";
+    QString xChatText = "ChatText";
+    QString xWant = "Want";
+    
     // Chat Dialog Constants
     quint16 minport, maxport;
     QTextEdit *textview;
@@ -61,6 +68,7 @@ private:
     
     // Routing
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
+    QTimer *routingTimer;
     
     bool bind();
     bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);

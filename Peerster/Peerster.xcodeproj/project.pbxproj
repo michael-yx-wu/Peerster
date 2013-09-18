@@ -154,7 +154,7 @@
 		91B15E841AA80083484172DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Peerster" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -229,7 +229,6 @@
 		4B72B24813252891014BCF61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
@@ -258,6 +257,7 @@
 					/opt/X11/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-pipe",
 					"-O2",
@@ -316,7 +316,6 @@
 		D70590BEB531B51029F711BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,

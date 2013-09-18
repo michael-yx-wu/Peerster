@@ -36,3 +36,11 @@ QString Message::getMessage() {
 QByteArray Message::getSerializedMessage() {
     return serializedMessage;
 }
+
+bool Message::isChatMessage() {
+    return message != NULL;
+}
+
+bool Message::isRouteMessage() {
+    return message == NULL;
+}

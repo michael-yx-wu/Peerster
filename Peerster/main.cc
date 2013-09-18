@@ -15,7 +15,6 @@
 ChatDialog::ChatDialog() {
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
-
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
     
     QEventLoop loop;
@@ -50,8 +49,8 @@ ChatDialog::ChatDialog() {
     // Create timers
     mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
+    routingTimer = new QTimer(this);
     mongerTimer->setSingleShot(true);
-    antiEntropyTimer->start(5000);
     
 	// Connect signals to their appropriate slots
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
@@ -59,6 +58,11 @@ ChatDialog::ChatDialog() {
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
     connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+    connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
+    
+    // Start timers
+    antiEntropyTimer->start(5000);
+    routingTimer->start(5000);//change to once per minute
 
     // Add the ports in my port range to my peer list
     for (int i = minport; i <= maxport; i++) {
@@ -162,12 +166,12 @@ void ChatDialog::processPendingDatagrams() {
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
         
-        // Check to see if datagram is a status or chat message
-        if (datapacket.contains("Origin")) {
+        // Check to see if datagram is a status or chat/route message
+        if (datapacket.contains(xOrigin)) {
             if (processRumorMessage(datapacket, sender, senderPort)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                Message message = Message(datapacket.value("Origin").toString(), datapacket.value("SeqNo").toUInt(), datapacket.value("ChatText").toString());
+                Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString());
                 rumorMonger(message, p.address, p.port);
             }
         }
@@ -179,8 +183,8 @@ void ChatDialog::processPendingDatagrams() {
 
 bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Check to see if we have already seen this message
-    QString origin = datapacket.value("Origin").toString();
-    quint32 seqno = datapacket.value("SeqNo").toUInt();
+    QString origin = datapacket.value(xOrigin).toString();
+    quint32 seqno = datapacket.value(xSeqNo).toUInt();
     if (messages.hasMessage(origin, seqno)) {
         return false;
     }
@@ -196,9 +200,12 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     // Update my DSDV routing table
     updateRoutingTable(origin, sender, senderPort);
     
-    // Display the new message
-    QString message = datapacket.value("ChatText").toString();
-    textview->append(message);
+    // Display the new message if ChatText exists
+    QString message = NULL;
+    if (datapacket.contains(xChatText)) {
+        message = datapacket.value(xChatText).toString();
+        textview->append(message);
+    }
 
     // Update status and save the message
     status[origin] = seqno+1;
@@ -213,11 +220,11 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     qDebug() << "Stopping monger timer... ";
     QString origin = "";
     quint32 seqno = -1;
-    QString chatText = "";
+    QString chatText = NULL;
     Message message;
     bool mongerRumor = false, sendStatus = false;
     
-    QMap<QString, QVariant> peerStatus = datapacket.value("Want").toMap();
+    QMap<QString, QVariant> peerStatus = datapacket.value(xWant).toMap();
     QMap<QString, QVariant>::iterator it;
     
     // Compare my status against the peer status
@@ -282,7 +289,7 @@ void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port
 void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     // Create the message
     QMap<QString, QVariant> statusMessage;
-    statusMessage.insert("Want", status);
+    statusMessage.insert(xWant, status);
     
     // Serialize the message
     QByteArray datagram;
@@ -353,10 +360,17 @@ void ChatDialog::antiEntropyTimeout() {
 
 #pragma mark - Routing
 
-//void ChatDialog::sendRouteMessage(Message message, QHostAddress address, quint16 port) {
-//    qDebug() << "Route Message to: " + address.toString() + " Port: " + QString::number(port);
-//    QByteArray
-//}
+// Monger route message to a random peer
+void ChatDialog::routeMonger() {
+    qDebug() << "Route Mongering!";
+    Message message = Message(hostname, messageNo);
+    status[hostname] = ++messageNo;
+    
+    // Rumor monger at a random peer
+    if (peers.size() == 0) return;
+    Peer p = peers.at(rand() % peers.size());
+    rumorMonger(message, p.address, p.port);
+}
 
 void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "Updating Routing Table - Origin: " << origin << "Sender & Port: " << address << " " << port;

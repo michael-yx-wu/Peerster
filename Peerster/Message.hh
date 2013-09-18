@@ -28,6 +28,8 @@ public:
     quint32 getSeqno();
     QString getMessage();
     QByteArray getSerializedMessage();
+    bool isChatMessage();
+    bool isRouteMessage();
     
 };
 
