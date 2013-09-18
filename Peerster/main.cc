@@ -63,7 +63,7 @@ ChatDialog::ChatDialog() {
     // Start timers
     antiEntropyTimer->start(5000);
     routingTimer->start(5000);//change to once per minute
-
+    
     // Add the ports in my port range to my peer list
     for (int i = minport; i <= maxport; i++) {
         if (i != myport) {
@@ -81,7 +81,7 @@ bool ChatDialog::bind() {
             return true;
         }
     }
-    qDebug() << "My IP:" << myIP;    
+    qDebug() << "My IP:" << myIP;
     qDebug() << "Oops, no ports in my default range " << minport << "-" << maxport << " available";
 	return false;
 }
@@ -206,11 +206,11 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         message = datapacket.value(xChatText).toString();
         textview->append(message);
     }
-
+    
     // Update status and save the message
     status[origin] = seqno+1;
     messages.addMessage(origin, seqno, message);
-
+    
     return true;
 }
 
@@ -262,7 +262,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
             break;
         }
     }
-
+    
     if (mongerRumor) {
         qDebug() << "Message requested: " << origin << " " << seqno << " " << chatText;
         message = Message(origin, seqno, chatText);
@@ -349,7 +349,7 @@ void ChatDialog::mongerTimeout() {
     }
 }
 
-#pragma mark - Anti-entropy 
+#pragma mark - Anti-entropy
 
 void ChatDialog::antiEntropyTimeout() {
     qDebug() << "Anti-Entropy timeout";
@@ -381,7 +381,7 @@ void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint1
 
 int main(int argc, char **argv) {
     srand(time(NULL));
-
+    
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
     
