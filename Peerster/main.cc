@@ -63,7 +63,7 @@ ChatDialog::ChatDialog() {
     // Add the ports in my port range to my peer list
     for (int i = minport; i <= maxport; i++) {
         if (i != myport) {
-            ChatDialog::updatePeerList(QHostAddress::LocalHost, i);
+            ChatDialog::updatePeerList(myIP, i);
         }
     }
 }
