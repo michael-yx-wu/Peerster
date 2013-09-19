@@ -16,7 +16,6 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
         originList->addWidget(originButton);
-        delete originButton;
     }
     originMap.insert(origin, qMakePair(address, port));
 }
