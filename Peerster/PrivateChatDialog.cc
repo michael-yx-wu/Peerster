@@ -2,8 +2,6 @@
 
 PrivateChatDialog::PrivateChatDialog(QString destName) {
     destinationName = destName;
-    
-    setWindowTitle("Private Chat with " + destinationName);
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Textbox(this);
@@ -11,8 +9,11 @@ PrivateChatDialog::PrivateChatDialog(QString destName) {
     layout = new QGridLayout();
     layout->addWidget(textview);
     layout->addWidget(chatbox);
-    setLayout(layout);
     chatbox->setFocus();
+    
+    setAttribute(Qt::WA_DeleteOnClose);
+    setLayout(layout);
+    setWindowTitle("Private Chat with " + destinationName);
 }
 
 PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort) {
@@ -20,7 +21,6 @@ PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quin
     destinationIP = destIP;
     destinationPort = destPort;
     
-    setWindowTitle("Private Chat with " + destinationName);
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Textbox(this);
@@ -28,14 +28,26 @@ PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quin
     layout = new QGridLayout();
     layout->addWidget(textview);
     layout->addWidget(chatbox);
-    setLayout(layout);
     chatbox->setFocus();
+    
+    setAttribute(Qt::WA_DeleteOnClose);
+    setLayout(layout);
+    setWindowTitle("Private Chat with " + destinationName);
 }
 
 PrivateChatDialog::~PrivateChatDialog() {
     delete textview;
     delete chatbox;
     delete layout;
+}
+
+void PrivateChatDialog::closeEvent(QCloseEvent *event) {
+    emit privateChatClosed();
+    QDialog::closeEvent(event);
+}
+
+QString PrivateChatDialog::getDestinationName() {
+    return destinationName;
 }
 
 void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {

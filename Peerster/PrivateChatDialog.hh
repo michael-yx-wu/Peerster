@@ -16,7 +16,13 @@ public:
     PrivateChatDialog(QString destName);
     PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort);
     ~PrivateChatDialog();
+    void closeEvent(QCloseEvent *event);
+    QString getDestinationName();
     void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
+    
+signals:
+    void privateChatClosed();
+    
 private:
     quint16 destinationPort;
     QGridLayout *layout;

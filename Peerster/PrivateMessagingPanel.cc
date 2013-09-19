@@ -4,8 +4,10 @@ PrivateMessagingPanel::PrivateMessagingPanel() {
     originBox = new QGroupBox("Known Origins");
     originList = new QVBoxLayout;
     originBox->setLayout(originList);
-    signalMapper = new QSignalMapper(this);
-    connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
+    buttonMapper = new QSignalMapper(this);
+    privateChatMapper = new QSignalMapper(this);
+    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
+    connect(privateChatMapper, SIGNAL(mapped(QString)), this, SLOT(windowClosed(QString)));
 }
 
 QGroupBox* PrivateMessagingPanel::getOriginBox() {
@@ -17,16 +19,23 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     if (!originMap.contains(origin)) {
         qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
-        signalMapper->setMapping(originButton, originButton->text());
-        connect(originButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        buttonMapper->setMapping(originButton, originButton->text());
+        connect(originButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
         originList->addWidget(originButton);
     }
     originMap.insert(origin, qMakePair(address, port));
 }
 
-void PrivateMessagingPanel::buttonClicked(QString text) {
-    qDebug() << "Starting private chat with " + text;
-    PrivateChatDialog *privateChat = new PrivateChatDialog(text);
-    privateChatDialogs.insert(text, privateChat);
+void PrivateMessagingPanel::buttonClicked(QString destinationName) {
+    qDebug() << "Starting private chat with " + destinationName;
+    PrivateChatDialog *privateChat = new PrivateChatDialog(destinationName);
+    privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
+    connect(privateChat, SIGNAL(privateChatClosed()), privateChatMapper, SLOT(map()));
+    privateChatDialogs.insert(destinationName, privateChat);
     privateChat->show();
 }
+
+void PrivateMessagingPanel::windowClosed(QString destinationName) {
+    privateChatDialogs.remove(destinationName);
+}
+
