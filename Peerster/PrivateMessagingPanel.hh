@@ -16,7 +16,7 @@ public:
     void updateOrigins(QString origin, QHostAddress address, quint16 port);
 
     public slots:
-    void buttonClicked(const QString &text);
+    void buttonClicked(const QString text);
     
 private:
     QGroupBox *originBox;
