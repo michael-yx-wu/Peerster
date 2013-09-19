@@ -25,5 +25,8 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
 }
 
 void PrivateMessagingPanel::buttonClicked(QString text) {
-    qDebug() << text << "clicked!!";
+    qDebug() << "Starting private chat with " + text;
+    PrivateChatDialog *privateChat = new PrivateChatDialog(text);
+    privateChatDialogs.insert(text, privateChat);
+    privateChat->show();
 }

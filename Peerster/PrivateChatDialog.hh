@@ -13,9 +13,10 @@ class PrivateChatDialog : public QDialog {
     
 public:
     PrivateChatDialog() {};
+    PrivateChatDialog(QString destName);
     PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort);
     ~PrivateChatDialog();
-    
+    void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
 private:
     quint16 destinationPort;
     QGridLayout *layout;
