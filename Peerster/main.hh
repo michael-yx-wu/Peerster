@@ -2,9 +2,12 @@
 #define PEERSTER_MAIN_HH
 
 #include <QDialog>
+#include <QGroupBox>
 #include <QHostInfo>
+#include <QPushButton>
 #include <QTextEdit>
 #include <QUdpSocket>
+#include <QVBoxLayout>
 #include <QByteArray>
 #include <QTimer>
 #include <QVector>
@@ -67,6 +70,8 @@ private:
     QTimer *antiEntropyTimer;
     
     // Routing
+    QGroupBox *originBox;
+    QVBoxLayout *originList;
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
     QTimer *routingTimer;
     
@@ -78,6 +83,7 @@ private:
     void sendMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
+    void updateOriginButtons(QString origin);
     void updateRoutingTable(QString origin, QHostAddress address, quint16 port);
 };
 

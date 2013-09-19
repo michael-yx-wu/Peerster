@@ -34,10 +34,15 @@ ChatDialog::ChatDialog() {
 	textview->setReadOnly(true);
 	chatbox = new Textbox(this);
     addHostBox = new Textbox(this);
-	QVBoxLayout *layout = new QVBoxLayout();
+    originBox = new QGroupBox(tr("Known Origins"));
+    originList = new QVBoxLayout();
+    originBox->setLayout(originList);
+    
+	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
+    layout->addWidget(originBox, 0, 1);
 	setLayout(layout);
     chatbox->setFocus();
     
@@ -68,6 +73,9 @@ ChatDialog::ChatDialog() {
     // Start timers
     antiEntropyTimer->start(5000);
     routingTimer->start(5000);//change to once per minute
+    
+    // Send a route message immediately
+    routeMonger();
     
     // Add the ports in my port range to my peer list
     for (int i = minport; i <= maxport; i++) {
@@ -377,10 +385,19 @@ void ChatDialog::routeMonger() {
     rumorMonger(message, p.address, p.port);
 }
 
+void ChatDialog::updateOriginButtons(QString origin) {
+    originList->addWidget(new QPushButton(origin));
+}
+
 void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "Updating Routing Table - Origin: " << origin << "Sender & Port: " << address << " " << port;
+    if (!routingTable.contains(origin)) {
+        updateOriginButtons(origin);
+    }
     routingTable.insert(origin, qMakePair(address, port));
 }
+
+
 
 #pragma mark
 
