@@ -15,6 +15,7 @@
 #include "Messages.hh"
 #include "Message.hh"
 #include "Peer.hh"
+#include "PrivateMessagingPanel.hh"
 #include "Textbox.hh"
 
 class ChatDialog : public QDialog {
@@ -70,8 +71,7 @@ private:
     QTimer *antiEntropyTimer;
     
     // Routing
-    QGroupBox *originBox;
-    QVBoxLayout *originList;
+    PrivateMessagingPanel knownOrigins;
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
     QTimer *routingTimer;
     
@@ -83,7 +83,7 @@ private:
     void sendMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
-    void updateOriginButtons(QString origin);
+    void updateOriginButtons(QString origin, QHostAddress address, quint16 port);
     void updateRoutingTable(QString origin, QHostAddress address, quint16 port);
 };
 

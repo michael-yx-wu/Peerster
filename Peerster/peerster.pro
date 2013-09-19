@@ -9,5 +9,5 @@ INCLUDEPATH += .
 QT += network
 
 # Input
-HEADERS += main.hh Textbox.hh Peer.hh Messages.hh Message.hh
-SOURCES += main.cc Textbox.cc Peer.cc Messages.cc Message.cc
+HEADERS += main.hh Textbox.hh Peer.hh Messages.hh Message.hh PrivateMessagingPanel.hh
+SOURCES += main.cc Textbox.cc Peer.cc Messages.cc Message.cc PrivateMessagingPanel.cc
