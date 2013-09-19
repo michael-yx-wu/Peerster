@@ -8,22 +8,23 @@
 #include <QSignalMapper>
 #include <QVBoxLayout>
 
-class PrivateMessagingPanel : QObject {
+class PrivateMessagingPanel : public QObject {
+    Q_OBJECT
+
 public:
-    PrivateMessagingPanel() ;
+    PrivateMessagingPanel();
     
     QGroupBox* getOriginBox();
     void updateOrigins(QString origin, QHostAddress address, quint16 port);
 
     public slots:
-    void buttonClicked(const QString text);
+    void buttonClicked(QString text);
     
 private:
     QGroupBox *originBox;
     QMap<QString, QPair<QHostAddress, quint16> > originMap;
     QSignalMapper *signalMapper;
     QVBoxLayout *originList;
-    
 };
 
 #endif

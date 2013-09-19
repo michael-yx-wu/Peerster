@@ -5,7 +5,7 @@ PrivateMessagingPanel::PrivateMessagingPanel() {
     originList = new QVBoxLayout;
     originBox->setLayout(originList);
     signalMapper = new QSignalMapper(this);
-    connect(signalMapper, SIGNAL(mapped(const QString)), this, SLOT(buttonClicked(const QString)));
+    connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
 }
 
 QGroupBox* PrivateMessagingPanel::getOriginBox() {
@@ -17,13 +17,13 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     if (!originMap.contains(origin)) {
         qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
-        originList->addWidget(originButton);
-        connect(originButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
         signalMapper->setMapping(originButton, originButton->text());
+        connect(originButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        originList->addWidget(originButton);
     }
     originMap.insert(origin, qMakePair(address, port));
 }
 
-void PrivateMessagingPanel::buttonClicked(const QString text) {
+void PrivateMessagingPanel::buttonClicked(QString text) {
     qDebug() << text << "clicked!!";
 }

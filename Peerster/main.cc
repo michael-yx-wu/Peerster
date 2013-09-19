@@ -38,7 +38,7 @@ ChatDialog::ChatDialog() {
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
-    layout->addWidget(knownOrigins.getOriginBox(), 0 ,1);
+    layout->addWidget(knownOrigins.getOriginBox(),0 , 1);
 	setLayout(layout);
     chatbox->setFocus();
     
