@@ -11,7 +11,9 @@ QGroupBox* PrivateMessagingPanel::getOriginBox() {
 }
 
 void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port) {
-    if (!origin.contains(origin)) {
+    qDebug() << "Updating origin information for: " << origin;
+    if (!originMap.contains(origin)) {
+        qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
         originList->addWidget(originButton);
         delete originButton;
