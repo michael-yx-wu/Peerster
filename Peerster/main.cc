@@ -64,7 +64,7 @@ ChatDialog::ChatDialog() {
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
     connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
-    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+//    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
@@ -75,11 +75,11 @@ ChatDialog::ChatDialog() {
     routeMonger();
     
     // Add the ports in my port range to my peer list
-    for (int i = minport; i <= maxport; i++) {
-        if (i != myport) {
-            ChatDialog::updatePeerList(myIP, i);
-        }
-    }
+//    for (int i = minport; i <= maxport; i++) {
+//        if (i != myport) {
+//            ChatDialog::updatePeerList(myIP, i);
+//        }
+//    }
 }
 
 // Attempt to bind to a UDP port in range
