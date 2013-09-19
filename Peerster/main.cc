@@ -383,6 +383,7 @@ void ChatDialog::routeMonger() {
 }
 
 void ChatDialog::updateOriginButtons(QString origin, QHostAddress address, quint16 port) {
+    qDebug() << "updating origin list";
     knownOrigins.updateOrigins(origin, address, port);
 }
 
