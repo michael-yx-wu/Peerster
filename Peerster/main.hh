@@ -4,10 +4,8 @@
 #include <QDialog>
 #include <QGroupBox>
 #include <QHostInfo>
-#include <QPushButton>
 #include <QTextEdit>
 #include <QUdpSocket>
-#include <QVBoxLayout>
 #include <QByteArray>
 #include <QTimer>
 #include <QVector>

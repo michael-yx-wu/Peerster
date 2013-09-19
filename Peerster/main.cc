@@ -2,7 +2,6 @@
 
 #include <QVBoxLayout>
 #include <QApplication>
-#include <QDebug>
 #include <QTextCodec>
 #include <QMap>
 #include <time.h>
