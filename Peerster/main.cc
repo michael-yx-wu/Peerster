@@ -169,7 +169,7 @@ void ChatDialog::processPendingDatagrams() {
         socket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
         
         // Update peer list if necessary
-        ChatDialog::updatePeerList(sender, senderPort);
+        updatePeerList(sender, senderPort);
         
         // Deserialize the datapacket
         QMap<QString, QVariant> datapacket;
@@ -193,8 +193,10 @@ void ChatDialog::processPendingDatagrams() {
 
 bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     // Check to see if we have already seen this message
+    // Update side panel regardless
     QString origin = datapacket.value(xOrigin).toString();
     quint32 seqno = datapacket.value(xSeqNo).toUInt();
+    updatePrivateMessagingPanel(origin, sender, senderPort);
     if (messages.hasMessage(origin, seqno)) {
         return false;
     }
@@ -206,9 +208,6 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         ChatDialog::sendStatusMessage(sender, senderPort);
         return false;
     }
-    
-    // Update my DSDV routing table
-    updateRoutingTable(origin, sender, senderPort);
     
     // Display the new message if ChatText exists
     QString message = NULL;
@@ -382,17 +381,9 @@ void ChatDialog::routeMonger() {
     rumorMonger(message, p.address, p.port);
 }
 
-void ChatDialog::updateOriginButtons(QString origin, QHostAddress address, quint16 port) {
+void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "updating origin list";
     knownOrigins.updateOrigins(origin, address, port);
-}
-
-void ChatDialog::updateRoutingTable(QString origin, QHostAddress address, quint16 port) {
-    qDebug() << "Updating Routing Table - Origin: " << origin << "Sender & Port: " << address << " " << port;
-    if (!routingTable.contains(origin)) {
-        updateOriginButtons(origin, address, port);
-    }
-    routingTable.insert(origin, qMakePair(address, port));
 }
 
 #pragma mark
