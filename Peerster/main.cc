@@ -246,8 +246,8 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         textview->append(message);
     }
     
-    // Forward message
-    else {
+    // Forward message if -noforward not dependent
+    else if (shouldForwardPrivateMessages) {
         if (--hoplimit == 0) {
             // Reached hoplimit. Stop forwarding private message
             return;
