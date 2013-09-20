@@ -319,7 +319,8 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
-    if (shouldForwardMessages == true || message.getOrigin() == hostname) {
+    if (shouldForwardMessages == true || message.getOrigin() == hostname || message.getMessage().isNull()) {
+        qDebug() << "Sending a Message!";
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
@@ -370,7 +371,7 @@ void ChatDialog::gotReturnPressedHostBox() {
 
 void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
     ChatDialog::sendMessage(message, address, port);
-    newMessages.append(message);
+    newMessages.enqueue(message);
     QTimer::singleShot(1000, this, SLOT(mongerTimeout()));
 }
 
