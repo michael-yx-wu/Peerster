@@ -324,7 +324,7 @@ void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
     else {
-        qDebug() << "NOT FORWARDING MESSAGE!!!";
+        qDebug() << "NOT FORWARDING MESSAGE from " + message.getOrigin();
     }
 }
 
