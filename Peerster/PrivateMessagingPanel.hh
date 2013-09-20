@@ -17,7 +17,7 @@ public:
     PrivateMessagingPanel();
     
     QGroupBox* getOriginBox();
-    void startPrivateChat(QString origin, QHostAddress address, quint16);
+    void setSocket(QUdpSocket *parentSocket);
     void updateOrigins(QString origin, QHostAddress address, quint16 port);
 
     public slots:
@@ -25,12 +25,13 @@ public:
     void windowClosed(QString destinationName);
     
 private:
+    QSignalMapper *buttonMapper;
     QGroupBox *originBox;
+    QVBoxLayout *originList;
     QMap<QString, QPair<QHostAddress, quint16> > originMap;
     QMap<QString, PrivateChatDialog*> privateChatDialogs;
-    QSignalMapper *buttonMapper;
     QSignalMapper *privateChatMapper;
-    QVBoxLayout *originList;
+    QUdpSocket *socket;
 };
 
 #endif

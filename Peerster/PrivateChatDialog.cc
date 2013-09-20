@@ -1,7 +1,9 @@
 #include "PrivateChatDialog.hh"
 
-PrivateChatDialog::PrivateChatDialog(QString destName) {
+PrivateChatDialog::PrivateChatDialog(QString destName, QUdpSocket *parentSocket) {
     destinationName = destName;
+    socket = parentSocket;
+    hopLimit = 10;
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Chatbox(this);
@@ -16,25 +18,6 @@ PrivateChatDialog::PrivateChatDialog(QString destName) {
     setWindowTitle("Private Chat with " + destinationName);
     
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
-}
-
-PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort) {
-    destinationName = destName;
-    destinationIP = destIP;
-    destinationPort = destPort;
-    
-    textview = new QTextEdit(this);
-    textview->setReadOnly(true);
-    chatbox = new Chatbox(this);
-
-    layout = new QGridLayout();
-    layout->addWidget(textview);
-    layout->addWidget(chatbox);
-    chatbox->setFocus();
-    
-    setAttribute(Qt::WA_DeleteOnClose);
-    setLayout(layout);
-    setWindowTitle("Private Chat with " + destinationName);
 }
 
 PrivateChatDialog::~PrivateChatDialog() {
@@ -58,5 +41,10 @@ void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 
 }
 
 void PrivateChatDialog::gotReturnPressedChatBox() {
+    Message message = Message(destinationName, chatbox->toPlainText(), hopLimit);
+    textview->append(message.getMessage());
+    chatbox->clear();
     
+    QByteArray datagram = message.getSerializedMessage();
+    socket->writeDatagram(datagram.data(), datagram.size(), destinationIP, destinationPort);
 }

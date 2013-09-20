@@ -5,16 +5,17 @@
 #include <QGridLayout>
 #include <QHostAddress>
 #include <QTextEdit>
+#include <QUdpSocket>
 
 #include "Chatbox.hh"
+#include "Message.hh"
 
 class PrivateChatDialog : public QDialog {
     Q_OBJECT
     
 public:
     PrivateChatDialog() {};
-    PrivateChatDialog(QString destName);
-    PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort);
+    PrivateChatDialog(QString destName, QUdpSocket *parentSocket);
     ~PrivateChatDialog();
     
     void closeEvent(QCloseEvent *event);
@@ -28,12 +29,14 @@ signals:
     void gotReturnPressedChatBox();
     
 private:
-    quint16 destinationPort;
-    QGridLayout *layout;
+    Chatbox *chatbox;
     QHostAddress destinationIP;
     QString destinationName;
+    quint16 destinationPort;
+    quint32 hopLimit;
+    QGridLayout *layout;
+    QUdpSocket *socket;
     QTextEdit *textview;
-    Chatbox *chatbox;
 };
 
 #endif

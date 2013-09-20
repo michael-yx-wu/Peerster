@@ -49,6 +49,9 @@ ChatDialog::ChatDialog() {
     if (!bind()) {
         exit(1);
     }
+    
+    knownOrigins.setSocket(socket);
+    
     setWindowTitle(QString::number(myport));
     messageNo = 1;
     

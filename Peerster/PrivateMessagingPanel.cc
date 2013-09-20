@@ -14,6 +14,10 @@ QGroupBox* PrivateMessagingPanel::getOriginBox() {
     return originBox;
 }
 
+void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
+    socket = parentSocket;
+}
+
 void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "Updating origin information for: " << origin;
     if (!originMap.contains(origin)) {
@@ -30,7 +34,7 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
 
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
-    PrivateChatDialog *privateChat = new PrivateChatDialog(destinationName);
+    PrivateChatDialog *privateChat = new PrivateChatDialog(destinationName, socket);
     privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
     connect(privateChat, SIGNAL(privateChatClosed()), privateChatMapper, SLOT(map()));
     privateChatDialogs.insert(destinationName, privateChat);
