@@ -19,7 +19,7 @@ const QString ChatDialog::xHopLimit = "HopLimit";
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
-    shouldForwardPrivateMessages = false;
+    shouldForwardMessages = true;
     
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
@@ -319,7 +319,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
-    if (shouldForwardPrivateMessages == true || message.getOrigin() != hostname) {
+    if (shouldForwardMessages == true || message.getOrigin() == hostname) {
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
@@ -436,7 +436,7 @@ int main(int argc, char **argv) {
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
         if (arg == "-noforward") {
-            dialog.shouldForwardPrivateMessages = false;
+            dialog.shouldForwardMessages = false;
         }
         dialog.resolvePeer(argv[i]);
     }

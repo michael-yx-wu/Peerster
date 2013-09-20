@@ -26,7 +26,7 @@ public:
     QHostAddress myIP;
     QString hostname;
     QUdpSocket *socket;
-    bool shouldForwardPrivateMessages;
+    bool shouldForwardMessages;
     
     void resolvePeer(QString hostPort);
     
