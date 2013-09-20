@@ -241,7 +241,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << message;
     qDebug() << hoplimit;
 
-    // Display message if I am intended target
+    // Display message if I am intended targets
     if (QString::compare(dest, hostname) == 0) {
         textview->append(message);
     }
@@ -319,8 +319,10 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
-    QByteArray datagram = message.getSerializedMessage();
-    socket->writeDatagram(datagram.data(), datagram.size(), address, port);
+    if (shouldForwardPrivateMessages == true || message.getOrigin() != hostname) {
+        QByteArray datagram = message.getSerializedMessage();
+        socket->writeDatagram(datagram.data(), datagram.size(), address, port);
+    }
 }
 
 void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
