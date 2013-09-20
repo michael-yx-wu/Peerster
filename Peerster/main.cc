@@ -218,7 +218,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     }
     
     // Display the new message if ChatText exists
-    QString message = NULL;
+    QString message;
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
@@ -262,7 +262,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     QString origin = "";
     quint32 seqno = -1;
-    QString chatText = NULL;
+    QString chatText;
     Message message;
     bool mongerRumor = false, sendStatus = false;
     
@@ -304,7 +304,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
     
     if (mongerRumor) {
-        if (QString::compare(chatText, "") == 0) {
+        if (chatText.isNull()) {
             message = Message(origin, seqno);
         }
         else {
