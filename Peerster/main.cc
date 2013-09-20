@@ -219,6 +219,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
+        qDebug() << "Displaying: " << message;
     }
     
     // Update status and save the message
