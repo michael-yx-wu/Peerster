@@ -65,7 +65,7 @@ ChatDialog::ChatDialog() {
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-//    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
