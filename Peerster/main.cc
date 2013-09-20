@@ -65,15 +65,13 @@ ChatDialog::ChatDialog() {
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+//    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
     antiEntropyTimer->start(5000);
-    routingTimer->start(5000);//change to once per minute
-    
-    // Send a route message immediately
-    routeMonger();
+    routingTimer->start(60000);//change to once per minute
+    QTimer::singleShot(1000, this, SLOT(routeMonger()));
     
     // Add the ports in my port range to my peer list
 //    for (int i = minport; i <= maxport; i++) {
@@ -301,10 +299,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     if (mongerRumor) {
         qDebug() << "Message requested: " << origin << " " << seqno << " " << chatText;
-        if (chatText == NULL) {
+        if (QString::compare(chatText, "") == 0) {
+            qDebug() << "IS ROUTE MESSAGE";
             message = Message(origin, seqno);
         }
         else {
+            qDebug() << "IS CHAT MESSAGE";
             message = Message(origin, seqno, chatText);
         }
         rumorMonger(message, sender, senderPort);
@@ -429,8 +429,8 @@ int main(int argc, char **argv) {
     
 	// Create an initial chat dialog window
 	ChatDialog dialog;
-    
     dialog.show();
+    dialog.routeMonger();
     
     // Display hostname
     qDebug();
