@@ -6,32 +6,48 @@
 #include <QVariant>
 
 class Message {
-private:
-    QString origin;
-    quint32 seqno;
-    QString message;
-    QByteArray serializedMessage;
-    QByteArray serializeChatMessage();
-    QByteArray serializeRouteMessage();
-    QByteArray serailizePrivateMessage();
-    
 public:
+#pragma mark - Constructors
+    
     Message() {};
-    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage = NULL) : origin(someOrigin), seqno(someSeqno), message(someMessage) {
-        if (someMessage != NULL) {
-            serializedMessage = serializeChatMessage();
-        }
-        else {
-            serializedMessage = serializeRouteMessage();
-        }
-    };
+    Message(const QString someOrigin, const quint32 someSeqno);
+    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage);
+    Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit);
+    
+    void decrementHopLimit();
+    bool atHopLimit();
+    bool isChatMessage();
+    bool isRouteMessage();
+    bool isPrivateMessage();
     QString getOrigin();
     quint32 getSeqno();
     QString getMessage();
     QByteArray getSerializedMessage();
-    bool isChatMessage();
-    bool isRouteMessage();
     
+private:
+    // Keys
+    static const QString xOrigin;
+    static const QString xSeqNo;
+    static const QString xChatText;
+    static const QString xDest;
+    static const QString xHopLimit;
+    
+    // Private Fields
+    QString origin;
+    QString destOrigin;
+    quint32 seqno;
+    QString message;
+    quint32 hopLimit;
+    QByteArray serializedMessage;
+    bool chatMessage;
+    bool routeMessage;
+    bool privateMessage;
+  
+#pragma mark - Message Serialization
+    
+    QByteArray serializeChatMessage();
+    QByteArray serializePrivateMessage();
+    QByteArray serializeRouteMessage();
 };
 
 #endif /* defined(__Peerster__Message__) */
