@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "Message.hh"
 
 #pragma mark - Constructors
@@ -16,7 +17,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno) {
 }
 
 Message::Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit) {
-    origin = someDestOrigin;
+    destOrigin = someDestOrigin;
     message = someMessage;
     hopLimit = someHopLimit;
     serializedMessage = serializePrivateMessage();
@@ -84,6 +85,14 @@ bool Message::isRouteMessage() {
 
 bool Message::isPrivateMessage() {
     return privateMessage;
+}
+
+QString Message::getDestOrigin() {
+    return destOrigin;
+}
+
+quint32 Message::getHopLimit() {
+    return hopLimit;
 }
 
 QString Message::getOrigin() {

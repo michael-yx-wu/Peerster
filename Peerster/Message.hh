@@ -19,6 +19,8 @@ public:
     bool isChatMessage();
     bool isRouteMessage();
     bool isPrivateMessage();
+    QString getDestOrigin();
+    quint32 getHopLimit();
     QString getOrigin();
     quint32 getSeqno();
     QString getMessage();

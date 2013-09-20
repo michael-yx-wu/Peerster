@@ -228,9 +228,13 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got private message";
-    QString dest = datapacket.value(xDest).toString();
+    qDebug() << hostname;
+    QString dest = datapacket.value("Dest").toString();
     QString message = datapacket.value(xChatText).toString();
     quint32 hoplimit = datapacket.value(xHopLimit).toUInt();
+    qDebug() << dest;
+    qDebug() << message;
+    qDebug() << hoplimit;
 
     // Display message if I am intended target
     if (QString::compare(dest, hostname) == 0) {

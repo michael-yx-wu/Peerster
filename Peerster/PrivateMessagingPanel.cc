@@ -24,6 +24,7 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
 
 void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "Updating origin information for: " << origin;
+    qDebug() << address << port;
     if (!originMap.contains(origin)) {
         qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
@@ -32,8 +33,11 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         originList->addWidget(originButton);
     }
     
-    // Update dest
+    // Update Route
     originMap.insert(origin, qMakePair(address, port));
+    if (privateChatDialogs.contains(origin)) {
+        privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
+    }
 }
 
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {

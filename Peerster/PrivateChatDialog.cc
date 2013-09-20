@@ -42,9 +42,12 @@ void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 
 
 void PrivateChatDialog::gotReturnPressedChatBox() {
     Message message = Message(destinationName, chatbox->toPlainText(), hopLimit);
+    qDebug() << "Writing private message to" << message.getDestOrigin() << destinationIP << ":" << destinationPort;
+    
     textview->append(message.getMessage());
     chatbox->clear();
     
     QByteArray datagram = message.getSerializedMessage();
+    
     socket->writeDatagram(datagram.data(), datagram.size(), destinationIP, destinationPort);
 }
