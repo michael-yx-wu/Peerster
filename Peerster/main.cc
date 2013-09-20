@@ -318,7 +318,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
-    if (shouldForwardMessages == true || message.getOrigin() == hostname || message.getMessage().isNull()) {
+    if (shouldForwardMessages == true || QString::compare(message.getOrigin(), hostname) == 0 || message.getMessage().isNull()) {
         qDebug() << "Sending a Message!";
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
