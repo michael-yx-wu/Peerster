@@ -3,21 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 42;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */; settings = {ATTRIBUTES = (); }; };
 		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
-		1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */; settings = {ATTRIBUTES = (); }; };
+		1036E1A0232E381E9EF071B9 /* Chatbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = B032812B47DD364B2EBE1935 /* Chatbox.cc */; settings = {ATTRIBUTES = (); }; };
 		3055D3F18102CDB806A05B7F /* Message.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 86B358F2BF0DDAE13C0D59AB /* Message.cc */; settings = {ATTRIBUTES = (); }; };
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
+		83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		88C75B2D10C5F20F97487493 /* PrivateMessagingPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2CAA940943C9521DBB4E /* PrivateMessagingPanel.cc */; settings = {ATTRIBUTES = (); }; };
 		899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E0BBC85E7EBD497B22D3B33E /* Messages.cc */; settings = {ATTRIBUTES = (); }; };
 		A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		B3470EEF1B69CBC8CDF46E7E /* Textbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 39F21E01BF99D77BE75B0832 /* Textbox.cc */; settings = {ATTRIBUTES = (); }; };
 		D33B1E115874F491151176CF /* Peer.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2E3BA334344441BCDAAC8724 /* Peer.cc */; settings = {ATTRIBUTES = (); }; };
 		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
 		FE9A58EE808766E390711F68 /* PrivateChatDialog.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 8741F89E42DAA88E4DD9713B /* PrivateChatDialog.cc */; settings = {ATTRIBUTES = (); }; };
@@ -25,16 +25,14 @@
 
 /* Begin PBXFileReference section */
 		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
+		0E44E651B2C048A61BBA378C /* Chatbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Chatbox.hh; sourceTree = SOURCE_ROOT; };
 		11D21793152EFA9E8AA45AED /* PrivateChatDialog.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrivateChatDialog.hh; sourceTree = SOURCE_ROOT; };
 		12CE19638E6C844EFEBA5234 /* Peer.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Peer.hh; sourceTree = SOURCE_ROOT; };
 		2E3BA334344441BCDAAC8724 /* Peer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peer.cc; sourceTree = SOURCE_ROOT; };
-		37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Textbox.cpp; sourceTree = SOURCE_ROOT; };
-		39F21E01BF99D77BE75B0832 /* Textbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Textbox.cc; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4AFB2CAA940943C9521DBB4E /* PrivateMessagingPanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PrivateMessagingPanel.cc; sourceTree = SOURCE_ROOT; };
-		4C085FE917EB41A7009C0CC8 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C574D2117EBE137000661B2 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
-		790A68ED394F84241507598D /* Textbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Textbox.hh; sourceTree = SOURCE_ROOT; };
 		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
 		86B358F2BF0DDAE13C0D59AB /* Message.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cc; sourceTree = SOURCE_ROOT; };
 		8741F89E42DAA88E4DD9713B /* PrivateChatDialog.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PrivateChatDialog.cc; sourceTree = SOURCE_ROOT; };
@@ -42,7 +40,9 @@
 		889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateMessagingPanel.cpp; sourceTree = SOURCE_ROOT; };
 		A08683E53D9B2519B1313D9E /* Message.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hh; sourceTree = SOURCE_ROOT; };
 		AA9D9004ACE84CD1D55FED5F /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtGui.framework; sourceTree = "<absolute>"; };
+		B032812B47DD364B2EBE1935 /* Chatbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chatbox.cc; sourceTree = SOURCE_ROOT; };
 		B6C69B87DFB85C6147A2E993 /* PrivateMessagingPanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrivateMessagingPanel.hh; sourceTree = SOURCE_ROOT; };
+		C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Chatbox.cpp; sourceTree = SOURCE_ROOT; };
 		D759577E53E2CE061239002D /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = SOURCE_ROOT; };
 		D98F638C7798CC1DDA980D9A /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtCore.framework; sourceTree = "<absolute>"; };
 		E0BBC85E7EBD497B22D3B33E /* Messages.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Messages.cc; sourceTree = SOURCE_ROOT; };
@@ -68,11 +68,11 @@
 			isa = PBXGroup;
 			children = (
 				FB61758D0F0FDA4BA867C3D5 /* Sources */,
-				46E892BBB6BB6952967E0561 /* Temporary Sources */,
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
+				46E892BBB6BB6952967E0561 /* Temporary Sources */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4C085FEA17EB41A7009C0CC8 /* Products */,
+				4C574D2217EBE137000661B2 /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -81,17 +81,17 @@
 			isa = PBXGroup;
 			children = (
 				F41053476CF4B2C49EF187F7 /* moc_main.cpp */,
-				37C055C2B4C57C576C063BCF /* moc_Textbox.cpp */,
+				C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */,
 				889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */,
 				7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */,
 			);
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4C085FEA17EB41A7009C0CC8 /* Products */ = {
+		4C574D2217EBE137000661B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C085FE917EB41A7009C0CC8 /* Peerster.app */,
+				4C574D2117EBE137000661B2 /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				000F2A1E9067A79452CB9855 /* main.hh */,
-				790A68ED394F84241507598D /* Textbox.hh */,
+				0E44E651B2C048A61BBA378C /* Chatbox.hh */,
 				12CE19638E6C844EFEBA5234 /* Peer.hh */,
 				4F2C0F4C926D8A65CB56838D /* Messages.hh */,
 				A08683E53D9B2519B1313D9E /* Message.hh */,
@@ -132,7 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				D759577E53E2CE061239002D /* main.cc */,
-				39F21E01BF99D77BE75B0832 /* Textbox.cc */,
+				B032812B47DD364B2EBE1935 /* Chatbox.cc */,
 				2E3BA334344441BCDAAC8724 /* Peer.cc */,
 				E0BBC85E7EBD497B22D3B33E /* Messages.cc */,
 				86B358F2BF0DDAE13C0D59AB /* Message.cc */,
@@ -161,7 +161,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4C085FE917EB41A7009C0CC8 /* Peerster.app */;
+			productReference = 4C574D2117EBE137000661B2 /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -170,17 +170,16 @@
 		91B15E841AA80083484172DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Peerster" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4C085FEA17EB41A7009C0CC8 /* Products */;
+			productRefGroup = 4C574D2217EBE137000661B2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -229,14 +228,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */,
-				B3470EEF1B69CBC8CDF46E7E /* Textbox.cc in Build Sources */,
+				1036E1A0232E381E9EF071B9 /* Chatbox.cc in Build Sources */,
 				D33B1E115874F491151176CF /* Peer.cc in Build Sources */,
 				899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */,
 				3055D3F18102CDB806A05B7F /* Message.cc in Build Sources */,
 				88C75B2D10C5F20F97487493 /* PrivateMessagingPanel.cc in Build Sources */,
 				FE9A58EE808766E390711F68 /* PrivateChatDialog.cc in Build Sources */,
 				D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */,
-				1A4B4133AC29C276E5FA3DA6 /* moc_Textbox.cpp in Build Sources */,
+				83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */,
 				02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */,
 				A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */,
 			);
@@ -249,6 +248,7 @@
 		4B72B24813252891014BCF61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
@@ -277,7 +277,6 @@
 					/opt/X11/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
 				);
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-pipe",
 					"-O2",
@@ -315,7 +314,6 @@
 		8C7174830A1E4DCBA0332EC1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PRODUCT_NAME = Peerster;
@@ -325,7 +323,6 @@
 		BEC09A62E69C3553534FF35E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -336,6 +333,7 @@
 		D70590BEB531B51029F711BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,

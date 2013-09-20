@@ -15,7 +15,7 @@
 #include "Message.hh"
 #include "Peer.hh"
 #include "PrivateMessagingPanel.hh"
-#include "Textbox.hh"
+#include "Chatbox.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT
@@ -52,8 +52,8 @@ private:
     // Chat Dialog Constants
     quint16 minport, maxport;
     QTextEdit *textview;
-    Textbox *addHostBox;
-    Textbox *chatbox;
+    Chatbox *addHostBox;
+    Chatbox *chatbox;
     
     std::vector<Peer> peers;
     std::vector<QHostAddress> foundAddresses;

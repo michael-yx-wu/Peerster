@@ -4,7 +4,7 @@ PrivateChatDialog::PrivateChatDialog(QString destName) {
     destinationName = destName;
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
-    chatbox = new Textbox(this);
+    chatbox = new Chatbox(this);
     
     layout = new QGridLayout();
     layout->addWidget(textview);
@@ -14,6 +14,8 @@ PrivateChatDialog::PrivateChatDialog(QString destName) {
     setAttribute(Qt::WA_DeleteOnClose);
     setLayout(layout);
     setWindowTitle("Private Chat with " + destinationName);
+    
+    connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
 }
 
 PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quint16 destPort) {
@@ -23,7 +25,7 @@ PrivateChatDialog::PrivateChatDialog(QString destName, QHostAddress destIP, quin
     
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
-    chatbox = new Textbox(this);
+    chatbox = new Chatbox(this);
 
     layout = new QGridLayout();
     layout->addWidget(textview);
@@ -53,4 +55,8 @@ QString PrivateChatDialog::getDestinationName() {
 void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {
     destinationIP = destIP;
     destinationPort = destPort;    
+}
+
+void PrivateChatDialog::gotReturnPressedChatBox() {
+    
 }

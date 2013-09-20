@@ -31,8 +31,8 @@ ChatDialog::ChatDialog() {
     setWindowTitle(hostname);
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
-	chatbox = new Textbox(this);
-    addHostBox = new Textbox(this);
+	chatbox = new Chatbox(this);
+    addHostBox = new Chatbox(this);
     
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(textview);
@@ -71,11 +71,11 @@ ChatDialog::ChatDialog() {
     routeMonger();
     
     // Add the ports in my port range to my peer list
-    for (int i = minport; i <= maxport; i++) {
-        if (i != myport) {
-            ChatDialog::updatePeerList(myIP, i);
-        }
-    }
+//    for (int i = minport; i <= maxport; i++) {
+//        if (i != myport) {
+//            ChatDialog::updatePeerList(myIP, i);
+//        }
+//    }
 }
 
 // Attempt to bind to a UDP port in range

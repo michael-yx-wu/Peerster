@@ -1,19 +1,19 @@
-#ifndef __Peerster__Textbox__
-#define __Peerster__Textbox__
+#ifndef __Peerster__Chatbox__
+#define __Peerster__Chatbox__
 
 #include <iostream>
 #include <QWidget>
 #include <QTextEdit>
 #include <QKeyEvent>
 
-class Textbox : public QTextEdit {
+class Chatbox : public QTextEdit {
     Q_OBJECT
     
 private:
     bool shift;
     
 public:
-    Textbox(QWidget *parent = 0) : QTextEdit(parent) {
+    Chatbox(QWidget *parent = 0) : QTextEdit(parent) {
         QFontMetrics m (font());
         int rowHeight = m.lineSpacing();
         setFixedHeight(3*rowHeight);

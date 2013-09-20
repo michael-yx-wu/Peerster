@@ -13,6 +13,7 @@ private:
     QByteArray serializedMessage;
     QByteArray serializeChatMessage();
     QByteArray serializeRouteMessage();
+    QByteArray serailizePrivateMessage();
     
 public:
     Message() {};

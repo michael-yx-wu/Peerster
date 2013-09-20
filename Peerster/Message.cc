@@ -17,7 +17,7 @@ QByteArray Message::serializeRouteMessage() {
     datapacket.insert("SeqNo", seqno);
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
-    stream << datapacket;
+    stream << datapacket;   
     return datagram;
 }
 
