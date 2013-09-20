@@ -17,6 +17,7 @@ public:
     PrivateMessagingPanel();
     
     QGroupBox* getOriginBox();
+    QMap<QString, QPair<QHostAddress, quint16> > getOriginMap();
     void setSocket(QUdpSocket *parentSocket);
     void updateOrigins(QString origin, QHostAddress address, quint16 port);
 

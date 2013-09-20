@@ -14,6 +14,8 @@ const QString ChatDialog::xOrigin = "Origin";
 const QString ChatDialog::xSeqNo = "SeqNo";
 const QString ChatDialog::xChatText = "ChatText";
 const QString ChatDialog::xWant = "Want";
+const QString ChatDialog::xDest = "Dest";
+const QString ChatDialog::xHopLimit = "HopLimit";
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
@@ -38,7 +40,7 @@ ChatDialog::ChatDialog() {
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
-    layout->addWidget(knownOrigins.getOriginBox(),0 , 1);
+    layout->addWidget(privateMessagingPanel.getOriginBox(),0 , 1);
 	setLayout(layout);
     chatbox->setFocus();
     
@@ -50,7 +52,7 @@ ChatDialog::ChatDialog() {
         exit(1);
     }
     
-    knownOrigins.setSocket(socket);
+    privateMessagingPanel.setSocket(socket);
     
     setWindowTitle(QString::number(myport));
     messageNo = 1;
@@ -184,6 +186,10 @@ void ChatDialog::processPendingDatagrams() {
                 rumorMonger(message, p.address, p.port);
             }
         }
+        // Check to see if datagram is a private chat message
+        else if (datapacket.contains(xDest)) {
+            
+        }
         else {
             processStatusMessage(datapacket, sender, senderPort);
         }
@@ -220,6 +226,29 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     messages.addMessage(origin, seqno, message);
     
     return true;
+}
+
+void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
+    QString dest = datapacket.value(xDest).toString();
+    QString message = datapacket.value(xChatText).toString();
+    quint32 hoplimit = datapacket.value(xHopLimit).toUInt();
+
+    // Display message if I am intended target
+    if (QString::compare(dest, hostname) == 0) {
+        textview->append(message);
+    }
+    
+    // Forward message
+    else {
+        if (--hoplimit == 0) {
+            // Reached hoplimit. Stop forwarding private message
+            return;
+        }
+        Message privateMessage = Message(dest, message, hoplimit);
+        QByteArray datagram = privateMessage.getSerializedMessage();
+        QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel.getOriginMap();
+        socket->writeDatagram(datagram.data(), datagram.size(), originMap.value(dest).first, originMap.value(dest).second);
+    }
 }
 
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
@@ -381,7 +410,7 @@ void ChatDialog::routeMonger() {
 
 void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port) {
     qDebug() << "updating origin list";
-    knownOrigins.updateOrigins(origin, address, port);
+    privateMessagingPanel.updateOrigins(origin, address, port);
 }
 
 #pragma mark

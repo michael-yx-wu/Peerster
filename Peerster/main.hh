@@ -48,6 +48,8 @@ private:
     static const QString xSeqNo;
     static const QString xChatText;
     static const QString xWant;
+    static const QString xDest;
+    static const QString xHopLimit;
     
     // Chat Dialog Constants
     quint16 minport, maxport;
@@ -68,12 +70,13 @@ private:
     QTimer *antiEntropyTimer;
     
     // Routing
-    PrivateMessagingPanel knownOrigins;
+    PrivateMessagingPanel privateMessagingPanel;
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
     QTimer *routingTimer;
     
     bool bind();
     bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
+    void processPrivateMessage(QMap<QString, QVariant> datapacket);
     void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
     void rumorMonger(Message message, QHostAddress address, quint16 port);

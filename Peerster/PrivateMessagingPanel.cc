@@ -14,6 +14,10 @@ QGroupBox* PrivateMessagingPanel::getOriginBox() {
     return originBox;
 }
 
+QMap<QString, QPair<QHostAddress, quint16> > PrivateMessagingPanel::getOriginMap() {
+    return originMap;
+}
+
 void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
     socket = parentSocket;
 }
