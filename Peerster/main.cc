@@ -56,7 +56,6 @@ ChatDialog::ChatDialog() {
     
     privateMessagingPanel.setSocket(socket);
     
-    setWindowTitle(QString::number(myport));
     messageNo = 1;
     
     // Create timers
