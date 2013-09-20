@@ -319,7 +319,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
     if (shouldForwardMessages == true || QString::compare(message.getOrigin(), hostname) == 0 || message.getMessage().isNull()) {
-        qDebug() << "Sending a Message!";
+        qDebug() << "Sending a Message from " + message.getOrigin();
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
@@ -352,7 +352,6 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressedChatBox() {
     Message message = Message(hostname, messageNo, chatbox->toPlainText());
-    qDebug() << "Attemptin to send new message from " + message.getOrigin();
     textview->append(message.getMessage());
     messages.addMessage(message.getOrigin(), message.getSeqno(), message.getMessage());
     status[hostname] = ++messageNo;
