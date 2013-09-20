@@ -53,16 +53,13 @@ ChatDialog::ChatDialog() {
     messageNo = 1;
     
     // Create timers
-    mongerTimer = new QTimer(this);
     antiEntropyTimer = new QTimer(this);
     routingTimer = new QTimer(this);
-    mongerTimer->setSingleShot(true);
     
 	// Connect signals to their appropriate slots
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressed()));
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-    connect(mongerTimer, SIGNAL(timeout()), this, SLOT(mongerTimeout()));
 //    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
@@ -223,9 +220,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
-    // Received a status message -- stop the timer
-    mongerTimer->stop();
-    qDebug() << "Stopping monger timer... ";
+    qDebug() << "Received status message from " << sender;
     QString origin = "";
     quint32 seqno = -1;
     QString chatText = NULL;
@@ -318,7 +313,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 #pragma mark - Chat
 
 // Send the current message to neighbors
-void ChatDialog::gotReturnPressed() {
+void ChatDialog::gotReturnPressedChatBox() {
     Message message = Message(hostname, messageNo, chatbox->toPlainText());
     
     textview->append(message.getMessage());
@@ -341,10 +336,8 @@ void ChatDialog::gotReturnPressedHostBox() {
 
 void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
     ChatDialog::sendMessage(message, address, port);
-    // Update the last sent messages to my peers
-    lastSentMessages[address.toString()] = message;
-    lastTarget = Peer(address, port);
-    mongerTimer->start(2000);
+    newMessages.append(message);
+    QTimer::singleShot(1000, this, SLOT(mongerTimeout()));
 }
 
 void ChatDialog::mongerTimeout() {
@@ -352,8 +345,11 @@ void ChatDialog::mongerTimeout() {
     qDebug() << "Monger Timeout";
     if (rand() % 2 == 1) {
         qDebug() << "Trying to monger again";
-        Message message = lastSentMessages.value(lastTarget.address.toString());
-        rumorMonger(message, lastTarget.address, lastTarget.port);
+        if (!newMessages.isEmpty()) {
+            if (peers.size() == 0) return;
+            Peer p = peers.at(rand() % peers.size());
+            rumorMonger(newMessages.dequeue(), p.address, p.port);
+        }
     }
 }
 

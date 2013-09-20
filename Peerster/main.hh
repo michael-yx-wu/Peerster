@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QGroupBox>
 #include <QHostInfo>
+#include <QQueue>
 #include <QTextEdit>
 #include <QUdpSocket>
 #include <QByteArray>
@@ -30,7 +31,7 @@ public:
     
     public slots:
     void antiEntropyTimeout();
-    void gotReturnPressed();
+    void gotReturnPressedChatBox();
     void gotReturnPressedHostBox();
     void lookupHostResults(const QHostInfo &host);
     void mongerTimeout();
@@ -60,10 +61,8 @@ private:
     quint32 messageNo;
     
     // Rumor Mongering
-    QTimer *mongerTimer;
     QMap<QString, QVariant> status;
-    QMap<QString, Message> lastSentMessages; // <host, Message>
-    Peer lastTarget;
+    QQueue<Message> newMessages;
     
     // Anti-Entropy
     QTimer *antiEntropyTimer;

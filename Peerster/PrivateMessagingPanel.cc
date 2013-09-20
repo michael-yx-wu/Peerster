@@ -23,6 +23,8 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         connect(originButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
         originList->addWidget(originButton);
     }
+    
+    // Update dest
     originMap.insert(origin, qMakePair(address, port));
 }
 
@@ -36,6 +38,7 @@ void PrivateMessagingPanel::buttonClicked(QString destinationName) {
 }
 
 void PrivateMessagingPanel::windowClosed(QString destinationName) {
+    qDebug() << "Closing private chat with: " + destinationName;
     privateChatDialogs.remove(destinationName);
 }
 
