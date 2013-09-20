@@ -188,7 +188,7 @@ void ChatDialog::processPendingDatagrams() {
         }
         // Check to see if datagram is a private chat message
         else if (datapacket.contains(xDest)) {
-            
+            processPrivateMessage(datapacket);
         }
         else {
             processStatusMessage(datapacket, sender, senderPort);
@@ -219,7 +219,6 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
-        qDebug() << "Displaying: " << message;
     }
     
     // Update status and save the message
@@ -230,6 +229,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
+    qDebug() << "Got private message";
     QString dest = datapacket.value(xDest).toString();
     QString message = datapacket.value(xChatText).toString();
     quint32 hoplimit = datapacket.value(xHopLimit).toUInt();
@@ -301,7 +301,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     if (mongerRumor) {
         qDebug() << "Message requested: " << origin << " " << seqno << " " << chatText;
-        message = Message(origin, seqno, chatText);
+        if (chatText == NULL) {
+            message = Message(origin, seqno);
+        }
+        else {
+            message = Message(origin, seqno, chatText);
+        }
         rumorMonger(message, sender, senderPort);
     }
     else if (sendStatus) {
