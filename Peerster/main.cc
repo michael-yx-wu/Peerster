@@ -352,7 +352,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressedChatBox() {
     Message message = Message(hostname, messageNo, chatbox->toPlainText());
-    
+    qDebug() << "Attemptin to send new message from " + message.getOrigin();
     textview->append(message.getMessage());
     messages.addMessage(message.getOrigin(), message.getSeqno(), message.getMessage());
     status[hostname] = ++messageNo;
