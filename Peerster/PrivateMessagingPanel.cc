@@ -36,6 +36,7 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     // Update Route
     originMap.insert(origin, qMakePair(address, port));
     if (privateChatDialogs.contains(origin)) {
+        qDebug() << "Updating open private chat window";
         privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
     }
 }
@@ -43,6 +44,7 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
     PrivateChatDialog *privateChat = new PrivateChatDialog(destinationName, socket);
+    privateChat->updateDestinationIPandPort(originMap.value(destinationName).first, originMap.value(destinationName).second);
     privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
     connect(privateChat, SIGNAL(privateChatClosed()), privateChatMapper, SLOT(map()));
     privateChatDialogs.insert(destinationName, privateChat);
