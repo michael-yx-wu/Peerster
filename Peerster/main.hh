@@ -26,6 +26,7 @@ public:
     QHostAddress myIP;
     QString hostname;
     QUdpSocket *socket;
+    bool shouldForwardPrivateMessages;
     
     void resolvePeer(QString hostPort);
     
@@ -73,6 +74,7 @@ private:
     PrivateMessagingPanel privateMessagingPanel;
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
     QTimer *routingTimer;
+
     
     bool bind();
     bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);

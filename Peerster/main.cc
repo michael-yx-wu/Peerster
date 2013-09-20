@@ -19,6 +19,8 @@ const QString ChatDialog::xHopLimit = "HopLimit";
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
+    shouldForwardPrivateMessages = false;
+    
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
     qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
@@ -430,6 +432,10 @@ int main(int argc, char **argv) {
     
     // Attempt to parse host:port strings
     for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "-noforward") {
+            dialog.shouldForwardPrivateMessages = false;
+        }
         dialog.resolvePeer(argv[i]);
     }
     
