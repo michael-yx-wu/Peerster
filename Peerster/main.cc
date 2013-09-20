@@ -146,14 +146,16 @@ void ChatDialog::myIPResults(const QHostInfo &host) {
 }
 
 void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
-    std::vector<Peer>::iterator it;
-    for (it = peers.begin(); it != peers.end(); it++) {
-        if ((*it).address == address && (*it).port == port) {
-            return;
+    if (address != myIP) {
+        std::vector<Peer>::iterator it;
+        for (it = peers.begin(); it != peers.end(); it++) {
+            if ((*it).address == address && (*it).port == port) {
+                return;
+            }
         }
+        qDebug() << "Adding : " << address << " port: " << port;
+        peers.push_back(Peer(address, port));
     }
-    qDebug() << "Adding : " << address << " port: " << port;
-    peers.push_back(Peer(address, port));
 }
 
 # pragma mark - Process Incoming Datagrams
@@ -199,10 +201,11 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     // Update side panel regardless
     QString origin = datapacket.value(xOrigin).toString();
     quint32 seqno = datapacket.value(xSeqNo).toUInt();
-    updatePrivateMessagingPanel(origin, sender, senderPort);
     if (messages.hasMessage(origin, seqno)) {
         return false;
     }
+    
+    updatePrivateMessagingPanel(origin, sender, senderPort);
     
     // We know about this origin and we have not seen this message,
     // but there is another message that should come before it
@@ -229,7 +232,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got private message";
     qDebug() << hostname;
-    QString dest = datapacket.value("Dest").toString();
+    QString dest = datapacket.value(xDest).toString();
     QString message = datapacket.value(xChatText).toString();
     quint32 hoplimit = datapacket.value(xHopLimit).toUInt();
     qDebug() << dest;
@@ -255,7 +258,6 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
 }
 
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
-    qDebug() << "Received status message from " << sender;
     QString origin = "";
     quint32 seqno = -1;
     QString chatText = NULL;
@@ -277,8 +279,6 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
         }
         // Peer does not have a message that I have
         else if (status.value(it.key()).toUInt() > peerStatus.value(it.key()).toUInt()) {
-            qDebug() << windowTitle()+" MyKey: " << it.key() << "Value: " << status.value(it.key());
-            qDebug() << windowTitle()+" PeerKey: " << it.key() << "Value: " << peerStatus.value(it.key());
             origin = it.key();
             seqno = peerStatus.value(origin).toUInt();
             chatText = messages.getMessage(origin, seqno);
@@ -302,31 +302,21 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
     
     if (mongerRumor) {
-        qDebug() << "Message requested: " << origin << " " << seqno << " " << chatText;
         if (QString::compare(chatText, "") == 0) {
-            qDebug() << "IS ROUTE MESSAGE";
             message = Message(origin, seqno);
         }
         else {
-            qDebug() << "IS CHAT MESSAGE";
             message = Message(origin, seqno, chatText);
         }
         rumorMonger(message, sender, senderPort);
     }
     else if (sendStatus) {
-        qDebug() << "Requesting Messages from: " << sender << " Port: " << senderPort;
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
     
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
-    if (message.getMessage() != NULL) {
-        qDebug() << "Chat Message to: " + address.toString() + " Port: " + QString::number(port);
-    }
-    else {
-        qDebug() << "Rumor Message to: " + address.toString() + " Port: " + QString::number(port);
-    }
     QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
@@ -342,8 +332,6 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     stream << statusMessage;
     
     // Send the message
-    qDebug() << "Sending Status Message to: " + address.toString() + " Port: " + QString::number(port);
-    
     QMap<QString, QVariant>::iterator it;
     for (it = status.begin(); it != status.end(); it++) {
         qDebug() << it.key() << ": " << it.value();
@@ -398,7 +386,6 @@ void ChatDialog::mongerTimeout() {
 #pragma mark - Anti-entropy
 
 void ChatDialog::antiEntropyTimeout() {
-    qDebug() << "Anti-Entropy timeout";
     if (peers.size() == 0) return;
     Peer p = peers.at(rand() % peers.size());
     ChatDialog::sendStatusMessage(p.address, p.port);
