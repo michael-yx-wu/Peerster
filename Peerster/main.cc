@@ -323,6 +323,9 @@ void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
+    else {
+        qDebug() << "NOT FORWARDING MESSAGE!!!";
+    }
 }
 
 void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
