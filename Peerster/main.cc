@@ -447,7 +447,9 @@ int main(int argc, char **argv) {
         if (arg == "-noforward") {
             dialog.shouldForwardMessages = false;
         }
-        dialog.resolvePeer(argv[i]);
+        else {
+            dialog.resolvePeer(argv[i]);
+        }
     }
     
 	// Enter the Qt main loop; everything else is event driven
