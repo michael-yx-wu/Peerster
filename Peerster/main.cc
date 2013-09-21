@@ -208,7 +208,10 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         return false;
     }
     
-    
+    quint32 lastIP = datapacket.value(xLastIP).toUInt();
+    quint16 lastPort = datapacket.value(xLastPort).toUInt();
+    QString hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
+    resolvePeer(hostPort);
     
     updatePrivateMessagingPanel(origin, sender, senderPort);
     
@@ -308,10 +311,10 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     if (mongerRumor) {
         if (chatText.isNull()) {
-            message = Message(origin, seqno, sender.toIPv4Address(), senderPort);
+            message = Message(origin, seqno, myIP.toIPv4Address(), myport);
         }
         else {
-            message = Message(origin, seqno, chatText, sender.toIPv4Address(), senderPort);
+            message = Message(origin, seqno, chatText, myIP.toIPv4Address(), myport);
         }
         rumorMonger(message, sender, senderPort);
     }
