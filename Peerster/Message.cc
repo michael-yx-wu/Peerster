@@ -120,12 +120,3 @@ QString Message::getMessage() {
 QByteArray Message::getSerializedMessage() {
     return serializedMessage;
 }
-
-void Message::updateLastIP(quint32 someIP) {
-    lastIP = someIP;
-}
-
-void Message::updateLastPort(quint16 somePort) {
-    lastPort = somePort;
-}
-
