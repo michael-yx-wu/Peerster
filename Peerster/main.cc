@@ -358,7 +358,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressedChatBox() {
-    Message message = Message(hostname, messageNo, chatbox->toPlainText(), myIP.toIPv4Address(), myport);
+    Message message = Message(hostname, messageNo, chatbox->toPlainText());
     textview->append(message.getMessage());
     messages.addMessage(message.getOrigin(), message.getSeqno(), message.getMessage());
     status[hostname] = ++messageNo;
@@ -409,7 +409,7 @@ void ChatDialog::antiEntropyTimeout() {
 // Monger route message to a random peer
 void ChatDialog::routeMonger() {
     qDebug() << "Route Mongering!";
-    Message message = Message(hostname, messageNo, myIP.toIPv4Address(), myport);
+    Message message = Message(hostname, messageNo);
     status[hostname] = ++messageNo;
     
     // Rumor monger at a random peer

@@ -11,6 +11,13 @@ const QString Message::xHopLimit = "HopLimit";
 const QString Message::xLastIP = "LastIP";
 const QString Message::xLastPort = "LastPort";
 
+Message::Message(const QString someOrigin, const quint32 someSeqno) {
+    origin = someOrigin;
+    seqno = someSeqno;
+    serializedMessage = serializeRouteMessage();
+    routeMessage = true;
+}
+
 Message::Message(const QString someOrigin, const quint32 someSeqno, const quint32 someIP, const quint16 somePort) {
     origin = someOrigin;
     seqno = someSeqno;
@@ -20,12 +27,12 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const quint3
     routeMessage = true;
 }
 
-Message::Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit) {
-    destOrigin = someDestOrigin;
+Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) {
+    origin = someOrigin;
+    seqno = someSeqno;
     message = someMessage;
-    hopLimit = someHopLimit;
-    serializedMessage = serializePrivateMessage();
-    privateMessage = true;
+    serializedMessage = serializeChatMessage();
+    chatMessage = true;
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort) {
@@ -38,6 +45,14 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     chatMessage = true;
 }
 
+Message::Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit) {
+    destOrigin = someDestOrigin;
+    message = someMessage;
+    hopLimit = someHopLimit;
+    serializedMessage = serializePrivateMessage();
+    privateMessage = true;
+}
+
 #pragma mark - Message Serialization
 
 QByteArray Message::serializeChatMessage() {
@@ -45,8 +60,12 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xChatText, message);
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-    datapacket.insert(xLastIP, lastIP);
-    datapacket.insert(xLastPort, lastPort);
+    if (!xLastIP.isNull()) {
+        datapacket.insert(xLastIP, lastIP);
+    }
+    if (!xLastPort.isNull()) {
+        datapacket.insert(xLastPort, lastPort);
+    }
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
@@ -68,8 +87,12 @@ QByteArray Message::serializeRouteMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-    datapacket.insert(xLastIP, lastIP);
-    datapacket.insert(xLastPort, lastPort);
+    if (!xLastIP.isNull()) {
+        datapacket.insert(xLastIP, lastIP);
+    }
+    if (!xLastPort.isNull()) {
+        datapacket.insert(xLastPort, lastPort);
+    }
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;   

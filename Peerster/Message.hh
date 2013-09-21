@@ -10,7 +10,9 @@ public:
 #pragma mark - Constructors
     
     Message() {};
+    Message(const QString someOrigin, const quint32 someSeqno);
     Message(const QString someOrigin, const quint32 someSeqno, const quint32 someIP, const quint16 somePort);
+    Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage);
     Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort);
     Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit);
     
