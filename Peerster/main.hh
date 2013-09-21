@@ -51,6 +51,8 @@ private:
     static const QString xWant;
     static const QString xDest;
     static const QString xHopLimit;
+    static const QString xLastIP;
+    static const QString xLastPort;
     
     // Chat Dialog Constants
     quint16 minport, maxport;

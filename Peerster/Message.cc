@@ -8,10 +8,14 @@ const QString Message::xSeqNo = "SeqNo";
 const QString Message::xChatText = "ChatText";
 const QString Message::xDest = "Dest";
 const QString Message::xHopLimit = "HopLimit";
+const QString Message::xLastIP = "LastIP";
+const QString Message::xLastPort = "LastPort";
 
-Message::Message(const QString someOrigin, const quint32 someSeqno) {
+Message::Message(const QString someOrigin, const quint32 someSeqno, const quint32 someIP, const quint16 somePort) {
     origin = someOrigin;
     seqno = someSeqno;
+    lastIP = someIP;
+    lastPort = somePort;
     serializedMessage = serializeRouteMessage();
     routeMessage = true;
 }
@@ -24,10 +28,12 @@ Message::Message(const QString someDestOrigin, const QString someMessage, quint3
     privateMessage = true;
 }
 
-Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) {
+Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort) {
     origin = someOrigin;
     seqno = someSeqno;
     message = someMessage;
+    lastIP = someIP;
+    lastPort = somePort;
     serializedMessage = serializeChatMessage();
     chatMessage = true;
 }
@@ -39,6 +45,8 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xChatText, message);
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
+    datapacket.insert(xLastIP, lastIP);
+    datapacket.insert(xLastPort, lastPort);
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
@@ -60,6 +68,8 @@ QByteArray Message::serializeRouteMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
+    datapacket.insert(xLastIP, lastIP);
+    datapacket.insert(xLastPort, lastPort);
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;   
@@ -109,5 +119,13 @@ QString Message::getMessage() {
 
 QByteArray Message::getSerializedMessage() {
     return serializedMessage;
+}
+
+void Message::updateLastIP(quint32 someIP) {
+    lastIP = someIP;
+}
+
+void Message::updateLastPort(quint16 somePort) {
+    lastPort = somePort;
 }
 

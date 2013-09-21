@@ -16,6 +16,8 @@ const QString ChatDialog::xChatText = "ChatText";
 const QString ChatDialog::xWant = "Want";
 const QString ChatDialog::xDest = "Dest";
 const QString ChatDialog::xHopLimit = "HopLimit";
+const QString ChatDialog::xLastIP = "LastIP";
+const QString ChatDialog::xLastPort = "LastPort";
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
@@ -183,7 +185,7 @@ void ChatDialog::processPendingDatagrams() {
             if (processRumorMessage(datapacket, sender, senderPort)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
                 Peer p = peers.at(rand() % peers.size());
-                Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString());
+                Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
                 rumorMonger(message, p.address, p.port);
             }
         }
@@ -205,6 +207,8 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     if (messages.hasMessage(origin, seqno)) {
         return false;
     }
+    
+    
     
     updatePrivateMessagingPanel(origin, sender, senderPort);
     
@@ -304,10 +308,10 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     
     if (mongerRumor) {
         if (chatText.isNull()) {
-            message = Message(origin, seqno);
+            message = Message(origin, seqno, sender.toIPv4Address(), senderPort);
         }
         else {
-            message = Message(origin, seqno, chatText);
+            message = Message(origin, seqno, chatText, sender.toIPv4Address(), senderPort);
         }
         rumorMonger(message, sender, senderPort);
     }
@@ -351,7 +355,7 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
 
 // Send the current message to neighbors
 void ChatDialog::gotReturnPressedChatBox() {
-    Message message = Message(hostname, messageNo, chatbox->toPlainText());
+    Message message = Message(hostname, messageNo, chatbox->toPlainText(), myIP.toIPv4Address(), myport);
     textview->append(message.getMessage());
     messages.addMessage(message.getOrigin(), message.getSeqno(), message.getMessage());
     status[hostname] = ++messageNo;
@@ -402,7 +406,7 @@ void ChatDialog::antiEntropyTimeout() {
 // Monger route message to a random peer
 void ChatDialog::routeMonger() {
     qDebug() << "Route Mongering!";
-    Message message = Message(hostname, messageNo);
+    Message message = Message(hostname, messageNo, myIP.toIPv4Address(), myport);
     status[hostname] = ++messageNo;
     
     // Rumor monger at a random peer
