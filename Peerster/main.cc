@@ -184,9 +184,21 @@ void ChatDialog::processPendingDatagrams() {
         if (datapacket.contains(xOrigin)) {
             if (processRumorMessage(datapacket, sender, senderPort)) {
                 ChatDialog::sendStatusMessage(sender, senderPort);
-                Peer p = peers.at(rand() % peers.size());
-                Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
-                rumorMonger(message, p.address, p.port);
+                
+                // Rumor monger if chat message
+                if (datapacket.contains(xChatText)) {
+                    Peer p = peers.at(rand() % peers.size());
+                    Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
+                    rumorMonger(message, p.address, p.port);
+                }
+                
+                // If route message, send to all known peers
+                else {
+                    Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
+                    for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
+                        sendMessage(message, (*it).address, (*it).port);
+                    }
+                }
             }
         }
         // Check to see if datagram is a private chat message
@@ -242,7 +254,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         messages.addMessage(origin, seqno, message);
     }
     else {
-        qDebug() << "Got rumor message from " + origin;
+        qDebug() << "Got route message from " + origin;
     }
     
     return true;
