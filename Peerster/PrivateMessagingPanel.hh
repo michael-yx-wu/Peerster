@@ -19,7 +19,7 @@ public:
     QGroupBox* getOriginBox();
     QMap<QString, QPair<QHostAddress, quint16> > getOriginMap();
     void setSocket(QUdpSocket *parentSocket);
-    void updateOrigins(QString origin, QHostAddress address, quint16 port);
+    void updateOrigins(QString origin, QHostAddress address, quint16 port, bool isDirectRoute);
 
     public slots:
     void buttonClicked(QString destinationName);
@@ -30,6 +30,7 @@ private:
     QGroupBox *originBox;
     QVBoxLayout *originList;
     QMap<QString, QPair<QHostAddress, quint16> > originMap;
+    QMap<QString, bool> originDirectIndirectMap;
     QMap<QString, PrivateChatDialog*> privateChatDialogs;
     QSignalMapper *privateChatMapper;
     QUdpSocket *socket;

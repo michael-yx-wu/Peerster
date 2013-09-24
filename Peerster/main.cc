@@ -77,11 +77,11 @@ ChatDialog::ChatDialog() {
     QTimer::singleShot(1000, this, SLOT(routeMonger()));
     
     // Add the ports in my port range to my peer list
-//    for (int i = minport; i <= maxport; i++) {
-//        if (i != myport) {
-//            ChatDialog::updatePeerList(myIP, i);
-//        }
-//    }
+    //    for (int i = minport; i <= maxport; i++) {
+    //        if (i != myport) {
+    //            ChatDialog::updatePeerList(myIP, i);
+    //        }
+    //    }
 }
 
 // Attempt to bind to a UDP port in range
@@ -200,20 +200,28 @@ void ChatDialog::processPendingDatagrams() {
 }
 
 bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
-    // Check to see if we have already seen this message
-    // Update side panel regardless
-    QString origin = datapacket.value(xOrigin).toString();
-    quint32 seqno = datapacket.value(xSeqNo).toUInt();
+    QString origin, hostPort, message;
+    quint32 seqno, lastIP;
+    quint16 lastPort;
+    bool isDirectRoute = true;
+    
+    // Check to see if we have already seen this rumor message
+    origin = datapacket.value(xOrigin).toString();
+    seqno = datapacket.value(xSeqNo).toUInt();
     if (messages.hasMessage(origin, seqno)) {
         return false;
     }
     
-    quint32 lastIP = datapacket.value(xLastIP).toUInt();
-    quint16 lastPort = datapacket.value(xLastPort).toUInt();
-    QString hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
-    resolvePeer(hostPort);
-    
-    updatePrivateMessagingPanel(origin, sender, senderPort);
+    // Resolve peer if lastIP/lastPort information present
+    // Send route information to privateMessagingPanel
+    if (datapacket.contains(xLastIP) && datapacket.contains(xLastPort)) {
+        lastIP = datapacket.value(xLastIP).toUInt();
+        lastPort = datapacket.value(xLastPort).toUInt();
+        hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
+        resolvePeer(hostPort);
+        isDirectRoute = false;
+    }
+    updatePrivateMessagingPanel(origin, sender, senderPort, isDirectRoute);
     
     // We know about this origin and we have not seen this message,
     // but there is another message that should come before it
@@ -223,9 +231,8 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         return false;
     }
     
-    // Display the new message if ChatText exists
     // If ChatText exists, display/save message and update seqno
-    QString message;
+    // If route message, do nothing
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
@@ -245,7 +252,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << dest;
     qDebug() << message;
     qDebug() << hoplimit;
-
+    
     // Display message if I am intended targets
     if (QString::compare(dest, hostname) == 0) {
         textview->append(message);
@@ -416,9 +423,9 @@ void ChatDialog::routeMonger() {
     rumorMonger(message, p.address, p.port);
 }
 
-void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port) {
+void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, bool isDirectRoute) {
     qDebug() << "updating origin list";
-    privateMessagingPanel.updateOrigins(origin, address, port);
+    privateMessagingPanel.updateOrigins(origin, address, port, isDirectRoute);
 }
 
 #pragma mark

@@ -22,7 +22,7 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
     socket = parentSocket;
 }
 
-void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port) {
+void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, bool isDirectRoute) {
     qDebug() << "Updating origin information for: " << origin;
     qDebug() << address << port;
     if (!originMap.contains(origin)) {
@@ -33,8 +33,18 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         originList->addWidget(originButton);
     }
     
-    // Update Route
-    originMap.insert(origin, qMakePair(address, port));
+    // If last route to origin was direct route, update only if new route is direct route
+    if (originMap.contains(origin) && originDirectIndirectMap.value(origin)) {
+        if (isDirectRoute) {
+            originMap.insert(origin, qMakePair(address, port));
+            originDirectIndirectMap.insert(origin, isDirectRoute);
+        }
+    }
+    else {
+        originMap.insert(origin, qMakePair(address, port));
+        originDirectIndirectMap.insert(origin, isDirectRoute);
+    }
+    
     if (privateChatDialogs.contains(origin)) {
         qDebug() << "Updating open private chat window";
         privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
