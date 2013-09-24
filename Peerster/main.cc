@@ -239,6 +239,9 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         status[origin] = seqno+1;
         messages.addMessage(origin, seqno, message);
     }
+    else {
+        qDebug() << "Got rumor message from " + origin;
+    }
     
     return true;
 }
