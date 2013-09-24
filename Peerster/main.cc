@@ -224,15 +224,14 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     }
     
     // Display the new message if ChatText exists
+    // If ChatText exists, display/save message and update seqno
     QString message;
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
+        status[origin] = seqno+1;
+        messages.addMessage(origin, seqno, message);
     }
-    
-    // Update status and save the message
-    status[origin] = seqno+1;
-    messages.addMessage(origin, seqno, message);
     
     return true;
 }
@@ -409,8 +408,7 @@ void ChatDialog::antiEntropyTimeout() {
 // Monger route message to a random peer
 void ChatDialog::routeMonger() {
     qDebug() << "Route Mongering!";
-    Message message = Message(hostname, messageNo);
-    status[hostname] = ++messageNo;
+    Message message = Message(hostname, messageNo+1);
     
     // Rumor monger at a random peer
     if (peers.size() == 0) return;
