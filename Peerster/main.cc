@@ -214,14 +214,16 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     
     // Resolve peer if lastIP/lastPort information present
     // Send route information to privateMessagingPanel
-    if (datapacket.contains(xLastIP) && datapacket.contains(xLastPort)) {
-        lastIP = datapacket.value(xLastIP).toUInt();
-        lastPort = datapacket.value(xLastPort).toUInt();
-        hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
-        resolvePeer(hostPort);
-        isDirectRoute = false;
+    if (origin != hostname) {
+        if (datapacket.contains(xLastIP) && datapacket.contains(xLastPort)) {
+            lastIP = datapacket.value(xLastIP).toUInt();
+            lastPort = datapacket.value(xLastPort).toUInt();
+            hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
+            resolvePeer(hostPort);
+            isDirectRoute = false;
+        }
+        updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
     }
-    updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
     
     // We know about this origin and we have not seen this message,
     // but there is another message that should come before it
