@@ -68,7 +68,7 @@ ChatDialog::ChatDialog() {
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-//    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
@@ -416,15 +416,14 @@ void ChatDialog::antiEntropyTimeout() {
 
 #pragma mark - Routing
 
-// Monger route message to a random peer
+// Monger route message to all peers
 void ChatDialog::routeMonger() {
     qDebug() << "Route Mongering!";
     Message message = Message(hostname, messageNo);
     
-    // Rumor monger at a random peer
-    if (peers.size() == 0) return;
-    Peer p = peers.at(rand() % peers.size());
-    rumorMonger(message, p.address, p.port);
+    for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
+        sendMessage(message, (*it).address, (*it).port);
+    }
 }
 
 void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
