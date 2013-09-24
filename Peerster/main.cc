@@ -396,8 +396,7 @@ void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port
 
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger again
-    qDebug() << "Monger Timeout";
-    if (rand() % 2 == 1) {
+    if (rand() % 2) {
         qDebug() << "Trying to monger again";
         if (!newMessages.isEmpty()) {
             if (peers.size() == 0) return;
@@ -429,7 +428,6 @@ void ChatDialog::routeMonger() {
 }
 
 void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
-    qDebug() << "updating origin list";
     privateMessagingPanel.updateOrigins(origin, address, port, seqno, isDirectRoute);
 }
 

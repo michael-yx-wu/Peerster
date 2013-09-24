@@ -23,10 +23,9 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
 }
 
 void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
-    qDebug() << "Updating origin information for: " << origin;
-    qDebug() << address << port;
+    
+    // Create a new button for previously unkonwn origins
     if (!originMap.contains(origin)) {
-        qDebug() << "New button for new origin!";
         QPushButton *originButton = new QPushButton(origin);
         buttonMapper->setMapping(originButton, originButton->text());
         connect(originButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
@@ -38,16 +37,19 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     if (origin.contains(origin)) {
         if (seqno >= originDirectIndirectMap.value(origin).first) {
             if (originDirectIndirectMap.value(origin).second && isDirectRoute) {
+                qDebug() << "Updating origin information for: " << origin;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
             }
             else if (!originDirectIndirectMap.value(origin).second) {
+                qDebug() << "Updating origin information for: " << origin;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
             }
         }
     }
     else {
+        qDebug() << "Updating origin information for: " << origin;
         originMap.insert(origin, qMakePair(address, port));
         originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
     }
