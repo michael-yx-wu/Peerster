@@ -68,7 +68,7 @@ ChatDialog::ChatDialog() {
     connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
     connect(addHostBox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedHostBox()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
+//    connect(antiEntropyTimer, SIGNAL(timeout()), this, SLOT(antiEntropyTimeout()));
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
@@ -332,7 +332,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
     if (shouldForwardMessages == true || message.getMessage().isNull()) {
-        qDebug() << "Sending a Message from " + message.getOrigin();
+        if (message.getMessage().isNull()) {
+            qDebug() << "Sending Route Message";
+        }
+        else {
+            qDebug() << "Sending Chat Message";
+        }
         QByteArray datagram = message.getSerializedMessage();
         socket->writeDatagram(datagram.data(), datagram.size(), address, port);
     }
@@ -352,10 +357,10 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     stream << statusMessage;
     
     // Send the message
-    QMap<QString, QVariant>::iterator it;
-    for (it = status.begin(); it != status.end(); it++) {
-        qDebug() << it.key() << ": " << it.value();
-    }
+//    QMap<QString, QVariant>::iterator it;
+//    for (it = status.begin(); it != status.end(); it++) {
+//        qDebug() << it.key() << ": " << it.value();
+//    }
     
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
@@ -386,7 +391,7 @@ void ChatDialog::gotReturnPressedHostBox() {
 void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
     ChatDialog::sendMessage(message, address, port);
     newMessages.enqueue(message);
-    QTimer::singleShot(1000, this, SLOT(mongerTimeout()));
+    QTimer::singleShot(2500, this, SLOT(mongerTimeout()));
 }
 
 void ChatDialog::mongerTimeout() {
