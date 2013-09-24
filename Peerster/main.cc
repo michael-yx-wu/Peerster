@@ -316,13 +316,8 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
     
     if (mongerRumor) {
-        if (chatText.isNull()) {
-            message = Message(origin, seqno, myIP.toIPv4Address(), myport);
-        }
-        else {
-            message = Message(origin, seqno, chatText, myIP.toIPv4Address(), myport);
-        }
-        rumorMonger(message, sender, senderPort);
+        message = Message(origin, seqno, chatText, myIP.toIPv4Address(), myport);
+        sendMessage(message, sender, senderPort);
     }
     else if (sendStatus) {
         ChatDialog::sendStatusMessage(sender, senderPort);
