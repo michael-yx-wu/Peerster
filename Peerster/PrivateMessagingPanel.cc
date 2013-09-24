@@ -38,11 +38,13 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         if (seqno >= originDirectIndirectMap.value(origin).first) {
             if (originDirectIndirectMap.value(origin).second && isDirectRoute) {
                 qDebug() << "Updating origin information for: " << origin;
+                qDebug() << address;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
             }
             else if (!originDirectIndirectMap.value(origin).second) {
                 qDebug() << "Updating origin information for: " << origin;
+                qDebug() << address;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
             }
@@ -50,6 +52,7 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     }
     else {
         qDebug() << "Updating origin information for: " << origin;
+        qDebug() << address;
         originMap.insert(origin, qMakePair(address, port));
         originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
     }
