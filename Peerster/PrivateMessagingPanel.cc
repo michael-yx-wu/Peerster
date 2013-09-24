@@ -22,7 +22,7 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
     socket = parentSocket;
 }
 
-void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, bool isDirectRoute) {
+void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
     qDebug() << "Updating origin information for: " << origin;
     qDebug() << address << port;
     if (!originMap.contains(origin)) {
@@ -34,15 +34,22 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     }
     
     // If last route to origin was direct route, update only if new route is direct route
-    if (originMap.contains(origin) && originDirectIndirectMap.value(origin)) {
-        if (isDirectRoute) {
-            originMap.insert(origin, qMakePair(address, port));
-            originDirectIndirectMap.insert(origin, isDirectRoute);
+    // or if new route has higher seqno
+    if (origin.contains(origin)) {
+        if (seqno >= originDirectIndirectMap.value(origin).first) {
+            if (originDirectIndirectMap.value(origin).second && isDirectRoute) {
+                originMap.insert(origin, qMakePair(address, port));
+                originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
+            }
+            else if (!originDirectIndirectMap.value(origin).second) {
+                originMap.insert(origin, qMakePair(address, port));
+                originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
+            }
         }
     }
     else {
         originMap.insert(origin, qMakePair(address, port));
-        originDirectIndirectMap.insert(origin, isDirectRoute);
+        originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
     }
     
     if (privateChatDialogs.contains(origin)) {

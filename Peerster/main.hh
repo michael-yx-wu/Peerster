@@ -88,7 +88,7 @@ private:
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
     void updateOriginButtons(QString origin, QHostAddress address, quint16 port);
-    void updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, bool isDirectRoute);
+    void updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
 };
 
 #endif

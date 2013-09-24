@@ -221,7 +221,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         resolvePeer(hostPort);
         isDirectRoute = false;
     }
-    updatePrivateMessagingPanel(origin, sender, senderPort, isDirectRoute);
+    updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
     
     // We know about this origin and we have not seen this message,
     // but there is another message that should come before it
@@ -423,9 +423,9 @@ void ChatDialog::routeMonger() {
     rumorMonger(message, p.address, p.port);
 }
 
-void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, bool isDirectRoute) {
+void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
     qDebug() << "updating origin list";
-    privateMessagingPanel.updateOrigins(origin, address, port, isDirectRoute);
+    privateMessagingPanel.updateOrigins(origin, address, port, seqno, isDirectRoute);
 }
 
 #pragma mark
