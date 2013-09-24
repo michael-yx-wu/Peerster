@@ -408,7 +408,7 @@ void ChatDialog::antiEntropyTimeout() {
 // Monger route message to a random peer
 void ChatDialog::routeMonger() {
     qDebug() << "Route Mongering!";
-    Message message = Message(hostname, messageNo+1);
+    Message message = Message(hostname, messageNo);
     
     // Rumor monger at a random peer
     if (peers.size() == 0) return;
