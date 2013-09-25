@@ -22,7 +22,7 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
     socket = parentSocket;
 }
 
-void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
+bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
     
     // Create a new button for previously unkonwn origins
     if (!originMap.contains(origin)) {
@@ -41,12 +41,22 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
                 qDebug() << address;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
+                if (privateChatDialogs.contains(origin)) {
+                    qDebug() << "Updating open private chat window";
+                    privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
+                }
+                return true;
             }
-            else if (!originDirectIndirectMap.value(origin).second) {
+            else if (!originDirectIndirectMap.value(origin).second && seqno > originDirectIndirectMap.value(origin).first) {
                 qDebug() << "Updating origin information for: " << origin;
                 qDebug() << address;
                 originMap.insert(origin, qMakePair(address, port));
                 originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
+                if (privateChatDialogs.contains(origin)) {
+                    qDebug() << "Updating open private chat window";
+                    privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
+                }
+                return true;
             }
         }
     }
@@ -55,12 +65,14 @@ void PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         qDebug() << address;
         originMap.insert(origin, qMakePair(address, port));
         originDirectIndirectMap.insert(origin, qMakePair(seqno, isDirectRoute));
+        if (privateChatDialogs.contains(origin)) {
+            qDebug() << "Updating open private chat window";
+            privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
+        }
+        return true;
     }
     
-    if (privateChatDialogs.contains(origin)) {
-        qDebug() << "Updating open private chat window";
-        privateChatDialogs.value(origin)->updateDestinationIPandPort(address, port);
-    }
+    return false;
 }
 
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {

@@ -79,16 +79,16 @@ private:
 
     
     bool bind();
-    bool processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
+    void processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void processPrivateMessage(QMap<QString, QVariant> datapacket);
     void processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
-    void rumorMonger(QString origin, quint32 seqno, QString message, QHostAddress address, quint16 port);
+    void rumorMonger(Message message);
     void rumorMonger(Message message, QHostAddress address, quint16 port);
     void sendMessage(Message message, QHostAddress address, quint16 port);
     void sendStatusMessage(QHostAddress address, quint16 port);
     void updatePeerList(QHostAddress address, quint16 port);
     void updateOriginButtons(QString origin, QHostAddress address, quint16 port);
-    void updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
+    bool updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
 };
 
 #endif

@@ -165,11 +165,14 @@ void ChatDialog::updatePeerList(QHostAddress address, quint16 port) {
 
 // Continue reading datagrams while the socket has pending datagrams
 void ChatDialog::processPendingDatagrams() {
+    QByteArray datagram;
+    QHostAddress sender;
+    quint16 senderPort;
+    Peer p;
+    Message message;
+    
     while (socket->hasPendingDatagrams()) {
-        QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
-        QHostAddress sender;
-        quint16 senderPort;
         socket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
         
         // Update peer list if necessary
@@ -182,24 +185,25 @@ void ChatDialog::processPendingDatagrams() {
         
         // Check to see if datagram is a status or chat/route message
         if (datapacket.contains(xOrigin)) {
-            if (processRumorMessage(datapacket, sender, senderPort)) {
-                ChatDialog::sendStatusMessage(sender, senderPort);
-                
-                // Rumor monger if chat message
-                if (datapacket.contains(xChatText)) {
-                    Peer p = peers.at(rand() % peers.size());
-                    Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
-                    rumorMonger(message, p.address, p.port);
-                }
-                
-                // If route message, send to all known peers
-                else {
-                    Message message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
-                    for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
-                        sendMessage(message, (*it).address, (*it).port);
-                    }
-                }
-            }
+//            if (processRumorMessage(datapacket, sender, senderPort)) {
+//                ChatDialog::sendStatusMessage(sender, senderPort);
+//                
+//                // Rumor monger if chat message
+//                if (datapacket.contains(xChatText)) {
+//                    p = peers.at(rand() % peers.size());
+//                    message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
+//                    rumorMonger(message, p.address, p.port);
+//                }
+//                
+//                // If route message, send to all known peers
+//                else {
+//                    message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
+//                    for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
+//                        sendMessage(message, (*it).address, (*it).port);
+//                    }
+//                }
+//            }
+            processRumorMessage(datapacket, sender, senderPort);
         }
         // Check to see if datagram is a private chat message
         else if (datapacket.contains(xDest)) {
@@ -211,17 +215,20 @@ void ChatDialog::processPendingDatagrams() {
     }
 }
 
-bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
+void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     QString origin, hostPort, message;
     quint32 seqno, lastIP;
     quint16 lastPort;
     bool isDirectRoute = true;
+    bool routeUpdated = false;
+    Message msg;
+    Peer p;
     
     // Check to see if we have already seen this rumor message
     origin = datapacket.value(xOrigin).toString();
     seqno = datapacket.value(xSeqNo).toUInt();
     if (messages.hasMessage(origin, seqno)) {
-        return false;
+        return;
     }
     
     // Resolve peer if lastIP/lastPort information present
@@ -234,7 +241,7 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
             resolvePeer(hostPort);
             isDirectRoute = false;
         }
-        updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
+        routeUpdated = updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
     }
     
     // We know about this origin and we have not seen this message,
@@ -242,22 +249,29 @@ bool ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     if (status.contains(origin) && status.value(origin).toUInt() != seqno) {
         qDebug() << "I want message #: " << status.value(origin).toUInt() << "from " << origin << " I got message #: " << seqno;
         ChatDialog::sendStatusMessage(sender, senderPort);
-        return false;
+        return;
     }
     
-    // If ChatText exists, display/save message and update seqno
-    // If route message, do nothing
+    // If ChatText exists, display/save message and update seqno, monger
+    // If route message, monger if route to origin updated
     if (datapacket.contains(xChatText)) {
         message = datapacket.value(xChatText).toString();
         textview->append(message);
         status[origin] = seqno+1;
         messages.addMessage(origin, seqno, message);
+        
+        msg = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
+        rumorMonger(msg);
     }
     else {
-        qDebug() << "Got route message from " + origin;
+        if (routeUpdated) {
+            msg = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
+            for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
+                sendMessage(msg, (*it).address, (*it).port);
+            }
+        }
     }
-    
-    return true;
+
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
@@ -289,8 +303,8 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
 }
 
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
-    QString origin = "";
-    quint32 seqno = -1;
+    QString origin;
+    quint32 seqno;
     QString chatText;
     Message message;
     bool mongerRumor = false, sendStatus = false;
@@ -369,11 +383,6 @@ void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     stream << statusMessage;
     
     // Send the message
-//    QMap<QString, QVariant>::iterator it;
-//    for (it = status.begin(); it != status.end(); it++) {
-//        qDebug() << it.key() << ": " << it.value();
-//    }
-    
     socket->writeDatagram(datagram.data(), datagram.size(), address, port);
 }
 
@@ -388,9 +397,7 @@ void ChatDialog::gotReturnPressedChatBox() {
     chatbox->clear();
     
     // Rumor monger at a random peer
-    if (peers.size() == 0) return;
-    Peer p = peers.at(rand() % peers.size());
-    rumorMonger(message, p.address, p.port);
+    rumorMonger(message);
 }
 
 void ChatDialog::gotReturnPressedHostBox() {
@@ -400,6 +407,14 @@ void ChatDialog::gotReturnPressedHostBox() {
 
 #pragma mark - Rumor Mongering
 
+// Monger message at a random peer
+void ChatDialog::rumorMonger(Message message) {
+    if (peers.size() == 0) return;
+    Peer peer = peers.at(rand() % peers.size());
+    rumorMonger(message, peer.address, peer.port);
+}
+
+// Monger message at a specified peer
 void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port) {
     ChatDialog::sendMessage(message, address, port);
     newMessages.enqueue(message);
@@ -438,8 +453,8 @@ void ChatDialog::routeMonger() {
     }
 }
 
-void ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
-    privateMessagingPanel.updateOrigins(origin, address, port, seqno, isDirectRoute);
+bool ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
+    return privateMessagingPanel.updateOrigins(origin, address, port, seqno, isDirectRoute);
 }
 
 #pragma mark

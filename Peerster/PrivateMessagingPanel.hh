@@ -19,7 +19,7 @@ public:
     QGroupBox* getOriginBox();
     QMap<QString, QPair<QHostAddress, quint16> > getOriginMap();
     void setSocket(QUdpSocket *parentSocket);
-    void updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
+    bool updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
 
     public slots:
     void buttonClicked(QString destinationName);
