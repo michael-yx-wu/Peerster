@@ -240,7 +240,7 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
             hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
             resolvePeer(hostPort);
             isDirectRoute = false;
-            routeUpdated = updatePrivateMessagingPanel(origin, lastIP, lastPort, seqno, isDirectRoute);
+            routeUpdated = updatePrivateMessagingPanel(origin, QHostAddress(lastIP), lastPort, seqno, isDirectRoute);
         }
         else {
             routeUpdated = updatePrivateMessagingPanel(origin, sender, senderPort, seqno, isDirectRoute);
