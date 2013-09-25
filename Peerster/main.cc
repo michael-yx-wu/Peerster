@@ -307,7 +307,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
 
 void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {
     QString origin;
-    quint32 seqno;
+    quint32 seqno = -1;
     QString chatText;
     Message message;
     bool mongerRumor = false, sendStatus = false;
