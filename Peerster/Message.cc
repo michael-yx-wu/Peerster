@@ -66,6 +66,7 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
     if (hasLastIPandPort) {
+        qDebug() << "Inserting: " + QString::number(lastIP) + ":" + QString::number(lastPort);
         datapacket.insert(xLastIP, lastIP);
         datapacket.insert(xLastPort, lastPort);
     }

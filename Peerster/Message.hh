@@ -5,6 +5,7 @@
 #include <QString>
 #include <QVariant>
 
+
 class Message {
 public:
 #pragma mark - Constructors
