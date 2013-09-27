@@ -12,50 +12,50 @@ const QString Message::xLastIP = "LastIP";
 const QString Message::xLastPort = "LastPort";
 
 Message::Message(const QString someOrigin, const quint32 someSeqno) {
+    hasLastIPandPort = false;
+    routeMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
     serializedMessage = serializeRouteMessage();
-    hasLastIPandPort = false;
-    routeMessage = true;
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const quint32 someIP, const quint16 somePort) {
+    hasLastIPandPort = true;
+    routeMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
     lastIP = someIP;
     lastPort = somePort;
     serializedMessage = serializeRouteMessage();
-    hasLastIPandPort = true;
-    routeMessage = true;
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) {
+    hasLastIPandPort = false;
+    chatMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
     message = someMessage;
     serializedMessage = serializeChatMessage();
-    hasLastIPandPort = false;
-    chatMessage = true;
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort) {
+    hasLastIPandPort = true;
+    chatMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
     message = someMessage;
     lastIP = someIP;
     lastPort = somePort;
     serializedMessage = serializeChatMessage();
-    hasLastIPandPort = true;
-    chatMessage = true;
 }
 
 Message::Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit) {
+    hasLastIPandPort = false;
+    privateMessage = true;
     destOrigin = someDestOrigin;
     message = someMessage;
     hopLimit = someHopLimit;
     serializedMessage = serializePrivateMessage();
-    hasLastIPandPort = false;
-    privateMessage = true;
 }
 
 #pragma mark - Message Serialization
@@ -65,10 +65,10 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xChatText, message);
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-//    if (hasLastIPandPort) {
-//        datapacket.insert(xLastIP, lastIP);
-//        datapacket.insert(xLastPort, lastPort);
-//    }
+    if (hasLastIPandPort) {
+        datapacket.insert(xLastIP, lastIP);
+        datapacket.insert(xLastPort, lastPort);
+    }
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
