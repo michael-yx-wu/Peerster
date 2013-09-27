@@ -15,6 +15,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno) {
     origin = someOrigin;
     seqno = someSeqno;
     serializedMessage = serializeRouteMessage();
+    hasLastIPandPort = false;
     routeMessage = true;
 }
 
@@ -24,6 +25,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const quint3
     lastIP = someIP;
     lastPort = somePort;
     serializedMessage = serializeRouteMessage();
+    hasLastIPandPort = true;
     routeMessage = true;
 }
 
@@ -32,6 +34,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     seqno = someSeqno;
     message = someMessage;
     serializedMessage = serializeChatMessage();
+    hasLastIPandPort = false;
     chatMessage = true;
 }
 
@@ -42,6 +45,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     lastIP = someIP;
     lastPort = somePort;
     serializedMessage = serializeChatMessage();
+    hasLastIPandPort = true;
     chatMessage = true;
 }
 
@@ -50,6 +54,7 @@ Message::Message(const QString someDestOrigin, const QString someMessage, quint3
     message = someMessage;
     hopLimit = someHopLimit;
     serializedMessage = serializePrivateMessage();
+    hasLastIPandPort = false;
     privateMessage = true;
 }
 
@@ -60,10 +65,8 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xChatText, message);
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-    if (!xLastIP.isNull()) {
+    if (hasLastIPandPort) {
         datapacket.insert(xLastIP, lastIP);
-    }
-    if (!xLastPort.isNull()) {
         datapacket.insert(xLastPort, lastPort);
     }
     QByteArray datagram;
@@ -87,10 +90,8 @@ QByteArray Message::serializeRouteMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-    if (!xLastIP.isNull()) {
+    if (hasLastIPandPort) {
         datapacket.insert(xLastIP, lastIP);
-    }
-    if (!xLastPort.isNull()) {
         datapacket.insert(xLastPort, lastPort);
     }
     QByteArray datagram;

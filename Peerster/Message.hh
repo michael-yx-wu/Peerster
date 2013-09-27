@@ -50,6 +50,7 @@ private:
     quint16 lastPort;
     QByteArray serializedMessage;
     bool chatMessage;
+    bool hasLastIPandPort;
     bool routeMessage;
     bool privateMessage;
   
