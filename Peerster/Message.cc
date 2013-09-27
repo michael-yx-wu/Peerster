@@ -65,11 +65,10 @@ QByteArray Message::serializeChatMessage() {
     datapacket.insert(xChatText, message);
     datapacket.insert(xOrigin, origin);
     datapacket.insert(xSeqNo, seqno);
-    if (hasLastIPandPort) {
-        qDebug() << "Inserting: " + QString::number(lastIP) + ":" + QString::number(lastPort);
-        datapacket.insert(xLastIP, lastIP);
-        datapacket.insert(xLastPort, lastPort);
-    }
+//    if (hasLastIPandPort) {
+//        datapacket.insert(xLastIP, lastIP);
+//        datapacket.insert(xLastPort, lastPort);
+//    }
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
