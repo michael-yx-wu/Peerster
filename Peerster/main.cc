@@ -238,6 +238,7 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
             lastIP = datapacket.value(xLastIP).toUInt();
             lastPort = datapacket.value(xLastPort).toUInt();
             hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
+            qDebug() << "Sending this to resolve peer method: " + hostPort;
             resolvePeer(hostPort);
             isDirectRoute = false;
             routeUpdated = updatePrivateMessagingPanel(origin, QHostAddress(lastIP), lastPort, seqno, isDirectRoute);
