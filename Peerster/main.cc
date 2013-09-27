@@ -72,7 +72,7 @@ ChatDialog::ChatDialog() {
     connect(routingTimer, SIGNAL(timeout()), this, SLOT(routeMonger()));
     
     // Start timers
-    antiEntropyTimer->start(5000);
+    antiEntropyTimer->start(2000);
     routingTimer->start(60000);//change to once per minute
     QTimer::singleShot(1000, this, SLOT(routeMonger()));
     
