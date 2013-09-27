@@ -237,7 +237,7 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         if (datapacket.contains(xLastIP) && datapacket.contains(xLastPort)) {
             lastIP = datapacket.value(xLastIP).toUInt();
             lastPort = datapacket.value(xLastPort).toUInt();
-            hostPort = QString::number(lastIP) + ":" + QString::number(lastPort);
+            hostPort = QHostAddress(lastIP).toString() + ":" + QString::number(lastPort);
             qDebug() << "Sending this to resolve peer method: " + hostPort;
             resolvePeer(hostPort);
             isDirectRoute = false;
