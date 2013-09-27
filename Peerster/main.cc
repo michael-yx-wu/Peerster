@@ -183,29 +183,10 @@ void ChatDialog::processPendingDatagrams() {
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         stream >> datapacket;
         
-        // Check to see if datagram is a status or chat/route message
+        // Process the datapacket
         if (datapacket.contains(xOrigin)) {
-//            if (processRumorMessage(datapacket, sender, senderPort)) {
-//                ChatDialog::sendStatusMessage(sender, senderPort);
-//                
-//                // Rumor monger if chat message
-//                if (datapacket.contains(xChatText)) {
-//                    p = peers.at(rand() % peers.size());
-//                    message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
-//                    rumorMonger(message, p.address, p.port);
-//                }
-//                
-//                // If route message, send to all known peers
-//                else {
-//                    message = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
-//                    for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
-//                        sendMessage(message, (*it).address, (*it).port);
-//                    }
-//                }
-//            }
             processRumorMessage(datapacket, sender, senderPort);
         }
-        // Check to see if datagram is a private chat message
         else if (datapacket.contains(xDest)) {
             processPrivateMessage(datapacket);
         }
@@ -264,12 +245,12 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
         status[origin] = seqno+1;
         messages.addMessage(origin, seqno, message);
         
-        msg = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
+        msg = Message(origin, seqno, datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
         rumorMonger(msg);
     }
     else {
         if (routeUpdated) {
-            msg = Message(datapacket.value(xOrigin).toString(), datapacket.value(xSeqNo).toUInt(), sender.toIPv4Address(), senderPort);
+            msg = Message(origin, seqno, sender.toIPv4Address(), senderPort);
             for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
                 sendMessage(msg, (*it).address, (*it).port);
             }
@@ -351,13 +332,12 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     }
     
     if (mongerRumor) {
-        message = Message(origin, seqno, chatText, myIP.toIPv4Address(), myport);
+        message = Message(origin, seqno, chatText);
         sendMessage(message, sender, senderPort);
     }
     else if (sendStatus) {
         ChatDialog::sendStatusMessage(sender, senderPort);
     }
-    
 }
 
 void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port) {
