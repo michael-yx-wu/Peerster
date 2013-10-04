@@ -1,9 +1,16 @@
-//
-//  FilePanel.cpp
-//  Peerster
-//
-//  Created by Michael Wu on 10/4/13.
-//
-//
+#include "FilePanel.hh"
 
-#include "FilePanel.h"
+FilePanel::FilePanel() {
+    fileShareBox = new QGroupBox("File Sharing");
+    fileShareBoxLayout = new QVBoxLayout;
+    fileShareBoxLayout->addWidget(new QPushButton("Add File(s)"));
+    fileShareBox->setLayout(fileShareBoxLayout);
+    
+    buttonMapper = new QSignalMapper(this);
+    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
+    
+}
+
+QGroupBox* FilePanel::getGroupBox() {
+    return fileShareBox;
+}

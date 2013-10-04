@@ -45,6 +45,8 @@ ChatDialog::ChatDialog() {
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
     layout->addWidget(privateMessagingPanel.getOriginBox(), 0, 1);
+    layout->addWidget(filePanel.getGroupBox(), 1, 1);
+    
 	setLayout(layout);
     chatbox->setFocus();
     

@@ -16,6 +16,7 @@
 #include "Peer.hh"
 #include "PrivateMessagingPanel.hh"
 #include "Chatbox.hh"
+#include "FilePanel.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT
@@ -77,6 +78,8 @@ private:
     QMap<QString, QPair<QHostAddress, quint16> > routingTable;
     QTimer *routingTimer;
 
+    // File sharing
+    FilePanel filePanel;    
     
     bool bind();
     void processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);

@@ -1,14 +1,26 @@
-//
-//  FilePanel.h
-//  Peerster
-//
-//  Created by Michael Wu on 10/4/13.
-//
-//
-
 #ifndef __Peerster__FilePanel__
 #define __Peerster__FilePanel__
 
-#include <iostream>
+#include <QButtonGroup>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QVBoxLayout>
 
-#endif /* defined(__Peerster__FilePanel__) */
+
+class FilePanel : public QObject {
+    Q_OBJECT
+    
+public:
+    FilePanel();
+    QGroupBox* getGroupBox();
+    
+private:
+//    QFileDialog *fileDialog;
+    QSignalMapper *buttonMapper;
+    QGroupBox *fileShareBox;
+    QVBoxLayout *fileShareBoxLayout;
+};
+
+#endif
