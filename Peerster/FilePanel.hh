@@ -2,10 +2,10 @@
 #define __Peerster__FilePanel__
 
 #include <QButtonGroup>
+#include <QDebug>
 #include <QFileDialog>
 #include <QGroupBox>
 #include <QPushButton>
-#include <QSignalMapper>
 #include <QVBoxLayout>
 
 
@@ -16,11 +16,13 @@ public:
     FilePanel();
     QGroupBox* getGroupBox();
     
+    public slots:
+    void showDialog();
+    
 private:
-//    QFileDialog *fileDialog;
-    QSignalMapper *buttonMapper;
     QGroupBox *fileShareBox;
     QVBoxLayout *fileShareBoxLayout;
+    QFileDialog *fileDialog;
 };
 
 #endif
