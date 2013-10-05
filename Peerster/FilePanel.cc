@@ -17,6 +17,7 @@ QGroupBox* FilePanel::getGroupBox() {
 void FilePanel::showDialog() {
    QStringList filesToAdd = QFileDialog::getOpenFileNames();
     for (int i = 0; i < filesToAdd.size(); i++) {
-        qDebug() << filesToAdd.at(i);
+        qDebug() << "Scanning file: " + filesToAdd.at(i);
+        
     }
 }
