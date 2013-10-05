@@ -8,6 +8,7 @@ PeersterFile::PeersterFile() {
 
 PeersterFile::PeersterFile(const QString someFilename) {
     file = new QFile(someFilename);
+    scanFile();
 }
 
 QString PeersterFile::getFilename() {
@@ -18,9 +19,17 @@ qint64 PeersterFile::getFileSize() {
     return file->size();
 }
 
-void scanFile(QFile *file) {
+void PeersterFile::scanFile() {
+    QByteArray blockHashes;
     QByteArray block;
     while ((block = file->read(BLOCKSIZE)).size() != 0) {
-        
+        QCA::Hash hash("sha256");
+        hash.update(block);
+        blockHashes.append(hash.final().toByteArray());
     }
+    QCA::Hash hash("sha256");
+    hash.update(blockHashes);
+    
+    blockListHash = hash.final().toByteArray();
+    blockListMetafile = new QFile(blockHashes);
 }

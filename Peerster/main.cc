@@ -1,5 +1,6 @@
 #include <unistd.h>
 
+#include <QtCrypto>
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QTextCodec>
@@ -450,6 +451,7 @@ int main(int argc, char **argv) {
     
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
+    QCA::init();
     
 	// Create an initial chat dialog window
 	ChatDialog dialog;

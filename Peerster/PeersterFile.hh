@@ -1,6 +1,7 @@
 #ifndef __Peerster__File__
 #define __Peerster__File__
 
+#include <QtCrypto>
 #include <QObject>
 #include <QString>
 #include <QFile>
@@ -16,7 +17,9 @@ public:
     
 private:
     QFile *file;
-    void scanFile(QFile *file);
+    QByteArray blockListHash;
+    QFile *blockListMetafile;
+    void scanFile();
 };
 
 #endif
