@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QFile>
 
 class PeersterFile : public QObject {
     Q_OBJECT
@@ -10,12 +11,12 @@ class PeersterFile : public QObject {
 public:
     PeersterFile();
     PeersterFile(const QString someFilename);
+    QString getFilename();
+    qint64 getFileSize();
     
 private:
-    QString filename;
-    quint32 filesize;
-    
-    
+    QFile *file;
+    void scanFile(QFile *file);
 };
 
 #endif

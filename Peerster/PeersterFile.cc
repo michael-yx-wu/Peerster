@@ -1,11 +1,26 @@
 #include "PeersterFile.hh"
 
+static qint64 BLOCKSIZE = 8192; // 8KB blocksize
+
 PeersterFile::PeersterFile() {
-    filename = QString();
-    filesize = 0;
+    file = NULL;
 }
 
 PeersterFile::PeersterFile(const QString someFilename) {
-    filename = someFilename;
-    
+    file = new QFile(someFilename);
+}
+
+QString PeersterFile::getFilename() {
+    return file->fileName();
+}
+
+qint64 PeersterFile::getFileSize() {
+    return file->size();
+}
+
+void scanFile(QFile *file) {
+    QByteArray block;
+    while ((block = file->read(BLOCKSIZE)).size() != 0) {
+        
+    }
 }
