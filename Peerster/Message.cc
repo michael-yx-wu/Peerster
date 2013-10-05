@@ -10,9 +10,12 @@ const QString Message::xDest = "Dest";
 const QString Message::xHopLimit = "HopLimit";
 const QString Message::xLastIP = "LastIP";
 const QString Message::xLastPort = "LastPort";
+const QString Message::xBlockRequest = "BlockRequest";
+const QString Message::xBlockReply = "BlockReply";
+const QString Message::xData = "Data";
 
 Message::Message(const QString someOrigin, const quint32 someSeqno) {
-    hasLastIPandPort = false;
+    defaultBoolValues();
     routeMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
@@ -20,6 +23,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno) {
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const quint32 someIP, const quint16 somePort) {
+    defaultBoolValues();
     hasLastIPandPort = true;
     routeMessage = true;
     origin = someOrigin;
@@ -30,7 +34,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const quint3
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage) {
-    hasLastIPandPort = false;
+    defaultBoolValues();
     chatMessage = true;
     origin = someOrigin;
     seqno = someSeqno;
@@ -39,6 +43,7 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
 }
 
 Message::Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort) {
+    defaultBoolValues();
     hasLastIPandPort = true;
     chatMessage = true;
     origin = someOrigin;
@@ -49,13 +54,65 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     serializedMessage = serializeChatMessage();
 }
 
-Message::Message(const QString someDestOrigin, const QString someMessage, quint32 someHopLimit) {
-    hasLastIPandPort = false;
+Message::Message(const QString someDestOrigin, const QString someMessage, const quint32 someHopLimit) {
+    defaultBoolValues();
     privateMessage = true;
     destOrigin = someDestOrigin;
     message = someMessage;
     hopLimit = someHopLimit;
     serializedMessage = serializePrivateMessage();
+}
+
+#pragma mark - Block Reply Constructors
+
+Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData) {
+    defaultBoolValues();
+    blockReplyMessage = true;
+    origin = someOrigin;
+    destOrigin = someDestOrigin;
+    hopLimit = someHopLimit;
+    blockReply = someBlockReply;
+    data = someData;
+    serializedMessage = serializeBlockReplyMessage();
+}
+
+Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData, const quint32 someIP, const quint16 somePort) {
+    defaultBoolValues();
+    blockReplyMessage = true;
+    hasLastIPandPort = true;
+    origin = someOrigin;
+    destOrigin = someDestOrigin;
+    hopLimit = someHopLimit;
+    blockReply = someBlockReply;
+    data = someData;
+    lastIP = someIP;
+    lastPort = somePort;
+    serializedMessage = serializeBlockReplyMessage();
+}
+
+#pragma mark - Block Request Constructors
+
+Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest) {
+    defaultBoolValues();
+    blockRequestMessage = true;
+    origin = someOrigin;
+    destOrigin = someDestOrigin;
+    hopLimit = someHopLimit;
+    blockRequest = someBlockRequest;
+    serializedMessage = serializeBlockRequestMessage();
+}
+
+Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest, const quint32 someIP, const quint16 somePort) {
+    defaultBoolValues();
+    blockRequestMessage = true;
+    hasLastIPandPort = true;
+    origin = someOrigin;
+    destOrigin = someDestOrigin;
+    hopLimit = someHopLimit;
+    blockRequest = someBlockRequest;
+    lastIP = someIP;
+    lastPort = somePort;
+    serializedMessage = serializeBlockRequestMessage();
 }
 
 #pragma mark - Message Serialization
@@ -100,15 +157,88 @@ QByteArray Message::serializeRouteMessage() {
     return datagram;
 }
 
+QByteArray Message::serializeBlockReplyMessage() {
+    QMap<QString, QVariant> datapacket;
+    datapacket.insert(xOrigin, origin);
+    datapacket.insert(xDest, destOrigin);
+    datapacket.insert(xHopLimit, hopLimit);
+    datapacket.insert(xBlockReply, blockReply);
+    datapacket.insert(xData, data);
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+    return datagram;
+}
+
+QByteArray Message::serializeBlockRequestMessage() {
+    QMap<QString, QVariant> datapacket;
+    datapacket.insert(xOrigin, origin);
+    datapacket.insert(xDest, destOrigin);
+    datapacket.insert(xHopLimit, hopLimit);
+    datapacket.insert(xBlockRequest, blockRequest);
+    if (hasLastIPandPort) {
+        datapacket.insert(xLastIP, lastIP);
+        datapacket.insert(xLastPort, lastPort);
+    }
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+    return datagram;
+}
+
 # pragma mark - Other Methods
+
+bool Message::atHopLimit() {
+    return hopLimit == 0;
+}
 
 void Message::decrementHopLimit() {
     hopLimit--;
 }
 
-bool Message::atHopLimit() {
-    return hopLimit == 0;
+void Message::defaultBoolValues() {
+    blockReplyMessage = false;
+    blockRequestMessage = false;
+    chatMessage = false;
+    hasLastIPandPort = false;
+    routeMessage = false;
+    privateMessage = false;
+    searchReplyMessage = false;
+    searchRequestMessage = false;
 }
+
+QString Message::getDestOrigin() {
+    return destOrigin;
+}
+
+quint32 Message::getHopLimit() {
+    return hopLimit;
+}
+
+QString Message::getMessage() {
+    return message;
+}
+
+QString Message::getOrigin() {
+    return origin;
+}
+
+quint32 Message::getSeqno() {
+    return seqno;
+}
+
+QByteArray Message::getSerializedMessage() {
+    return serializedMessage;
+}
+
+bool Message::isBlockReply() {
+    return blockReplyMessage;
+}
+
+bool Message::isBlockRequest() {
+    return blockRequestMessage;
+}
+
 bool Message::isChatMessage() {
     return chatMessage;
 }
@@ -121,26 +251,12 @@ bool Message::isPrivateMessage() {
     return privateMessage;
 }
 
-QString Message::getDestOrigin() {
-    return destOrigin;
+bool Message::isSearchReply() {
+    return searchReplyMessage;
 }
 
-quint32 Message::getHopLimit() {
-    return hopLimit;
+bool Message::isSearchRequest() {
+    return searchRequestMessage;
 }
 
-QString Message::getOrigin() {
-    return origin;
-}
 
-quint32 Message::getSeqno() {
-    return seqno;
-}
-
-QString Message::getMessage() {
-    return message;
-}
-
-QByteArray Message::getSerializedMessage() {
-    return serializedMessage;
-}
