@@ -18,6 +18,6 @@ void FilePanel::showDialog() {
    QStringList filesToAdd = QFileDialog::getOpenFileNames();
     for (int i = 0; i < filesToAdd.size(); i++) {
         qDebug() << "Scanning file: " + filesToAdd.at(i);
-        
+        files.append(new PeersterFile(filesToAdd.at(i)));
     }
 }

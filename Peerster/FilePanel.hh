@@ -5,9 +5,11 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QGroupBox>
+#include <QList>
 #include <QPushButton>
 #include <QVBoxLayout>
 
+#include "PeersterFile.hh"
 
 class FilePanel : public QObject {
     Q_OBJECT
@@ -23,6 +25,7 @@ private:
     QGroupBox *fileShareBox;
     QVBoxLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;
+    QList<PeersterFile*> files;
 };
 
 #endif
