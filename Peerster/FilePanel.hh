@@ -8,6 +8,7 @@
 #include <QList>
 #include <QPushButton>
 #include <QSignalMapper>
+#include <QLineEdit>
 #include <QVBoxLayout>
 
 #include "PeersterFile.hh"
@@ -28,11 +29,13 @@ private:
     static const QString button3text;
     QPushButton *downloadFileButton;
     QGroupBox *fileShareBox;
-    QVBoxLayout *fileShareBoxLayout;
+    QGridLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;
     QList<PeersterFile*> files;
     QSignalMapper *signalMapper;
     QPushButton *selectFilesButton;
+    QLineEdit *downloadFromNode;
+    QLineEdit *metafileHash;
 };
 
 #endif

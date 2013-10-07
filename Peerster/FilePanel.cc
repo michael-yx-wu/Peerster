@@ -5,7 +5,7 @@ const QString FilePanel::button2text = "Download File";
 
 FilePanel::FilePanel() {
     fileShareBox = new QGroupBox("File Sharing");
-    fileShareBoxLayout = new QVBoxLayout;
+    fileShareBoxLayout = new QGridLayout();
     fileShareBox->setLayout(fileShareBoxLayout);
     
     // Create signal mapper
@@ -14,15 +14,21 @@ FilePanel::FilePanel() {
     
     // Add files button
     selectFilesButton = new QPushButton(button1text);
-    fileShareBoxLayout->addWidget(selectFilesButton);
     signalMapper->setMapping(selectFilesButton, button1text);
     connect(selectFilesButton, SIGNAL(clicked()), signalMapper, SLOT(Map()));
+    fileShareBoxLayout->addWidget(selectFilesButton, 0, 1);
     
-    // Download file button
+    // Download file GUI
     downloadFileButton = new QPushButton(button2text);
-    fileShareBoxLayout->addWidget(downloadFileButton);
     signalMapper->setMapping(downloadFileButton, button2text);
     connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(Map()));
+    downloadFromNode = new QLineEdit();
+    metafileHash = new QLineEdit();
+    downloadFromNode->setPlaceholderText("Target Node");
+    metafileHash->setPlaceholderText("Hash of Metafile");
+    fileShareBoxLayout->addWidget(downloadFileButton, 1, 1);
+    fileShareBoxLayout->addWidget(downloadFromNode, 1, 0);
+    fileShareBoxLayout->addWidget(metafileHash, 2, 0);
 }
 
 QGroupBox* FilePanel::getGroupBox() {
