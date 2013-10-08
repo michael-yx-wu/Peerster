@@ -19,9 +19,10 @@ class FilePanel : public QObject {
 public:
     FilePanel();
     QGroupBox* getGroupBox();
-    
-    public slots:
     void showDialog();
+
+    public slots:
+    void buttonClicked(QString buttonName);
     
 private:
     static const QString button1text;

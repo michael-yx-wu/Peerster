@@ -15,13 +15,13 @@ FilePanel::FilePanel() {
     // Add files button
     selectFilesButton = new QPushButton(button1text);
     signalMapper->setMapping(selectFilesButton, button1text);
-    connect(selectFilesButton, SIGNAL(clicked()), signalMapper, SLOT(Map()));
+    connect(selectFilesButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     fileShareBoxLayout->addWidget(selectFilesButton, 0, 1);
     
     // Download file GUI
     downloadFileButton = new QPushButton(button2text);
     signalMapper->setMapping(downloadFileButton, button2text);
-    connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(Map()));
+    connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     downloadFromNode = new QLineEdit();
     metafileHash = new QLineEdit();
     downloadFromNode->setPlaceholderText("Target Node");
@@ -40,5 +40,19 @@ void FilePanel::showDialog() {
     for (int i = 0; i < filesToAdd.size(); i++) {
         qDebug() << "Scanning file: " + filesToAdd.at(i);
         files.append(new PeersterFile(filesToAdd.at(i)));
+    }
+}
+
+void FilePanel::buttonClicked(QString buttonName) {
+    qDebug() << "Clicked";
+    if (buttonName == button1text) {
+        showDialog();
+    }
+    else if (buttonName == button2text) {
+        QString targetNode = downloadFromNode->text();
+        QByteArray hash;
+        hash.append(metafileHash->text());
+        downloadFromNode->clear();
+        metafileHash->clear();
     }
 }
