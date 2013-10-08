@@ -5,6 +5,8 @@
 #include <QString>
 #include <QVariant>
 
+#include "MapKeys.hh"
+
 class Message {
 public:
 #pragma mark - Constructors

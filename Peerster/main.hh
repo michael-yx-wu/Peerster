@@ -50,17 +50,7 @@ public:
 signals:
     void lookupDone();
     
-private:
-    // Standard Map Keys
-//    static const QString xOrigin;
-//    static const QString xSeqNo;
-//    static const QString xChatText;
-//    static const QString xWant;
-//    static const QString xDest;
-//    static const QString xHopLimit;
-//    static const QString xLastIP;
-//    static const QString xLastPort;
-    
+private:    
     // Chat Dialog Constants
     quint16 minport, maxport;
     QTextEdit *textview;

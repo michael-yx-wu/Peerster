@@ -5,15 +5,6 @@
 
 #pragma mark - Setup
 
-//const QString ChatDialog::xOrigin = "Origin";
-//const QString ChatDialog::xSeqNo = "SeqNo";
-//const QString ChatDialog::xChatText = "ChatText";
-//const QString ChatDialog::xWant = "Want";
-//const QString ChatDialog::xDest = "Dest";
-//const QString ChatDialog::xHopLimit = "HopLimit";
-//const QString ChatDialog::xLastIP = "LastIP";
-//const QString ChatDialog::xLastPort = "LastPort";
-
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
     shouldForwardMessages = true;
