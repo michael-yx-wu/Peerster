@@ -1,24 +1,18 @@
 #include <unistd.h>
-
-#include <QtCrypto>
-#include <QVBoxLayout>
-#include <QApplication>
-#include <QTextCodec>
-#include <QMap>
 #include <time.h>
 
 #include "main.hh"
 
 #pragma mark - Setup
 
-const QString ChatDialog::xOrigin = "Origin";
-const QString ChatDialog::xSeqNo = "SeqNo";
-const QString ChatDialog::xChatText = "ChatText";
-const QString ChatDialog::xWant = "Want";
-const QString ChatDialog::xDest = "Dest";
-const QString ChatDialog::xHopLimit = "HopLimit";
-const QString ChatDialog::xLastIP = "LastIP";
-const QString ChatDialog::xLastPort = "LastPort";
+//const QString ChatDialog::xOrigin = "Origin";
+//const QString ChatDialog::xSeqNo = "SeqNo";
+//const QString ChatDialog::xChatText = "ChatText";
+//const QString ChatDialog::xWant = "Want";
+//const QString ChatDialog::xDest = "Dest";
+//const QString ChatDialog::xHopLimit = "HopLimit";
+//const QString ChatDialog::xLastIP = "LastIP";
+//const QString ChatDialog::xLastPort = "LastPort";
 
 // Initialize ChatDialog's private variables
 ChatDialog::ChatDialog() {
@@ -187,10 +181,10 @@ void ChatDialog::processPendingDatagrams() {
         stream >> datapacket;
         
         // Process the datapacket
-        if (datapacket.contains(xOrigin)) {
+        if (datapacket.contains(MapKeys::xOrigin)) {
             processRumorMessage(datapacket, sender, senderPort);
         }
-        else if (datapacket.contains(xDest)) {
+        else if (datapacket.contains(MapKeys::xDest)) {
             processPrivateMessage(datapacket);
         }
         else {
@@ -209,8 +203,8 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     Peer p;
     
     // Check to see if we have already seen this rumor message
-    origin = datapacket.value(xOrigin).toString();
-    seqno = datapacket.value(xSeqNo).toUInt();
+    origin = datapacket.value(MapKeys::xOrigin).toString();
+    seqno = datapacket.value(MapKeys::xSeqNo).toUInt();
     if (messages.hasMessage(origin, seqno)) {
         return;
     }
@@ -218,9 +212,9 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     // Resolve peer if lastIP/lastPort information present
     // Send route information to privateMessagingPanel
     if (origin != hostname) {
-        if (datapacket.contains(xLastIP) && datapacket.contains(xLastPort)) {
-            lastIP = datapacket.value(xLastIP).toUInt();
-            lastPort = datapacket.value(xLastPort).toUInt();
+        if (datapacket.contains(MapKeys::xLastIP) && datapacket.contains(MapKeys::xLastPort)) {
+            lastIP = datapacket.value(MapKeys::xLastIP).toUInt();
+            lastPort = datapacket.value(MapKeys::xLastPort).toUInt();
             hostPort = QHostAddress(lastIP).toString() + ":" + QString::number(lastPort);
             qDebug() << "Sending this to resolve peer method: " + hostPort;
             resolvePeer(hostPort);
@@ -242,13 +236,13 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     
     // If ChatText exists, display/save message and update seqno, monger
     // If route message, monger if route to origin updated
-    if (datapacket.contains(xChatText)) {
-        message = datapacket.value(xChatText).toString();
+    if (datapacket.contains(MapKeys::xChatText)) {
+        message = datapacket.value(MapKeys::xChatText).toString();
         textview->append(message);
         status[origin] = seqno+1;
         messages.addMessage(origin, seqno, message);
         
-        msg = Message(origin, seqno, datapacket.value(xChatText).toString(), sender.toIPv4Address(), senderPort);
+        msg = Message(origin, seqno, datapacket.value(MapKeys::xChatText).toString(), sender.toIPv4Address(), senderPort);
         rumorMonger(msg);
     }
     else {
@@ -265,9 +259,9 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got private message";
     qDebug() << hostname;
-    QString dest = datapacket.value(xDest).toString();
-    QString message = datapacket.value(xChatText).toString();
-    quint32 hoplimit = datapacket.value(xHopLimit).toUInt();
+    QString dest = datapacket.value(MapKeys::xDest).toString();
+    QString message = datapacket.value(MapKeys::xChatText).toString();
+    quint32 hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
     qDebug() << dest;
     qDebug() << message;
     qDebug() << hoplimit;
@@ -297,7 +291,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     Message message;
     bool mongerRumor = false, sendStatus = false;
     
-    QMap<QString, QVariant> peerStatus = datapacket.value(xWant).toMap();
+    QMap<QString, QVariant> peerStatus = datapacket.value(MapKeys::xWant).toMap();
     QMap<QString, QVariant>::iterator it;
     
     // Compare my status against the peer status
@@ -362,7 +356,7 @@ void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port
 void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     // Create the message
     QMap<QString, QVariant> statusMessage;
-    statusMessage.insert(xWant, status);
+    statusMessage.insert(MapKeys::xWant, status);
     
     // Serialize the message
     QByteArray datagram;

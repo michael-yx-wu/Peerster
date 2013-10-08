@@ -1,22 +1,28 @@
 #ifndef PEERSTER_MAIN_HH
 #define PEERSTER_MAIN_HH
 
+#include <QApplication>
+#include <QByteArray>
 #include <QDialog>
 #include <QGroupBox>
 #include <QHostInfo>
+#include <QMap>
 #include <QQueue>
+#include <QTextCodec>
 #include <QTextEdit>
-#include <QUdpSocket>
-#include <QByteArray>
 #include <QTimer>
+#include <QUdpSocket>
 #include <QVector>
+#include <QVBoxLayout>
+#include <QtCrypto>
 
-#include "Messages.hh"
-#include "Message.hh"
-#include "Peer.hh"
-#include "PrivateMessagingPanel.hh"
 #include "Chatbox.hh"
 #include "FilePanel.hh"
+#include "MapKeys.hh"
+#include "Message.hh"
+#include "Messages.hh"
+#include "Peer.hh"
+#include "PrivateMessagingPanel.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT
@@ -46,14 +52,14 @@ signals:
     
 private:
     // Standard Map Keys
-    static const QString xOrigin;
-    static const QString xSeqNo;
-    static const QString xChatText;
-    static const QString xWant;
-    static const QString xDest;
-    static const QString xHopLimit;
-    static const QString xLastIP;
-    static const QString xLastPort;
+//    static const QString xOrigin;
+//    static const QString xSeqNo;
+//    static const QString xChatText;
+//    static const QString xWant;
+//    static const QString xDest;
+//    static const QString xHopLimit;
+//    static const QString xLastIP;
+//    static const QString xLastPort;
     
     // Chat Dialog Constants
     quint16 minport, maxport;

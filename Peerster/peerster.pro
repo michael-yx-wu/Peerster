@@ -10,5 +10,5 @@ INCLUDEPATH += .
 QT += network
 
 # Input
-HEADERS += main.hh Chatbox.hh FilePanel.hh Messages.hh Message.hh Peer.hh PeersterFile.hh PrivateMessagingPanel.hh PrivateChatDialog.hh
-SOURCES += main.cc Chatbox.cc FilePanel.cc Messages.cc Message.cc Peer.cc PeersterFile.cc PrivateMessagingPanel.cc PrivateChatDialog.cc
+HEADERS += main.hh Chatbox.hh FilePanel.hh MapKeys.hh Message.hh Messages.hh Peer.hh PeersterFile.hh PrivateMessagingPanel.hh PrivateChatDialog.hh
+SOURCES += main.cc Chatbox.cc FilePanel.cc MapKeys.cc Message.cc Messages.cc Peer.cc PeersterFile.cc PrivateMessagingPanel.cc PrivateChatDialog.cc
