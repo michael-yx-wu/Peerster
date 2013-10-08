@@ -27,6 +27,7 @@ public:
     
     public slots:
     void buttonClicked(QString buttonName);
+    void handleBlockRequest(Message message);
     
 private:
     static const QString button1text;
@@ -46,6 +47,7 @@ private:
     QLineEdit *targetNodeTextBox;
     QLineEdit *hashTextBox;
     
+    bool hasHash(QByteArray hash);
     void sendBlockRequest(QString targetode, QByteArray metafileHash);
     void showDialog();
 };

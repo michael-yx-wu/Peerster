@@ -54,6 +54,23 @@ void FilePanel::buttonClicked(QString buttonName) {
     }
 }
 
+void FilePanel::handleBlockRequest(Message message) {
+    
+}
+
+bool FilePanel::hasHash(QByteArray hash) {
+    foreach(PeersterFile* f, files) {
+        
+    }
+    // Search metafile hashes
+    
+    
+    // Search metafiles
+    
+    
+    return false;
+}
+
 // Send block request to the specified Node
 void FilePanel::sendBlockRequest(QString targetode, QByteArray metafileHash) {
     qDebug() << "Sending blockrequest to " + targetode + "with hash" << metafileHash;

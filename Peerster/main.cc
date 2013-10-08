@@ -276,9 +276,21 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     }
     if (datapacket.contains(MapKeys::xHopLimit)) {
         hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
+        hoplimit--;
     }
     if (datapacket.contains(MapKeys::xOrigin)) {
         origin = datapacket.value(MapKeys::xOrigin).toString();
+    }
+    
+    // Determine type of message to forward
+    if (!blockReply.isEmpty()) {
+        privateMessage = Message(origin, dest, hoplimit, blockReply, data);
+    }
+    else if (!blockRequest.isEmpty()) {
+        privateMessage = Message(origin, dest, hoplimit, blockRequest);
+    }
+    else if (!message.isEmpty()) {
+        privateMessage = Message(dest, message, hoplimit);
     }
     
     // I am the intended target of the private message
@@ -293,28 +305,12 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         }
         // Process block request
         else if (!blockRequest.isEmpty()) {
-            
+            filePanel->handleBlockRequest(privateMessage);
         }
         
     }
-    // Forward message if -noforward not specified
-    else if (shouldForwardMessages) {
-        if (--hoplimit == 0) {
-            // Reached hoplimit. Stop forwarding private message
-            return;
-        }
-        
-        // Determine type of message to forward
-        if (!blockReply.isEmpty()) {
-            privateMessage = Message(origin, dest, hoplimit, blockReply, data);
-        }
-        else if (!blockRequest.isEmpty()) {
-            privateMessage = Message(origin, dest, hoplimit, blockRequest);
-        }
-        else if (!message.isEmpty()) {
-            privateMessage = Message(dest, message, hoplimit);
-        }
-        
+    // Forward message if -noforward not specified and hopLimit not reached
+    else if (shouldForwardMessages && hoplimit > 0) {
         QByteArray datagram = privateMessage.getSerializedMessage();
         QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel->getOriginMap();
         QHostAddress targetIP = originMap.value(dest).first;
