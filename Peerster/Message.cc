@@ -65,20 +65,6 @@ Message::Message(const QString someOrigin, const QString someDestOrigin, const q
     serializedMessage = serializeBlockReplyMessage();
 }
 
-Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData, const quint32 someIP, const quint16 somePort) {
-    defaultBoolValues();
-    blockReplyMessage = true;
-    hasLastIPandPort = true;
-    origin = someOrigin;
-    destOrigin = someDestOrigin;
-    hopLimit = someHopLimit;
-    blockReply = someBlockReply;
-    data = someData;
-    lastIP = someIP;
-    lastPort = somePort;
-    serializedMessage = serializeBlockReplyMessage();
-}
-
 #pragma mark - Block Request Constructors
 
 Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest) {
@@ -88,19 +74,6 @@ Message::Message(const QString someOrigin, const QString someDestOrigin, const q
     destOrigin = someDestOrigin;
     hopLimit = someHopLimit;
     blockRequest = someBlockRequest;
-    serializedMessage = serializeBlockRequestMessage();
-}
-
-Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest, const quint32 someIP, const quint16 somePort) {
-    defaultBoolValues();
-    blockRequestMessage = true;
-    hasLastIPandPort = true;
-    origin = someOrigin;
-    destOrigin = someDestOrigin;
-    hopLimit = someHopLimit;
-    blockRequest = someBlockRequest;
-    lastIP = someIP;
-    lastPort = somePort;
     serializedMessage = serializeBlockRequestMessage();
 }
 

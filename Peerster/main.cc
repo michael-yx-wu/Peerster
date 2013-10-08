@@ -252,17 +252,50 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
-    QString dest, message;
+    Message privateMessage;
+    QString origin, dest, message;
     quint32 hoplimit;
+    QByteArray blockRequest, blockReply, data;
     qDebug() << "Got private message";
     qDebug() << hostname;
+    
+    // Get data from the datapacket
     dest = datapacket.value(MapKeys::xDest).toString();
     hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
-    
-    // Display chat message if I am the intended target
-    if (datapacket.contains(MapKeys::xChatText) && dest == hostname) {
+    if (datapacket.contains(MapKeys::xBlockReply)) {
+        blockReply = datapacket.value(MapKeys::xBlockReply).toByteArray();
+    }
+    if (datapacket.contains(MapKeys::xBlockRequest)) {
+        blockRequest = datapacket.value(MapKeys::xBlockRequest).toByteArray();
+    }
+    if (datapacket.contains(MapKeys::xChatText)) {
         message = datapacket.value(MapKeys::xChatText).toString();
-        textview->append(message);
+    }
+    if (datapacket.contains(MapKeys::xData)) {
+        data = datapacket.value(MapKeys::xData).toByteArray();
+    }
+    if (datapacket.contains(MapKeys::xHopLimit)) {
+        hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
+    }
+    if (datapacket.contains(MapKeys::xOrigin)) {
+        origin = datapacket.value(MapKeys::xOrigin).toString();
+    }
+    
+    // I am the intended target of the private message
+    if (dest == hostname) {
+        if (datapacket.contains(MapKeys::xChatText)) {
+            message = datapacket.value(MapKeys::xChatText).toString();
+            textview->append(message);
+        }
+        // Process block reply
+        else if (!blockReply.isEmpty()) {
+            
+        }
+        // Process block request
+        else if (!blockRequest.isEmpty()) {
+            
+        }
+        
     }
     // Forward message if -noforward not specified
     else if (shouldForwardMessages) {
@@ -270,7 +303,18 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
             // Reached hoplimit. Stop forwarding private message
             return;
         }
-        Message privateMessage = Message(dest, message, hoplimit);
+        
+        // Determine type of message to forward
+        if (!blockReply.isEmpty()) {
+            privateMessage = Message(origin, dest, hoplimit, blockReply, data);
+        }
+        else if (!blockRequest.isEmpty()) {
+            privateMessage = Message(origin, dest, hoplimit, blockRequest);
+        }
+        else if (!message.isEmpty()) {
+            privateMessage = Message(dest, message, hoplimit);
+        }
+        
         QByteArray datagram = privateMessage.getSerializedMessage();
         QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel->getOriginMap();
         QHostAddress targetIP = originMap.value(dest).first;

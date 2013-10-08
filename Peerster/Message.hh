@@ -26,11 +26,9 @@ public:
     
     // Block Reply Message
     Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData);
-    Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData, const quint32 someIP, const quint16 somePort);
 
     // Block Request Message
     Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest);
-    Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest, const quint32 someIP, const quint16 somePort);
     
 #pragma mark - Accessor methods
     
