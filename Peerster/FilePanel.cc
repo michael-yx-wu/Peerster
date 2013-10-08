@@ -22,16 +22,16 @@ FilePanel::FilePanel(QString someOrigin) {
     fileShareBoxLayout->addWidget(selectFilesButton, 0, 1);
     
     // Download file GUI
+    targetNodeTextBox = new QLineEdit();
+    hashTextBox = new QLineEdit();
     downloadFileButton = new QPushButton(button2text);
     signalMapper->setMapping(downloadFileButton, button2text);
     connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    targetNodeTextBox = new QLineEdit();
-    hashTextBox = new QLineEdit();
     targetNodeTextBox->setPlaceholderText("Target Node");
     hashTextBox->setPlaceholderText("Hash of Metafile");
-    fileShareBoxLayout->addWidget(downloadFileButton, 1, 1);
     fileShareBoxLayout->addWidget(targetNodeTextBox, 1, 0);
     fileShareBoxLayout->addWidget(hashTextBox, 2, 0);
+    fileShareBoxLayout->addWidget(downloadFileButton, 2, 1);
 }
 
 QGroupBox* FilePanel::getGroupBox() {
