@@ -252,20 +252,19 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
+    QString dest, message;
+    quint32 hoplimit;
     qDebug() << "Got private message";
     qDebug() << hostname;
-    QString dest = datapacket.value(MapKeys::xDest).toString();
-    QString message = datapacket.value(MapKeys::xChatText).toString();
-    quint32 hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
+    dest = datapacket.value(MapKeys::xDest).toString();
+    hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
     
-    
-    
-    // Display message if I am intended targets
-    if (QString::compare(dest, hostname) == 0) {
+    // Display chat message if I am the intended target
+    if (datapacket.contains(MapKeys::xChatText) && dest == hostname) {
+        message = datapacket.value(MapKeys::xChatText).toString();
         textview->append(message);
     }
-    
-    // Forward message if -noforward not dependent
+    // Forward message if -noforward not specified
     else if (shouldForwardMessages) {
         if (--hoplimit == 0) {
             // Reached hoplimit. Stop forwarding private message
@@ -274,7 +273,9 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         Message privateMessage = Message(dest, message, hoplimit);
         QByteArray datagram = privateMessage.getSerializedMessage();
         QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel->getOriginMap();
-        socket->writeDatagram(datagram.data(), datagram.size(), originMap.value(dest).first, originMap.value(dest).second);
+        QHostAddress targetIP = originMap.value(dest).first;
+        quint16 targetPort = originMap.value(dest).second;
+        socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
     }
 }
 
