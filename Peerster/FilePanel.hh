@@ -10,17 +10,21 @@
 #include <QSignalMapper>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <QUdpSocket>
 
+#include "Message.hh"
 #include "PeersterFile.hh"
+#include "PrivateMessagingPanel.hh"
 
 class FilePanel : public QObject {
     Q_OBJECT
     
 public:
-    FilePanel();
+    FilePanel(QString someOrigin);
     QGroupBox* getGroupBox();
-    void showDialog();
-
+    void setPrivateMessagingPanel(PrivateMessagingPanel *somePanel);
+    void setSocket(QUdpSocket *parentSocket);
+    
     public slots:
     void buttonClicked(QString buttonName);
     
@@ -33,10 +37,17 @@ private:
     QGridLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;
     QList<PeersterFile*> files;
+    quint32 hoplimit;
+    QString origin;
+    PrivateMessagingPanel *privateMessagingPanel;
     QSignalMapper *signalMapper;
     QPushButton *selectFilesButton;
-    QLineEdit *downloadFromNode;
-    QLineEdit *metafileHash;
+    QUdpSocket *socket;
+    QLineEdit *targetNodeTextBox;
+    QLineEdit *hashTextBox;
+    
+    void sendBlockRequest(QString targetode, QByteArray metafileHash);
+    void showDialog();
 };
 
 #endif

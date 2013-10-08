@@ -69,13 +69,12 @@ private:
     // Anti-Entropy
     QTimer *antiEntropyTimer;
     
-    // Routing
-    PrivateMessagingPanel privateMessagingPanel;
-    QMap<QString, QPair<QHostAddress, quint16> > routingTable;
+    // Routing & Private Messaging
+    PrivateMessagingPanel *privateMessagingPanel;
     QTimer *routingTimer;
 
     // File sharing
-    FilePanel filePanel;    
+    FilePanel *filePanel;
     
     bool bind();
     void processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);

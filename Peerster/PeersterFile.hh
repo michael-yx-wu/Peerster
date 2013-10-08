@@ -14,11 +14,14 @@ public:
     PeersterFile(const QString someFilename);
     QString getFilename();
     qint64 getFileSize();
+    void setBlocklistHash(QByteArray someHash);
+    void setBlocklistMetafile(QByteArray someMetafile);
     
 private:
     QFile *file;
-    QByteArray blockListHash;
-    QFile *blockListMetafile;
+    QByteArray blocklistHash;
+    QByteArray blocklistMetafile;
+    
     void scanFile();
 };
 

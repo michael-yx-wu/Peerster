@@ -3,7 +3,10 @@
 const QString FilePanel::button1text = "Add Files(s)";
 const QString FilePanel::button2text = "Download File";
 
-FilePanel::FilePanel() {
+FilePanel::FilePanel(QString someOrigin) {
+    origin = someOrigin;
+    hoplimit = 10;
+    
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
     fileShareBox->setLayout(fileShareBoxLayout);
@@ -22,19 +25,46 @@ FilePanel::FilePanel() {
     downloadFileButton = new QPushButton(button2text);
     signalMapper->setMapping(downloadFileButton, button2text);
     connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    downloadFromNode = new QLineEdit();
-    metafileHash = new QLineEdit();
-    downloadFromNode->setPlaceholderText("Target Node");
-    metafileHash->setPlaceholderText("Hash of Metafile");
+    targetNodeTextBox = new QLineEdit();
+    hashTextBox = new QLineEdit();
+    targetNodeTextBox->setPlaceholderText("Target Node");
+    hashTextBox->setPlaceholderText("Hash of Metafile");
     fileShareBoxLayout->addWidget(downloadFileButton, 1, 1);
-    fileShareBoxLayout->addWidget(downloadFromNode, 1, 0);
-    fileShareBoxLayout->addWidget(metafileHash, 2, 0);
+    fileShareBoxLayout->addWidget(targetNodeTextBox, 1, 0);
+    fileShareBoxLayout->addWidget(hashTextBox, 2, 0);
 }
 
 QGroupBox* FilePanel::getGroupBox() {
     return fileShareBox;
 }
 
+// Process button clicking
+void FilePanel::buttonClicked(QString buttonName) {
+    qDebug() << "Clicked";
+    if (buttonName == button1text) {
+        showDialog();
+    }
+    else if (buttonName == button2text) {
+        QString targetNode = targetNodeTextBox->text();
+        QByteArray hashTextBoxText;
+        hashTextBoxText.append(hashTextBox->text());
+        targetNodeTextBox->clear();
+        hashTextBox->clear();
+        sendBlockRequest(targetNode, hashTextBoxText);
+    }
+}
+
+// Send block request to the specified Node
+void FilePanel::sendBlockRequest(QString targetode, QByteArray metafileHash) {
+    qDebug() << "Sending blockrequest to " + targetode + "with hash" << metafileHash;
+    Message message = Message(origin, targetode, hoplimit, metafileHash);
+    QByteArray datagram = message.getSerializedMessage();
+    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetode).first;
+    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetode).second;
+    socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+}
+
+// Show file selection dialog
 void FilePanel::showDialog() {
     QStringList filesToAdd = QFileDialog::getOpenFileNames();
     for (int i = 0; i < filesToAdd.size(); i++) {
@@ -43,16 +73,11 @@ void FilePanel::showDialog() {
     }
 }
 
-void FilePanel::buttonClicked(QString buttonName) {
-    qDebug() << "Clicked";
-    if (buttonName == button1text) {
-        showDialog();
-    }
-    else if (buttonName == button2text) {
-        QString targetNode = downloadFromNode->text();
-        QByteArray hash;
-        hash.append(metafileHash->text());
-        downloadFromNode->clear();
-        metafileHash->clear();
-    }
+void FilePanel::setPrivateMessagingPanel(PrivateMessagingPanel *somePanel) {
+    privateMessagingPanel = somePanel;
 }
+
+void FilePanel::setSocket(QUdpSocket *parentSocket) {
+    socket = parentSocket;
+}
+

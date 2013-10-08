@@ -25,13 +25,15 @@ ChatDialog::ChatDialog() {
 	textview->setReadOnly(true);
 	chatbox = new Chatbox(this);
     addHostBox = new Chatbox(this);
+    filePanel = new FilePanel(hostname);
+    privateMessagingPanel = new PrivateMessagingPanel();
     
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
-    layout->addWidget(privateMessagingPanel.getOriginBox(), 0, 1);
-    layout->addWidget(filePanel.getGroupBox(), 1, 1);
+    layout->addWidget(privateMessagingPanel->getOriginBox(), 0, 1);
+    layout->addWidget(filePanel->getGroupBox(), 1, 1);
     
 	setLayout(layout);
     chatbox->setFocus();
@@ -44,7 +46,9 @@ ChatDialog::ChatDialog() {
         exit(1);
     }
     
-    privateMessagingPanel.setSocket(socket);
+    filePanel->setSocket(socket);
+    filePanel->setPrivateMessagingPanel(privateMessagingPanel);
+    privateMessagingPanel->setSocket(socket);
     
     messageNo = 1;
     
@@ -253,9 +257,8 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     QString dest = datapacket.value(MapKeys::xDest).toString();
     QString message = datapacket.value(MapKeys::xChatText).toString();
     quint32 hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
-    qDebug() << dest;
-    qDebug() << message;
-    qDebug() << hoplimit;
+    
+    
     
     // Display message if I am intended targets
     if (QString::compare(dest, hostname) == 0) {
@@ -270,7 +273,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         }
         Message privateMessage = Message(dest, message, hoplimit);
         QByteArray datagram = privateMessage.getSerializedMessage();
-        QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel.getOriginMap();
+        QMap<QString, QPair<QHostAddress, quint16> > originMap = privateMessagingPanel->getOriginMap();
         socket->writeDatagram(datagram.data(), datagram.size(), originMap.value(dest).first, originMap.value(dest).second);
     }
 }
@@ -426,7 +429,7 @@ void ChatDialog::routeMonger() {
 }
 
 bool ChatDialog::updatePrivateMessagingPanel(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
-    return privateMessagingPanel.updateOrigins(origin, address, port, seqno, isDirectRoute);
+    return privateMessagingPanel->updateOrigins(origin, address, port, seqno, isDirectRoute);
 }
 
 #pragma mark

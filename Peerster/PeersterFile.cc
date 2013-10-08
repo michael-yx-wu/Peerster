@@ -30,6 +30,14 @@ void PeersterFile::scanFile() {
     QCA::Hash hash("sha256");
     hash.update(blockHashes);
     
-    blockListHash = hash.final().toByteArray();
-    blockListMetafile = new QFile(blockHashes);
+    blocklistHash = hash.final().toByteArray();
+    blocklistMetafile = blockHashes;
+}
+
+void PeersterFile::setBlocklistHash(QByteArray someHash) {
+    blocklistHash = someHash;
+}
+
+void PeersterFile::setBlocklistMetafile(QByteArray someMetafile) {
+    blocklistMetafile = someMetafile;
 }
