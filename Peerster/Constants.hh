@@ -17,7 +17,8 @@ public:
     static const QString xBlockReply;
     static const QString xData;
     
-    static const qint64 xBlockSize;
+    static const qint64 BLOCKSIZE;
+    static const quint32 HOPLIMIT;
 };
 
 

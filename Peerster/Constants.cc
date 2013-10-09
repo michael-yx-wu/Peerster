@@ -12,4 +12,5 @@ const QString Constants::xBlockRequest = "BlockRequest";
 const QString Constants::xBlockReply = "BlockReply";
 const QString Constants::xData = "Data";
 
-const qint64 Constants::xBlockSize = 8192;
+const qint64 Constants::BLOCKSIZE = 8192;
+const quint32 Constants::HOPLIMIT = 10;

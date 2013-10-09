@@ -38,7 +38,8 @@ private:
     QGridLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;
     QList<PeersterFile*> files;
-    quint32 hoplimit;
+    bool isWaitingForMetafile;
+    bool isWaitingForFile;
     QString origin;
     PrivateMessagingPanel *privateMessagingPanel;
     QSignalMapper *signalMapper;
@@ -47,8 +48,8 @@ private:
     QLineEdit *targetNodeTextBox;
     QLineEdit *hashTextBox;
     
-    bool hasHash(QByteArray hash);
-    void sendBlockRequest(QString targetode, QByteArray metafileHash);
+    void sendBlockRequest(QString targetNode, QByteArray hash);
+    void sendMetafile(QString targetNode, QByteArray hash, PeersterFile *f);
     void showDialog();
 };
 

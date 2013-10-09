@@ -5,7 +5,7 @@ const QString FilePanel::button2text = "Download File";
 
 FilePanel::FilePanel(QString someOrigin) {
     origin = someOrigin;
-    hoplimit = 10;
+    isWaitingForMetafile = isWaitingForFile = false;
     
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
@@ -55,35 +55,38 @@ void FilePanel::buttonClicked(QString buttonName) {
 }
 
 void FilePanel::handleBlockRequest(Message message) {
-    
-}
-
-bool FilePanel::hasHash(QByteArray hash) {
-    foreach(PeersterFile* f, files) {
-        if (hash == f->getBlocklistHash()) {
-            return true;
+    QByteArray blockRequest = message.getBlockRequest();
+    int i = 0;
+    foreach(PeersterFile *f, files) {
+        QByteArray blockRequest = message.getBlockRequest();
+        if (blockRequest == f->getBlocklistHash()) {
+            // send block reply with entire
+            break;
         }
-        QByteArray metafile = f->getBlocklistMetafile();
-        for (qint64 i = 0; i < metafile.size(); i+=Constants::xBlockSize) {
-            
+        else if ((i = f->getBlocklistMetafile().indexOf(blockRequest)) != -1) {
+            // send block reply with corresponding block
+            break;
         }
     }
-    // Search metafile hashes
-    
-    
-    // Search metafiles
-    
-    
-    return false;
 }
 
-// Send block request to the specified Node
-void FilePanel::sendBlockRequest(QString targetode, QByteArray metafileHash) {
-    qDebug() << "Sending blockrequest to " + targetode + "with hash" << metafileHash;
-    Message message = Message(origin, targetode, hoplimit, metafileHash);
+// Send block request to the specified node
+void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
+    qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
+    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash);
     QByteArray datagram = message.getSerializedMessage();
-    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetode).first;
-    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetode).second;
+    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
+    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
+    socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+}
+
+// Send metafile to the specified node
+void FilePanel::sendMetafile(QString targetNode, QByteArray hash, PeersterFile *f) {
+    qDebug() << "Sending metafile to " + targetNode;
+    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
+    QByteArray datagram = message.getSerializedMessage();
+    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
+    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
 }
 

@@ -169,6 +169,18 @@ void Message::defaultBoolValues() {
     searchRequestMessage = false;
 }
 
+QByteArray Message::getBlockReply() {
+    return blockReply;
+}
+
+QByteArray Message::getBlockRequest() {
+    return blockRequest;
+}
+
+QByteArray Message::getData() {
+    return data;
+}
+
 QString Message::getDestOrigin() {
     return destOrigin;
 }
