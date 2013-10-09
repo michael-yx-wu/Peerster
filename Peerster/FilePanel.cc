@@ -60,7 +60,13 @@ void FilePanel::handleBlockRequest(Message message) {
 
 bool FilePanel::hasHash(QByteArray hash) {
     foreach(PeersterFile* f, files) {
-        
+        if (hash == f->getBlocklistHash()) {
+            return true;
+        }
+        QByteArray metafile = f->getBlocklistMetafile();
+        for (int i = 0; i < metafile.size(); i+=) {
+            <#statements#>
+        }
     }
     // Search metafile hashes
     

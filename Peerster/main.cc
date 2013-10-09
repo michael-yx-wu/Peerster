@@ -176,10 +176,10 @@ void ChatDialog::processPendingDatagrams() {
         stream >> datapacket;
         
         // Process the datapacket
-        if (datapacket.contains(MapKeys::xOrigin)) {
+        if (datapacket.contains(Constants::xOrigin)) {
             processRumorMessage(datapacket, sender, senderPort);
         }
-        else if (datapacket.contains(MapKeys::xDest)) {
+        else if (datapacket.contains(Constants::xDest)) {
             processPrivateMessage(datapacket);
         }
         else {
@@ -198,8 +198,8 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     Peer p;
     
     // Check to see if we have already seen this rumor message
-    origin = datapacket.value(MapKeys::xOrigin).toString();
-    seqno = datapacket.value(MapKeys::xSeqNo).toUInt();
+    origin = datapacket.value(Constants::xOrigin).toString();
+    seqno = datapacket.value(Constants::xSeqNo).toUInt();
     if (messages.hasMessage(origin, seqno)) {
         return;
     }
@@ -207,9 +207,9 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     // Resolve peer if lastIP/lastPort information present
     // Send route information to privateMessagingPanel
     if (origin != hostname) {
-        if (datapacket.contains(MapKeys::xLastIP) && datapacket.contains(MapKeys::xLastPort)) {
-            lastIP = datapacket.value(MapKeys::xLastIP).toUInt();
-            lastPort = datapacket.value(MapKeys::xLastPort).toUInt();
+        if (datapacket.contains(Constants::xLastIP) && datapacket.contains(Constants::xLastPort)) {
+            lastIP = datapacket.value(Constants::xLastIP).toUInt();
+            lastPort = datapacket.value(Constants::xLastPort).toUInt();
             hostPort = QHostAddress(lastIP).toString() + ":" + QString::number(lastPort);
             qDebug() << "Sending this to resolve peer method: " + hostPort;
             resolvePeer(hostPort);
@@ -231,13 +231,13 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     
     // If ChatText exists, display/save message and update seqno, monger
     // If route message, monger if route to origin updated
-    if (datapacket.contains(MapKeys::xChatText)) {
-        message = datapacket.value(MapKeys::xChatText).toString();
+    if (datapacket.contains(Constants::xChatText)) {
+        message = datapacket.value(Constants::xChatText).toString();
         textview->append(message);
         status[origin] = seqno+1;
         messages.addMessage(origin, seqno, message);
         
-        msg = Message(origin, seqno, datapacket.value(MapKeys::xChatText).toString(), sender.toIPv4Address(), senderPort);
+        msg = Message(origin, seqno, datapacket.value(Constants::xChatText).toString(), sender.toIPv4Address(), senderPort);
         rumorMonger(msg);
     }
     else {
@@ -260,26 +260,26 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << hostname;
     
     // Get data from the datapacket
-    dest = datapacket.value(MapKeys::xDest).toString();
-    hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
-    if (datapacket.contains(MapKeys::xBlockReply)) {
-        blockReply = datapacket.value(MapKeys::xBlockReply).toByteArray();
+    dest = datapacket.value(Constants::xDest).toString();
+    hoplimit = datapacket.value(Constants::xHopLimit).toUInt();
+    if (datapacket.contains(Constants::xBlockReply)) {
+        blockReply = datapacket.value(Constants::xBlockReply).toByteArray();
     }
-    if (datapacket.contains(MapKeys::xBlockRequest)) {
-        blockRequest = datapacket.value(MapKeys::xBlockRequest).toByteArray();
+    if (datapacket.contains(Constants::xBlockRequest)) {
+        blockRequest = datapacket.value(Constants::xBlockRequest).toByteArray();
     }
-    if (datapacket.contains(MapKeys::xChatText)) {
-        message = datapacket.value(MapKeys::xChatText).toString();
+    if (datapacket.contains(Constants::xChatText)) {
+        message = datapacket.value(Constants::xChatText).toString();
     }
-    if (datapacket.contains(MapKeys::xData)) {
-        data = datapacket.value(MapKeys::xData).toByteArray();
+    if (datapacket.contains(Constants::xData)) {
+        data = datapacket.value(Constants::xData).toByteArray();
     }
-    if (datapacket.contains(MapKeys::xHopLimit)) {
-        hoplimit = datapacket.value(MapKeys::xHopLimit).toUInt();
+    if (datapacket.contains(Constants::xHopLimit)) {
+        hoplimit = datapacket.value(Constants::xHopLimit).toUInt();
         hoplimit--;
     }
-    if (datapacket.contains(MapKeys::xOrigin)) {
-        origin = datapacket.value(MapKeys::xOrigin).toString();
+    if (datapacket.contains(Constants::xOrigin)) {
+        origin = datapacket.value(Constants::xOrigin).toString();
     }
     
     // Determine type of message to forward
@@ -295,8 +295,8 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     
     // I am the intended target of the private message
     if (dest == hostname) {
-        if (datapacket.contains(MapKeys::xChatText)) {
-            message = datapacket.value(MapKeys::xChatText).toString();
+        if (datapacket.contains(Constants::xChatText)) {
+            message = datapacket.value(Constants::xChatText).toString();
             textview->append(message);
         }
         // Process block reply
@@ -326,7 +326,7 @@ void ChatDialog::processStatusMessage(QMap<QString, QVariant> datapacket, QHostA
     Message message;
     bool mongerRumor = false, sendStatus = false;
     
-    QMap<QString, QVariant> peerStatus = datapacket.value(MapKeys::xWant).toMap();
+    QMap<QString, QVariant> peerStatus = datapacket.value(Constants::xWant).toMap();
     QMap<QString, QVariant>::iterator it;
     
     // Compare my status against the peer status
@@ -391,7 +391,7 @@ void ChatDialog::sendMessage(Message message, QHostAddress address, quint16 port
 void ChatDialog::sendStatusMessage(QHostAddress address, quint16 port) {
     // Create the message
     QMap<QString, QVariant> statusMessage;
-    statusMessage.insert(MapKeys::xWant, status);
+    statusMessage.insert(Constants::xWant, status);
     
     // Serialize the message
     QByteArray datagram;

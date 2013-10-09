@@ -11,13 +11,7 @@ PeersterFile::PeersterFile(const QString someFilename) {
     scanFile();
 }
 
-QString PeersterFile::getFilename() {
-    return file->fileName();
-}
 
-qint64 PeersterFile::getFileSize() {
-    return file->size();
-}
 
 void PeersterFile::scanFile() {
     QByteArray blockHashes;
@@ -32,6 +26,24 @@ void PeersterFile::scanFile() {
     
     blocklistHash = hash.final().toByteArray();
     blocklistMetafile = blockHashes;
+}
+
+#pragma mark - Accessor methods
+
+QByteArray PeersterFile::getBlocklistHash() {
+    return blocklistHash;
+}
+
+QByteArray PeersterFile::getBlocklistMetafile() {
+    return blocklistMetafile;
+}
+
+QString PeersterFile::getFilename() {
+    return file->fileName();
+}
+
+qint64 PeersterFile::getFileSize() {
+    return file->size();
 }
 
 void PeersterFile::setBlocklistHash(QByteArray someHash) {

@@ -1,9 +1,9 @@
-#ifndef __Peerster__MapKeys__
-#define __Peerster__MapKeys__
+#ifndef __Peerster__Constants__
+#define __Peerster__Constants__
 
 #include <QString>
 
-class MapKeys {
+class Constants {
 public:
     static const QString xOrigin;
     static const QString xSeqNo;

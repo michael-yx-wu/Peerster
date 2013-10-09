@@ -12,8 +12,11 @@ class PeersterFile : public QObject {
 public:
     PeersterFile();
     PeersterFile(const QString someFilename);
+    
+    QByteArray getBlocklistHash();
+    QByteArray getBlocklistMetafile();
     QString getFilename();
-    qint64 getFileSize();
+    qint64 getFileSize();    
     void setBlocklistHash(QByteArray someHash);
     void setBlocklistMetafile(QByteArray someMetafile);
     
