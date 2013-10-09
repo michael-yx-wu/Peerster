@@ -48,8 +48,10 @@ private:
     QLineEdit *targetNodeTextBox;
     QLineEdit *hashTextBox;
     
+    void sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex);
     void sendBlockRequest(QString targetNode, QByteArray hash);
-    void sendMetafile(QString targetNode, QByteArray hash, PeersterFile *f);
+    void sendMessage(QString targetNode, Message message);
+    void sendMetafile(QString targetNode, PeersterFile *f, QByteArray hash);
     void showDialog();
 };
 

@@ -15,6 +15,7 @@ public:
     PeersterFile();
     PeersterFile(const QString someFilename);
     
+    QByteArray getBlock(int blockIndex);
     QByteArray getBlocklistHash();
     QByteArray getBlocklistMetafile();
     QString getFilename();

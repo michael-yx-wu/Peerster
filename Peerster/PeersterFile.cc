@@ -12,6 +12,7 @@ PeersterFile::PeersterFile(const QString someFilename) {
 
 
 void PeersterFile::scanFile() {
+    file->open(QIODevice::ReadOnly);
     QByteArray blockHashes;
     QByteArray block;
     while ((block = file->read(Constants::BLOCKSIZE)).size() != 0) {
@@ -24,9 +25,21 @@ void PeersterFile::scanFile() {
     
     blocklistHash = hash.final().toByteArray();
     blocklistMetafile = blockHashes;
+    file->close();
 }
 
 #pragma mark - Accessor methods
+
+QByteArray PeersterFile::getBlock(int blockIndex) {
+    QByteArray block;
+    file->open(QIODevice::ReadOnly);
+    for (qint64 i = 0; i < blockIndex; i++) {
+        file->read(Constants::BLOCKSIZE);
+    }
+    block = file->read(Constants::BLOCKSIZE);
+    file->close();
+    return block;
+}
 
 QByteArray PeersterFile::getBlocklistHash() {
     return blocklistHash;

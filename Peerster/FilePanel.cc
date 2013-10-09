@@ -34,9 +34,7 @@ FilePanel::FilePanel(QString someOrigin) {
     fileShareBoxLayout->addWidget(downloadFileButton, 2, 1);
 }
 
-QGroupBox* FilePanel::getGroupBox() {
-    return fileShareBox;
-}
+#pragma mark - GUI Actions
 
 // Process button clicking
 void FilePanel::buttonClicked(QString buttonName) {
@@ -54,13 +52,24 @@ void FilePanel::buttonClicked(QString buttonName) {
     }
 }
 
+// Show file selection dialog
+void FilePanel::showDialog() {
+    QStringList filesToAdd = QFileDialog::getOpenFileNames();
+    for (int i = 0; i < filesToAdd.size(); i++) {
+        qDebug() << "Scanning file: " + filesToAdd.at(i);
+        files.append(new PeersterFile(filesToAdd.at(i)));
+    }
+}
+
+#pragma mark - Block Reply and Request Methods
+
 void FilePanel::handleBlockRequest(Message message) {
     QByteArray blockRequest = message.getBlockRequest();
     int i = 0;
     foreach(PeersterFile *f, files) {
         QByteArray blockRequest = message.getBlockRequest();
         if (blockRequest == f->getBlocklistHash()) {
-            // send block reply with entire
+            sendMetafile(message.getDestOrigin(), f, blockRequest);
             break;
         }
         else if ((i = f->getBlocklistMetafile().indexOf(blockRequest)) != -1) {
@@ -74,29 +83,33 @@ void FilePanel::handleBlockRequest(Message message) {
 void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
     qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
     Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash);
-    QByteArray datagram = message.getSerializedMessage();
-    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
-    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
-    socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+    sendMessage(targetNode, message);
 }
 
 // Send metafile to the specified node
-void FilePanel::sendMetafile(QString targetNode, QByteArray hash, PeersterFile *f) {
+void FilePanel::sendMetafile(QString targetNode, PeersterFile *f, QByteArray hash) {
     qDebug() << "Sending metafile to " + targetNode;
     Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
+    sendMessage(targetNode, message);
+}
+
+void FilePanel::sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex) {
+    qDebug() << "Sending block #" + QString::number(blockIndex) + " to targetNode";
+    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlock(blockIndex));
+    sendMessage(targetNode, message);
+}
+
+void FilePanel::sendMessage(QString targetNode, Message message) {
     QByteArray datagram = message.getSerializedMessage();
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
 }
 
-// Show file selection dialog
-void FilePanel::showDialog() {
-    QStringList filesToAdd = QFileDialog::getOpenFileNames();
-    for (int i = 0; i < filesToAdd.size(); i++) {
-        qDebug() << "Scanning file: " + filesToAdd.at(i);
-        files.append(new PeersterFile(filesToAdd.at(i)));
-    }
+#pragma mark - Accessor Methods
+
+QGroupBox* FilePanel::getGroupBox() {
+    return fileShareBox;
 }
 
 void FilePanel::setPrivateMessagingPanel(PrivateMessagingPanel *somePanel) {
