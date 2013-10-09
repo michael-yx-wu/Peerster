@@ -1,7 +1,5 @@
 #include "PeersterFile.hh"
 
-static qint64 BLOCKSIZE = 8192; // 8KB blocksize
-
 PeersterFile::PeersterFile() {
     file = NULL;
 }
@@ -16,7 +14,7 @@ PeersterFile::PeersterFile(const QString someFilename) {
 void PeersterFile::scanFile() {
     QByteArray blockHashes;
     QByteArray block;
-    while ((block = file->read(BLOCKSIZE)).size() != 0) {
+    while ((block = file->read(Constants::xBlockSize)).size() != 0) {
         QCA::Hash hash("sha256");
         hash.update(block);
         blockHashes.append(hash.final().toByteArray());

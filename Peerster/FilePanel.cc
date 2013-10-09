@@ -64,8 +64,8 @@ bool FilePanel::hasHash(QByteArray hash) {
             return true;
         }
         QByteArray metafile = f->getBlocklistMetafile();
-        for (int i = 0; i < metafile.size(); i+=) {
-            <#statements#>
+        for (qint64 i = 0; i < metafile.size(); i+=Constants::xBlockSize) {
+            
         }
     }
     // Search metafile hashes

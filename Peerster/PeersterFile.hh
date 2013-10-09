@@ -6,6 +6,8 @@
 #include <QString>
 #include <QFile>
 
+#include "Constants.hh"
+
 class PeersterFile : public QObject {
     Q_OBJECT
     

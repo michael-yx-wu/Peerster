@@ -16,6 +16,8 @@ public:
     static const QString xBlockRequest;
     static const QString xBlockReply;
     static const QString xData;
+    
+    static const qint64 xBlockSize;
 };
 
 

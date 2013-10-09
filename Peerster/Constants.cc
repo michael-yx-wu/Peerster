@@ -11,3 +11,5 @@ const QString Constants::xLastPort = "LastPort";
 const QString Constants::xBlockRequest = "BlockRequest";
 const QString Constants::xBlockReply = "BlockReply";
 const QString Constants::xData = "Data";
+
+const qint64 Constants::xBlockSize = 8192;
