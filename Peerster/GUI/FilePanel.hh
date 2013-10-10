@@ -14,13 +14,13 @@
 #include <QUdpSocket>
 #include <QtCrypto>
 
-#include "Message.hh"
-#include "BlockReplyMessage.hh"
-#include "BlockRequestMessage.hh"
-#include "PeersterFile.hh"
+#include "../Messages/Message.hh"
+#include "../Messages/BlockReplyMessage.hh"
+#include "../Messages/BlockRequestMessage.hh"
+#include "../Messages/SearchReplyMessage.hh"
+#include "../Messages/SearchRequestMessage.hh"
+#include "../FileSharing/PeersterFile.hh"
 #include "PrivateMessagingPanel.hh"
-#include "SearchReplyMessage.hh"
-#include "SearchRequestMessage.hh"
 
 class FilePanel : public QObject {
     Q_OBJECT

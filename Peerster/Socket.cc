@@ -1,11 +1,3 @@
-//
-//  Socket.cpp
-//  Peerster
-//
-//  Created by Michael Wu on 9/2/13.
-//
-//
-
 #include "Socket.hh"
 
 // Atempt to bind to a UDP port in range

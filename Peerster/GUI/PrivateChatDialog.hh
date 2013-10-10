@@ -8,7 +8,7 @@
 #include <QUdpSocket>
 
 #include "Chatbox.hh"
-#include "Message.hh"
+#include "../Messages/Message.hh"
 
 class PrivateChatDialog : public QDialog {
     Q_OBJECT

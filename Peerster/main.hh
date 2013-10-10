@@ -16,12 +16,17 @@
 #include <QVBoxLayout>
 #include <QtCrypto>
 
-#include "Chatbox.hh"
 #include "Constants.hh"
-#include "FilePanel.hh"
+#include "GUI/Chatbox.hh"
+#include "GUI/FilePanel.hh"
+#include "GUI/PrivateMessagingPanel.hh"
+#include "Messages/Message.hh"
+#include "Messages/BlockReplyMessage.hh"
+#include "Messages/BlockRequestMessage.hh"
+#include "Messages/SearchReplyMessage.hh"
+#include "Messages/SearchRequestMessage.hh"
 #include "Messages.hh"
 #include "Peer.hh"
-#include "PrivateMessagingPanel.hh"
 
 class ChatDialog : public QDialog {
 	Q_OBJECT

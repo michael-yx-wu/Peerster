@@ -1,12 +1,12 @@
-#ifndef __Peerster__File__
-#define __Peerster__File__
+#ifndef __Peerster__PeersterFile__
+#define __Peerster__PeersterFile__
 
 #include <QObject>
 #include <QString>
 #include <QFile>
 #include <QtCrypto>
 
-#include "Constants.hh"
+#include "../Constants.hh"
 
 class PeersterFile : public QObject {
     Q_OBJECT
