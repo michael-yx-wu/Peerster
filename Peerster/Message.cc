@@ -64,18 +64,6 @@ Message::Message(const QString someOrigin, const QString someDestOrigin, const q
     serializedMessage = serializeBlockReplyMessage();
 }
 
-#pragma mark - Block Request Constructors
-
-Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest) {
-    defaultBoolValues();
-    blockRequestMessage = true;
-    origin = someOrigin;
-    dest = someDestOrigin;
-    hopLimit = someHopLimit;
-    blockRequest = someBlockRequest;
-    serializedMessage = serializeBlockRequestMessage();
-}
-
 #pragma mark - Message Serialization
 
 QByteArray Message::serializeChatMessage() {

@@ -1,6 +1,8 @@
 #include "SearchReplyMessage.hh"
 
 SearchReplyMessage::SearchReplyMessage(const QString someOrigin, const QString someDest, const quint32 someHoplimit, const QString someSearchReply, const QVariantList someMatchNames, const QVariantList someMatchIDs) {
+    defaultBoolValues();
+    searchReplyMessage = true;
     origin = someOrigin;
     dest = someDest;
     hopLimit = someHoplimit;

@@ -34,6 +34,22 @@
 					);
 			};
 		};
+		D51C384CEDE0A626D48787D8 = {
+			isa = PBXFileReference;
+			name = "BlockRequestMessage.cc";
+			path = "BlockRequestMessage.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		890C2902962B6E3058743EDD = {
+			fileRef = "D51C384CEDE0A626D48787D8";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
 		B032812B47DD364B2EBE1935 = {
 			isa = PBXFileReference;
 			name = "Chatbox.cc";
@@ -313,6 +329,13 @@
 			refType = 4;
 			sourceTree = "SOURCE_ROOT";
 		};
+		8FB1F5FE3CA1E32F629001E6 = {
+			isa = PBXFileReference;
+			name = "BlockRequestMessage.hh";
+			path = "BlockRequestMessage.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0E44E651B2C048A61BBA378C = {
 			isa = PBXFileReference;
 			name = "Chatbox.hh";
@@ -401,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				"000F2A1E9067A79452CB9855",
+				"8FB1F5FE3CA1E32F629001E6",
 				"0E44E651B2C048A61BBA378C",
 				"8F4D43B6AF93B867F58C5CC8",
 				"DB8AA3A90B3289697BB3E296",
@@ -420,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				"D759577E53E2CE061239002D",
+				"D51C384CEDE0A626D48787D8",
 				"B032812B47DD364B2EBE1935",
 				"98DDAEC184A723DABF37678E",
 				"419B0936305D928799E3FA12",
@@ -462,6 +487,7 @@
 				);
 			generatedFileNames = (
 				"0F92C7DE5A6D0ECD279B47C7",
+				"890C2902962B6E3058743EDD",
 				"1036E1A0232E381E9EF071B9",
 				"745BBB7F397F58ACA0BB35F5",
 				"244222B8413AA8798804B555",
@@ -483,6 +509,7 @@
 			name = "Qt Preprocessors";
 			neededFileNames = (
 				"0F92C7DE5A6D0ECD279B47C7",
+				"890C2902962B6E3058743EDD",
 				"1036E1A0232E381E9EF071B9",
 				"745BBB7F397F58ACA0BB35F5",
 				"244222B8413AA8798804B555",
@@ -507,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				"0F92C7DE5A6D0ECD279B47C7",
+				"890C2902962B6E3058743EDD",
 				"1036E1A0232E381E9EF071B9",
 				"745BBB7F397F58ACA0BB35F5",
 				"244222B8413AA8798804B555",

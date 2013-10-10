@@ -1,6 +1,8 @@
 #include "SearchRequestMessage.hh"
 
 SearchMessage::SearchMessage(const QString someOrigin, const QString someQuery, const quint32 someBudget) {
+    defaultBoolValues();
+    searchRequestMessage = true;
     origin = someOrigin;
     searchRequest = someQuery;
     budget = someBudget;

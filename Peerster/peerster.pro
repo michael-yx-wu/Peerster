@@ -10,5 +10,5 @@ INCLUDEPATH += .
 QT += network
 
 # Input
-HEADERS += main.hh Chatbox.hh Constants.hh FilePanel.hh Message.hh Messages.hh Peer.hh PeersterFile.hh PrivateMessagingPanel.hh PrivateChatDialog.hh SearchReplyMessage.hh SearchRequestMessage.hh
-SOURCES += main.cc Chatbox.cc Constants.cc FilePanel.cc Message.cc Messages.cc Peer.cc PeersterFile.cc PrivateMessagingPanel.cc PrivateChatDialog.cc SearchReplyMessage.cc SearchRequestMessage.cc
+HEADERS += main.hh BlockRequestMessage.hh Chatbox.hh Constants.hh FilePanel.hh Message.hh Messages.hh Peer.hh PeersterFile.hh PrivateMessagingPanel.hh PrivateChatDialog.hh SearchReplyMessage.hh SearchRequestMessage.hh
+SOURCES += main.cc BlockRequestMessage.cc Chatbox.cc Constants.cc FilePanel.cc Message.cc Messages.cc Peer.cc PeersterFile.cc PrivateMessagingPanel.cc PrivateChatDialog.cc SearchReplyMessage.cc SearchRequestMessage.cc

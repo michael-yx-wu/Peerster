@@ -27,9 +27,6 @@ public:
     // Block Reply Message
     Message(const QString someOrigin, const QString someDest, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData);
 
-    // Block Request Message
-    Message(const QString someOrigin, const QString someDest, const quint32 someHopLimit, const QByteArray someBlockRequest);
-    
 #pragma mark - Accessor methods
     
     bool atHopLimit();
