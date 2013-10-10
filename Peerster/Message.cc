@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "Message.hh"
 
 #pragma mark - Constructors
@@ -43,10 +42,10 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     serializedMessage = serializeChatMessage();
 }
 
-Message::Message(const QString someDestOrigin, const QString someMessage, const quint32 someHopLimit) {
+Message::Message(const QString someDest, const QString someMessage, const quint32 someHopLimit) {
     defaultBoolValues();
     privateMessage = true;
-    destOrigin = someDestOrigin;
+    dest = someDest;
     message = someMessage;
     hopLimit = someHopLimit;
     serializedMessage = serializePrivateMessage();
@@ -58,7 +57,7 @@ Message::Message(const QString someOrigin, const QString someDestOrigin, const q
     defaultBoolValues();
     blockReplyMessage = true;
     origin = someOrigin;
-    destOrigin = someDestOrigin;
+    dest = someDestOrigin;
     hopLimit = someHopLimit;
     blockReply = someBlockReply;
     data = someData;
@@ -71,7 +70,7 @@ Message::Message(const QString someOrigin, const QString someDestOrigin, const q
     defaultBoolValues();
     blockRequestMessage = true;
     origin = someOrigin;
-    destOrigin = someDestOrigin;
+    dest = someDestOrigin;
     hopLimit = someHopLimit;
     blockRequest = someBlockRequest;
     serializedMessage = serializeBlockRequestMessage();
@@ -96,7 +95,7 @@ QByteArray Message::serializeChatMessage() {
 
 QByteArray Message::serializePrivateMessage() {
     QMap<QString, QVariant> datapacket;
-    datapacket.insert(Constants::xDest, destOrigin);
+    datapacket.insert(Constants::xDest, dest);
     datapacket.insert(Constants::xChatText, message);
     datapacket.insert(Constants::xHopLimit, hopLimit);
     QByteArray datagram;
@@ -122,7 +121,7 @@ QByteArray Message::serializeRouteMessage() {
 QByteArray Message::serializeBlockReplyMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(Constants::xOrigin, origin);
-    datapacket.insert(Constants::xDest, destOrigin);
+    datapacket.insert(Constants::xDest, dest);
     datapacket.insert(Constants::xHopLimit, hopLimit);
     datapacket.insert(Constants::xBlockReply, blockReply);
     datapacket.insert(Constants::xData, data);
@@ -135,13 +134,9 @@ QByteArray Message::serializeBlockReplyMessage() {
 QByteArray Message::serializeBlockRequestMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(Constants::xOrigin, origin);
-    datapacket.insert(Constants::xDest, destOrigin);
+    datapacket.insert(Constants::xDest, dest);
     datapacket.insert(Constants::xHopLimit, hopLimit);
     datapacket.insert(Constants::xBlockRequest, blockRequest);
-    if (hasLastIPandPort) {
-        datapacket.insert(Constants::xLastIP, lastIP);
-        datapacket.insert(Constants::xLastPort, lastPort);
-    }
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;
@@ -177,16 +172,28 @@ QByteArray Message::getBlockRequest() {
     return blockRequest;
 }
 
+quint32 Message::getBudget() {
+    return budget;
+}
+
 QByteArray Message::getData() {
     return data;
 }
 
-QString Message::getDestOrigin() {
-    return destOrigin;
+QString Message::getDest() {
+    return dest;
 }
 
 quint32 Message::getHopLimit() {
     return hopLimit;
+}
+
+QVariantList Message::getMatchIDs() {
+    return matchIDs;
+}
+
+QVariantList Message::getMatchNames() {
+    return matchNames;
 }
 
 QString Message::getMessage() {
@@ -195,6 +202,14 @@ QString Message::getMessage() {
 
 QString Message::getOrigin() {
     return origin;
+}
+
+QString Message::getSearchRequest() {
+    return searchRequest;
+}
+
+QString Message::getSearchReply() {
+    return searchReply;
 }
 
 quint32 Message::getSeqno() {

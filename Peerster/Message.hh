@@ -37,11 +37,16 @@ public:
     void defaultBoolValues();
     QByteArray getBlockReply();
     QByteArray getBlockRequest();
+    quint32 getBudget();
     QByteArray getData();
-    QString getDestOrigin();
+    QString getDest();
     quint32 getHopLimit();
+    QVariantList getMatchIDs();
+    QVariantList getMatchNames();
     QString getMessage();
     QString getOrigin();
+    QString getSearchRequest();
+    QString getSearchReply();
     quint32 getSeqno();
     QByteArray getSerializedMessage();
     bool isBlockReply();
@@ -52,13 +57,13 @@ public:
     bool isSearchReply();
     bool isSearchRequest();
     
-private:
-    // Private Fields
+protected:
+    // Protected
     QByteArray blockReply;
     QByteArray blockRequest;
     quint32 budget;
     QByteArray data;
-    QString destOrigin;
+    QString dest;
     quint32 hopLimit;
     quint32 lastIP;
     quint16 lastPort;
@@ -66,7 +71,8 @@ private:
     QVariantList matchNames;
     QString message;
     QString origin;
-    QString search;
+    QString searchRequest;
+    QString searchReply;
     quint32 seqno;
     QByteArray serializedMessage;
     bool blockReplyMessage;

@@ -136,13 +136,13 @@ void FilePanel::handleBlockRequest(Message message) {
         QByteArray blockRequest = message.getBlockRequest();
         // Send metafile
         if (blockRequest == f->getBlocklistHash()) {
-            sendMetafileReply(message.getDestOrigin(), f, blockRequest);
+            sendMetafileReply(message.getDest(), f, blockRequest);
             break;
         }
         // Send datablock
         else if ((i = f->getBlocklistMetafile().indexOf(blockRequest)) != -1) {
             int blockIndex = i/Constants::HASHSIZE;
-            sendBlockReply(message.getDestOrigin(), f, blockRequest, blockIndex);
+            sendBlockReply(message.getDest(), f, blockRequest, blockIndex);
             break;
         }
     }

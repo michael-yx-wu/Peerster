@@ -18,7 +18,7 @@ public:
     static const QString xBlockRequest;
     static const QString xBlockReply;
     static const QString xData;
-    static const QString xSearch;
+    static const QString xSearchRequest;
     static const QString xSearchReply;
     static const QString xBudget;
     static const QString xMatchNames;
