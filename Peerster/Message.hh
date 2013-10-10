@@ -22,13 +22,13 @@ public:
     Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort);
     
     // Private Chat Message
-    Message(const QString someDestOrigin, const QString someMessage, const quint32 someHopLimit);
+    Message(const QString someDest, const QString someMessage, const quint32 someHopLimit);
     
     // Block Reply Message
-    Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData);
+    Message(const QString someOrigin, const QString someDest, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData);
 
     // Block Request Message
-    Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockRequest);
+    Message(const QString someOrigin, const QString someDest, const quint32 someHopLimit, const QByteArray someBlockRequest);
     
 #pragma mark - Accessor methods
     
@@ -56,13 +56,17 @@ private:
     // Private Fields
     QByteArray blockReply;
     QByteArray blockRequest;
+    quint32 budget;
     QByteArray data;
     QString destOrigin;
     quint32 hopLimit;
     quint32 lastIP;
     quint16 lastPort;
+    QVariantList matchIDs;
+    QVariantList matchNames;
     QString message;
     QString origin;
+    QString search;
     quint32 seqno;
     QByteArray serializedMessage;
     bool blockReplyMessage;

@@ -11,6 +11,11 @@ const QString Constants::xLastPort = "LastPort";
 const QString Constants::xBlockRequest = "BlockRequest";
 const QString Constants::xBlockReply = "BlockReply";
 const QString Constants::xData = "Data";
+const QString Constants::xSearch = "Search";
+const QString Constants::xSearchReply = "SearchReply";
+const QString Constants::xBudget = "Budget";
+const QString Constants::xMatchNames = "MatchNames";
+const QString Constants::xMatchIDs = "MatchIDs";
 
 const qint64 Constants::BLOCKSIZE = 8192;
 const int Constants::HASHSIZE = 32;
