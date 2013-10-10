@@ -20,7 +20,7 @@
 #include "../Messages/SearchReplyMessage.hh"
 #include "../Messages/SearchRequestMessage.hh"
 #include "../FileSharing/PeersterFile.hh"
-#include "PrivateMessagingPanel.hh"
+#include "./PrivateMessagingPanel.hh"
 
 class FilePanel : public QObject {
     Q_OBJECT
@@ -44,7 +44,7 @@ private:
     QByteArray dataForPendingFile;
     QPushButton *downloadFileButton;
     QList<PeersterFile*> files;
-    int filesDownloaded = 0;
+    int filesDownloaded;
     QGroupBox *fileShareBox;
     QGridLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;

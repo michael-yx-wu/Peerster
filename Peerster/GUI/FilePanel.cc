@@ -6,6 +6,7 @@ const QString FilePanel::button2text = "Download File";
 FilePanel::FilePanel(QString someOrigin) {
     origin = someOrigin;
     isWaitingForMetafile = isWaitingForFile = false;
+    filesDownloaded = 0;
     
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();

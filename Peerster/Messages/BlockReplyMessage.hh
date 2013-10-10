@@ -1,7 +1,7 @@
 #ifndef __Peerster__BlockReplyMessage__
 #define __Peerster__BlockReplyMessage__
 
-#include "Message.hh"
+#include "./Message.hh"
 
 class BlockReplyMessage : public Message {
 public:

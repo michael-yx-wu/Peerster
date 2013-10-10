@@ -7,7 +7,7 @@
 #include <QTextEdit>
 #include <QUdpSocket>
 
-#include "Chatbox.hh"
+#include "./Chatbox.hh"
 #include "../Messages/Message.hh"
 
 class PrivateChatDialog : public QDialog {
