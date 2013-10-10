@@ -5,7 +5,7 @@
 #include <QString>
 #include <QVariant>
 
-#include "Constants.hh"
+#include "../Constants.hh"
 
 class Message {
 public:
