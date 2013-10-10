@@ -13,4 +13,7 @@ const QString Constants::xBlockReply = "BlockReply";
 const QString Constants::xData = "Data";
 
 const qint64 Constants::BLOCKSIZE = 8192;
+const int Constants::HASHSIZE = 32;
+const QString Constants::HASHTYPE = "sha256";
 const quint32 Constants::HOPLIMIT = 10;
+const QString Constants::SAVE_DIRECTORY = QCoreApplication::applicationDirPath();

@@ -9,21 +9,15 @@ PeersterFile::PeersterFile(const QString someFilename) {
     scanFile();
 }
 
-
-
 void PeersterFile::scanFile() {
     file->open(QIODevice::ReadOnly);
     QByteArray blockHashes;
     QByteArray block;
     while ((block = file->read(Constants::BLOCKSIZE)).size() != 0) {
-        QCA::Hash hash("sha256");
-        hash.update(block);
-        blockHashes.append(hash.final().toByteArray());
+        QByteArray blockHash = QCA::Hash(Constants::HASHTYPE).hash(block).toByteArray();
+        blockHashes.append(blockHash);
     }
-    QCA::Hash hash("sha256");
-    hash.update(blockHashes);
-    
-    blocklistHash = hash.final().toByteArray();
+    blocklistHash = QCA::Hash(Constants::HASHTYPE).hash(blockHashes).toByteArray();
     blocklistMetafile = blockHashes;
     file->close();
 }

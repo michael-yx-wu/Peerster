@@ -301,7 +301,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         }
         // Process block reply
         else if (!blockReply.isEmpty()) {
-            
+            filePanel->handleBlockReply(privateMessage);
         }
         // Process block request
         else if (!blockRequest.isEmpty()) {

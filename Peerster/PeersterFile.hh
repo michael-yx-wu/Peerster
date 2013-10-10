@@ -1,10 +1,10 @@
 #ifndef __Peerster__File__
 #define __Peerster__File__
 
-#include <QtCrypto>
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include <QtCrypto>
 
 #include "Constants.hh"
 

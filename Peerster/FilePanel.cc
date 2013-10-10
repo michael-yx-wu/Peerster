@@ -48,7 +48,15 @@ void FilePanel::buttonClicked(QString buttonName) {
         hashTextBoxText.append(hashTextBox->text());
         targetNodeTextBox->clear();
         hashTextBox->clear();
-        sendBlockRequest(targetNode, hashTextBoxText);
+        if (!isWaitingForFile && !isWaitingForMetafile) {
+            isWaitingForFile = isWaitingForMetafile = true;
+            sendBlockRequest(targetNode, hashTextBoxText);
+        }
+        else {
+            QMessageBox messageBox;
+            messageBox.setText("Please wait. Busy downloading file.");
+            messageBox.show();
+        }
     }
 }
 
@@ -61,19 +69,80 @@ void FilePanel::showDialog() {
     }
 }
 
-#pragma mark - Block Reply and Request Methods
+#pragma mark - Handle Block Reply
+
+void FilePanel::handleBlockReply(Message message) {
+    QByteArray blockReply = message.getBlockReply();
+    QByteArray data = message.getData();
+    
+    // Drop invalid block replies
+    if (!validBlockReply(blockReply, data)) {
+        return;
+    }
+    
+    // Got a metafile -- start requesting data blocks
+    if (isWaitingForMetafile && isWaitingForFile) {
+        isWaitingForMetafile = false;
+        blocksDownloaded = 0;
+        numBlocksToDownload = data.size()/Constants::HASHSIZE;
+        if (data.size() % Constants::HASHSIZE != 0) {
+            numBlocksToDownload++;
+        }
+        metafileForPendingFile = message.getData();
+        sendBlockRequest(message.getOrigin(), getMetaBlock(metafileForPendingFile, blocksDownloaded));
+    }
+    
+    // Got block data
+    else if (!isWaitingForMetafile && isWaitingForFile) {
+        // Append to the file data
+        blocksDownloaded++;
+        dataForPendingFile.append(message.getData());
+        
+        if (blocksDownloaded == numBlocksToDownload) {
+            // Stop downloading, add the file to our list of files
+            isWaitingForFile = false;
+            files.append(new PeersterFile(saveDownloadedFile(dataForPendingFile)));
+            return;
+        }
+        
+        // Send block request for next block in sequence
+        sendBlockRequest(message.getOrigin(), getMetaBlock(metafileForPendingFile, blocksDownloaded));
+    }
+}
+
+QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
+    return qbArray.mid(blockNumber*Constants::HASHSIZE, Constants::HASHSIZE);
+}
+
+QString FilePanel::saveDownloadedFile(QByteArray data) {
+    QString filename = Constants::SAVE_DIRECTORY + QString::number(filesDownloaded++);
+    QFile *f = new QFile(filename);
+    f->open(QIODevice::WriteOnly);
+    f->write(data);
+    f->close();
+    return filename;
+}
+
+bool FilePanel::validBlockReply(QByteArray hash, QByteArray block) {
+    return QCA::Hash(Constants::HASHTYPE).hash(block).toByteArray() == hash;
+}
+
+#pragma mark - Handle Block Request
 
 void FilePanel::handleBlockRequest(Message message) {
     QByteArray blockRequest = message.getBlockRequest();
     int i = 0;
     foreach(PeersterFile *f, files) {
         QByteArray blockRequest = message.getBlockRequest();
+        // Send metafile
         if (blockRequest == f->getBlocklistHash()) {
-            sendMetafile(message.getDestOrigin(), f, blockRequest);
+            sendMetafileReply(message.getDestOrigin(), f, blockRequest);
             break;
         }
+        // Send datablock
         else if ((i = f->getBlocklistMetafile().indexOf(blockRequest)) != -1) {
-            // send block reply with corresponding block
+            int blockIndex = i/Constants::HASHSIZE;
+            sendBlockReply(message.getDestOrigin(), f, blockRequest, blockIndex);
             break;
         }
     }
@@ -87,7 +156,7 @@ void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
 }
 
 // Send metafile to the specified node
-void FilePanel::sendMetafile(QString targetNode, PeersterFile *f, QByteArray hash) {
+void FilePanel::sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash) {
     qDebug() << "Sending metafile to " + targetNode;
     Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
     sendMessage(targetNode, message);
