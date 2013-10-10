@@ -51,19 +51,6 @@ Message::Message(const QString someDest, const QString someMessage, const quint3
     serializedMessage = serializePrivateMessage();
 }
 
-#pragma mark - Block Reply Constructors
-
-Message::Message(const QString someOrigin, const QString someDestOrigin, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData) {
-    defaultBoolValues();
-    blockReplyMessage = true;
-    origin = someOrigin;
-    dest = someDestOrigin;
-    hopLimit = someHopLimit;
-    blockReply = someBlockReply;
-    data = someData;
-    serializedMessage = serializeBlockReplyMessage();
-}
-
 #pragma mark - Message Serialization
 
 QByteArray Message::serializeChatMessage() {
@@ -103,19 +90,6 @@ QByteArray Message::serializeRouteMessage() {
     QByteArray datagram;
     QDataStream stream(&datagram, QIODevice::WriteOnly);
     stream << datapacket;   
-    return datagram;
-}
-
-QByteArray Message::serializeBlockReplyMessage() {
-    QMap<QString, QVariant> datapacket;
-    datapacket.insert(Constants::xOrigin, origin);
-    datapacket.insert(Constants::xDest, dest);
-    datapacket.insert(Constants::xHopLimit, hopLimit);
-    datapacket.insert(Constants::xBlockReply, blockReply);
-    datapacket.insert(Constants::xData, data);
-    QByteArray datagram;
-    QDataStream stream(&datagram, QIODevice::WriteOnly);
-    stream << datapacket;
     return datagram;
 }
 

@@ -24,9 +24,6 @@ public:
     // Private Chat Message
     Message(const QString someDest, const QString someMessage, const quint32 someHopLimit);
     
-    // Block Reply Message
-    Message(const QString someOrigin, const QString someDest, const quint32 someHopLimit, const QByteArray someBlockReply, const QByteArray someData);
-
 #pragma mark - Accessor methods
     
     bool atHopLimit();
@@ -86,8 +83,6 @@ protected:
     QByteArray serializeChatMessage();
     QByteArray serializePrivateMessage();
     QByteArray serializeRouteMessage();
-    QByteArray serializeBlockReplyMessage();
-    QByteArray serializeBlockRequestMessage();
 };
 
 #endif

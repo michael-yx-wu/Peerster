@@ -158,13 +158,13 @@ void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
 // Send metafile to the specified node
 void FilePanel::sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash) {
     qDebug() << "Sending metafile to " + targetNode;
-    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
+    Message message = BlockReplyMessage(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
     sendMessage(targetNode, message);
 }
 
 void FilePanel::sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex) {
     qDebug() << "Sending block #" + QString::number(blockIndex) + " to targetNode";
-    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlock(blockIndex));
+    Message message = BlockReplyMessage(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlock(blockIndex));
     sendMessage(targetNode, message);
 }
 

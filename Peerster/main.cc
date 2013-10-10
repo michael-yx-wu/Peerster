@@ -284,7 +284,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     
     // Determine type of message to forward
     if (!blockReply.isEmpty()) {
-        privateMessage = Message(origin, dest, hoplimit, blockReply, data);
+        privateMessage = BlockReplyMessage(origin, dest, hoplimit, blockReply, data);
     }
     else if (!blockRequest.isEmpty()) {
         privateMessage = BlockRequestMessage(origin, dest, hoplimit, blockRequest);

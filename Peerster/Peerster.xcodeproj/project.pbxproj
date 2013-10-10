@@ -24,6 +24,7 @@
 		899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E0BBC85E7EBD497B22D3B33E /* Messages.cc */; settings = {ATTRIBUTES = (); }; };
 		9591BB9D05D15E6702D97569 /* SearchReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E51220F3373E6285CEDA508A /* SearchReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */; settings = {ATTRIBUTES = (); }; };
+		AA962F0D3BF57D0194C5F901 /* BlockReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 33B498D4023D53F4526E6CC4 /* BlockReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		B986F2E8D95A535775A0C085 /* moc_FilePanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */; settings = {ATTRIBUTES = (); }; };
 		D33B1E115874F491151176CF /* Peer.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2E3BA334344441BCDAAC8724 /* Peer.cc */; settings = {ATTRIBUTES = (); }; };
 		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -38,12 +39,14 @@
 		0E44E651B2C048A61BBA378C /* Chatbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Chatbox.hh; sourceTree = SOURCE_ROOT; };
 		11D21793152EFA9E8AA45AED /* PrivateChatDialog.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PrivateChatDialog.hh; sourceTree = SOURCE_ROOT; };
 		12CE19638E6C844EFEBA5234 /* Peer.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Peer.hh; sourceTree = SOURCE_ROOT; };
+		2AE975D9C76CEFB9714C8548 /* BlockReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlockReplyMessage.hh; sourceTree = SOURCE_ROOT; };
 		2E3BA334344441BCDAAC8724 /* Peer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peer.cc; sourceTree = SOURCE_ROOT; };
+		33B498D4023D53F4526E6CC4 /* BlockReplyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlockReplyMessage.cc; sourceTree = SOURCE_ROOT; };
 		419B0936305D928799E3FA12 /* FilePanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FilePanel.cc; sourceTree = SOURCE_ROOT; };
 		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4AFB2CAA940943C9521DBB4E /* PrivateMessagingPanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PrivateMessagingPanel.cc; sourceTree = SOURCE_ROOT; };
-		4CAA95D3180717D60051EB7C /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CAA95D818071BA60051EB7C /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		713564A7C99C581D997452E6 /* PeersterFile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeersterFile.cc; sourceTree = SOURCE_ROOT; };
 		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
@@ -97,7 +100,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4CAA95D4180717D60051EB7C /* Products */,
+				4CAA95D918071BA60051EB7C /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -115,10 +118,10 @@
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4CAA95D4180717D60051EB7C /* Products */ = {
+		4CAA95D918071BA60051EB7C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CAA95D3180717D60051EB7C /* Peerster.app */,
+				4CAA95D818071BA60051EB7C /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				000F2A1E9067A79452CB9855 /* main.hh */,
+				2AE975D9C76CEFB9714C8548 /* BlockReplyMessage.hh */,
 				8FB1F5FE3CA1E32F629001E6 /* BlockRequestMessage.hh */,
 				0E44E651B2C048A61BBA378C /* Chatbox.hh */,
 				8F4D43B6AF93B867F58C5CC8 /* Constants.hh */,
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				D759577E53E2CE061239002D /* main.cc */,
+				33B498D4023D53F4526E6CC4 /* BlockReplyMessage.cc */,
 				D51C384CEDE0A626D48787D8 /* BlockRequestMessage.cc */,
 				B032812B47DD364B2EBE1935 /* Chatbox.cc */,
 				98DDAEC184A723DABF37678E /* Constants.cc */,
@@ -201,7 +206,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4CAA95D3180717D60051EB7C /* Peerster.app */;
+			productReference = 4CAA95D818071BA60051EB7C /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -220,7 +225,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4CAA95D4180717D60051EB7C /* Products */;
+			productRefGroup = 4CAA95D918071BA60051EB7C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -269,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */,
+				AA962F0D3BF57D0194C5F901 /* BlockReplyMessage.cc in Build Sources */,
 				890C2902962B6E3058743EDD /* BlockRequestMessage.cc in Build Sources */,
 				1036E1A0232E381E9EF071B9 /* Chatbox.cc in Build Sources */,
 				745BBB7F397F58ACA0BB35F5 /* Constants.cc in Build Sources */,

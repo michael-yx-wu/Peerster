@@ -15,6 +15,7 @@
 #include <QtCrypto>
 
 #include "Message.hh"
+#include "BlockReplyMessage.hh"
 #include "BlockRequestMessage.hh"
 #include "PeersterFile.hh"
 #include "PrivateMessagingPanel.hh"
