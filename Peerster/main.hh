@@ -19,7 +19,6 @@
 #include "Chatbox.hh"
 #include "Constants.hh"
 #include "FilePanel.hh"
-#include "Message.hh"
 #include "Messages.hh"
 #include "Peer.hh"
 #include "PrivateMessagingPanel.hh"

@@ -151,7 +151,7 @@ void FilePanel::handleBlockRequest(Message message) {
 // Send block request to the specified node
 void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
     qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
-    Message message = Message(origin, targetNode, Constants::HOPLIMIT, hash);
+    Message message = BlockRequestMessage(origin, targetNode, Constants::HOPLIMIT, hash);
     sendMessage(targetNode, message);
 }
 

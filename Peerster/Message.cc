@@ -119,18 +119,6 @@ QByteArray Message::serializeBlockReplyMessage() {
     return datagram;
 }
 
-QByteArray Message::serializeBlockRequestMessage() {
-    QMap<QString, QVariant> datapacket;
-    datapacket.insert(Constants::xOrigin, origin);
-    datapacket.insert(Constants::xDest, dest);
-    datapacket.insert(Constants::xHopLimit, hopLimit);
-    datapacket.insert(Constants::xBlockRequest, blockRequest);
-    QByteArray datagram;
-    QDataStream stream(&datagram, QIODevice::WriteOnly);
-    stream << datapacket;
-    return datagram;
-}
-
 # pragma mark - Other Methods
 
 bool Message::atHopLimit() {

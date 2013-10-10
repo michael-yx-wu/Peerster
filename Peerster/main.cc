@@ -287,7 +287,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         privateMessage = Message(origin, dest, hoplimit, blockReply, data);
     }
     else if (!blockRequest.isEmpty()) {
-        privateMessage = Message(origin, dest, hoplimit, blockRequest);
+        privateMessage = BlockRequestMessage(origin, dest, hoplimit, blockRequest);
     }
     else if (!message.isEmpty()) {
         privateMessage = Message(dest, message, hoplimit);

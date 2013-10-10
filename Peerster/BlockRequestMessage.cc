@@ -7,5 +7,17 @@ BlockRequestMessage::BlockRequestMessage(const QString someOrigin, const QString
     dest = someDest;
     hopLimit = someHopLimit;
     blockRequest = someBlockRequest;
-    
+    serializedMessage = serializeBlockRequestMessage();
+}
+
+QByteArray BlockRequestMessage::serializeBlockRequestMessage() {
+    QMap<QString, QVariant> datapacket;
+    datapacket.insert(Constants::xOrigin, origin);
+    datapacket.insert(Constants::xDest, dest);
+    datapacket.insert(Constants::xHopLimit, hopLimit);
+    datapacket.insert(Constants::xBlockRequest, blockRequest);
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+    return datagram;
 }
