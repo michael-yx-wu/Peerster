@@ -1,7 +1,7 @@
 #ifndef __Peerster__SearchRequestMessage__
 #define __Peerster__SearchRequestMessage__
 
-#include "./Message.hh"
+#include "Message.hh"
 
 class SearchMessage : public Message {
 public:

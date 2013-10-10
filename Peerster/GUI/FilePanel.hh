@@ -20,7 +20,7 @@
 #include "../Messages/SearchReplyMessage.hh"
 #include "../Messages/SearchRequestMessage.hh"
 #include "../FileSharing/PeersterFile.hh"
-#include "./PrivateMessagingPanel.hh"
+#include "PrivateMessagingPanel.hh"
 
 class FilePanel : public QObject {
     Q_OBJECT

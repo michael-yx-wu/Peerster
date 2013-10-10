@@ -8,7 +8,7 @@
 #include <QSignalMapper>
 #include <QVBoxLayout>
 
-#include "./PrivateChatDialog.hh"
+#include "PrivateChatDialog.hh"
 
 class PrivateMessagingPanel : public QObject {
     Q_OBJECT
