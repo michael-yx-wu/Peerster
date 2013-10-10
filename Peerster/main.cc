@@ -481,6 +481,7 @@ int main(int argc, char **argv) {
 	// Initialize Qt toolkit
 	QApplication app(argc,argv);
     QCA::init();
+    Constants::setApplicationDirectory(QCoreApplication::applicationDirPath());
     
 	// Create an initial chat dialog window
 	ChatDialog dialog;

@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QDialog>
 #include <QGroupBox>
 #include <QHostInfo>

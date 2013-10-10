@@ -1,7 +1,6 @@
 #ifndef __Peerster__Constants__
 #define __Peerster__Constants__
 
-#include <QCoreApplication>
 #include <QString>
 
 class Constants {
@@ -29,7 +28,9 @@ public:
     static const int HASHSIZE;
     static const QString HASHTYPE;
     static const quint32 HOPLIMIT;
-    static const QString SAVE_DIRECTORY;
+    static QString SAVE_DIRECTORY;
+    
+    static void setApplicationDirectory(QString path);
 };
 
 
