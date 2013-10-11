@@ -18,7 +18,7 @@ public:
         int rowHeight = m.lineSpacing();
         setFixedHeight(3*rowHeight);
         shift = false;
-        
+        setTabChangesFocus(true);
     };
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

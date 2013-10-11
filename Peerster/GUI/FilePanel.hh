@@ -55,6 +55,8 @@ private:
     QByteArray metafileForPendingFile;
     PrivateMessagingPanel *privateMessagingPanel;
     QSignalMapper *signalMapper;
+    QPushButton *searchButton;
+    QLineEdit *searchTextBox;
     QPushButton *selectFilesButton;
     QUdpSocket *socket;
     QLineEdit *targetNodeTextBox;

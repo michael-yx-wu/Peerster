@@ -2,6 +2,7 @@
 
 const QString FilePanel::button1text = "Add Files(s)";
 const QString FilePanel::button2text = "Download File";
+const QString FilePanel::button3text = "Search";
 
 FilePanel::FilePanel(QString someOrigin) {
     origin = someOrigin;
@@ -24,17 +25,24 @@ FilePanel::FilePanel(QString someOrigin) {
     
     // Download file GUI
     targetNodeTextBox = new QLineEdit();
+    targetNodeTextBox->setPlaceholderText("Target Node");
     hashTextBox = new QLineEdit();
+    hashTextBox->setPlaceholderText("Hash of Metafile");
     downloadFileButton = new QPushButton(button2text);
     signalMapper->setMapping(downloadFileButton, button2text);
     connect(downloadFileButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    targetNodeTextBox->setPlaceholderText("Target Node");
-    hashTextBox->setPlaceholderText("Hash of Metafile");
     fileShareBoxLayout->addWidget(targetNodeTextBox, 1, 0);
     fileShareBoxLayout->addWidget(hashTextBox, 2, 0);
     fileShareBoxLayout->addWidget(downloadFileButton, 2, 1);
     
     // Search file GUI
+    searchTextBox = new QLineEdit();
+    searchTextBox->setPlaceholderText("Search Query");
+    searchButton = new QPushButton(button3text);
+    signalMapper->setMapping(searchButton, button3text);
+    connect(searchButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    fileShareBoxLayout->addWidget(searchTextBox, 3, 0);
+    fileShareBoxLayout->addWidget(searchButton, 3, 1);
     
 }
 
