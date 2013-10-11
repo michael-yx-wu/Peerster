@@ -35,6 +35,7 @@ public:
     void buttonClicked(QString buttonName);
     void handleBlockReply(Message message);
     void handleBlockRequest(Message message);
+    void sendBlockRequest(QString targetNode, QByteArray hash);
     
 private:
     int blocksDownloaded;
@@ -66,7 +67,6 @@ private:
     QByteArray getMetaBlock(QByteArray qbArray, int blockNumber);
     QString saveDownloadedFile(QByteArray data);
     void sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex);
-    void sendBlockRequest(QString targetNode, QByteArray hash);
     void sendMessage(QString targetNode, Message message);
     void sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash);
     void showDialog();

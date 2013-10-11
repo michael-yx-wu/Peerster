@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */; settings = {ATTRIBUTES = (); }; };
 		072DEAF199EC832351D00217 /* PeersterFile.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = CDE39949937C61391EFE9219 /* PeersterFile.cc */; settings = {ATTRIBUTES = (); }; };
+		0966E220859B941E7CAF3FD3 /* SearchResultsWindow.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */; settings = {ATTRIBUTES = (); }; };
 		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
 		1CFE0C78A64F3E598E833754 /* SearchReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D6C4748E93948F6970358485 /* SearchReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 7517BF99384862A85367FB95 /* BlockRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
@@ -16,6 +17,7 @@
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
 		50F1A0A6C62C20D272991B90 /* moc_PeersterFile.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */; settings = {ATTRIBUTES = (); }; };
 		522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
+		55518DF469BF55DF78E2437C /* moc_SearchResultsWindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */; settings = {ATTRIBUTES = (); }; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
 		745BBB7F397F58ACA0BB35F5 /* Constants.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 98DDAEC184A723DABF37678E /* Constants.cc */; settings = {ATTRIBUTES = (); }; };
@@ -23,7 +25,6 @@
 		80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E0BBC85E7EBD497B22D3B33E /* Messages.cc */; settings = {ATTRIBUTES = (); }; };
-		96975A09ED96892309CD49A4 /* SearchResultsWindow.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */; settings = {ATTRIBUTES = (); }; };
 		98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */; settings = {ATTRIBUTES = (); }; };
 		98FA7E9E8B04EA8147C25827 /* Socket.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 68376373146216DB7F574AD9 /* Socket.cc */; settings = {ATTRIBUTES = (); }; };
 		9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09F1CB6767DEF02B3D0C635C /* FilePanel.cc */; settings = {ATTRIBUTES = (); }; };
@@ -38,19 +39,20 @@
 
 /* Begin PBXFileReference section */
 		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
-		07F14E5684220354824E14D7 /* SearchResultsWindow.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResultsWindow.hh; path = GUI/SearchResultsWindow.hh; sourceTree = SOURCE_ROOT; };
 		09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrivateChatDialog.cc; path = GUI/PrivateChatDialog.cc; sourceTree = SOURCE_ROOT; };
 		09F1CB6767DEF02B3D0C635C /* FilePanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilePanel.cc; path = GUI/FilePanel.cc; sourceTree = SOURCE_ROOT; };
 		0C2021078A3A8CBCB9A3A01E /* Chatbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Chatbox.hh; path = GUI/Chatbox.hh; sourceTree = SOURCE_ROOT; };
 		12CE19638E6C844EFEBA5234 /* Peer.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Peer.hh; sourceTree = SOURCE_ROOT; };
+		2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchResultsWindow.cc; path = GUI/SearchResultsWindow.cc; sourceTree = SOURCE_ROOT; };
 		24A8DD62E000C3CB83BE9741 /* SearchRequestMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchRequestMessage.hh; path = Messages/SearchRequestMessage.hh; sourceTree = SOURCE_ROOT; };
 		2E3BA334344441BCDAAC8724 /* Peer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peer.cc; sourceTree = SOURCE_ROOT; };
 		414DD86A7AC96B15FE9D354D /* PrivateMessagingPanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PrivateMessagingPanel.hh; path = GUI/PrivateMessagingPanel.hh; sourceTree = SOURCE_ROOT; };
 		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4BF8915F4A4CED4C258BF8E9 /* Socket.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hh; sourceTree = SOURCE_ROOT; };
-		4CDC517018077C7700A34ADC /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CC3D6521808465F0023A2F7 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
+		567D6C91AD1A7AECBFB7A034 /* SearchResultsWindow.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResultsWindow.hh; path = GUI/SearchResultsWindow.hh; sourceTree = SOURCE_ROOT; };
 		5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockReplyMessage.cc; path = Messages/BlockReplyMessage.cc; sourceTree = SOURCE_ROOT; };
 		5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Socket.cpp; sourceTree = SOURCE_ROOT; };
 		68376373146216DB7F574AD9 /* Socket.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cc; sourceTree = SOURCE_ROOT; };
@@ -59,7 +61,6 @@
 		7517BF99384862A85367FB95 /* BlockRequestMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockRequestMessage.cc; path = Messages/BlockRequestMessage.cc; sourceTree = SOURCE_ROOT; };
 		7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FilePanel.hh; path = GUI/FilePanel.hh; sourceTree = SOURCE_ROOT; };
 		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
-		81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchResultsWindow.cc; path = GUI/SearchResultsWindow.cc; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
 		889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateMessagingPanel.cpp; sourceTree = SOURCE_ROOT; };
 		8F4D43B6AF93B867F58C5CC8 /* Constants.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hh; sourceTree = SOURCE_ROOT; };
@@ -80,6 +81,7 @@
 		E0BBC85E7EBD497B22D3B33E /* Messages.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Messages.cc; sourceTree = SOURCE_ROOT; };
 		E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PeersterFile.cpp; sourceTree = SOURCE_ROOT; };
 		E4532E33CA7B0E0B47E58779 /* qca */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = qca; path = /usr/local/Cellar/qt/4.8.5/lib/libqca.2.0.3.dylib; sourceTree = "<absolute>"; };
+		E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_SearchResultsWindow.cpp; sourceTree = SOURCE_ROOT; };
 		F3AFBE020864EC80D6EE4A8E /* BlockReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BlockReplyMessage.hh; path = Messages/BlockReplyMessage.hh; sourceTree = SOURCE_ROOT; };
 		F41053476CF4B2C49EF187F7 /* moc_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_main.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -108,7 +110,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4CDC517118077C7700A34ADC /* Products */,
+				4CC3D6531808465F0023A2F7 /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -120,7 +122,7 @@
 				7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */,
 				DFC2D44A436C35D52AA946A8 /* PrivateChatDialog.hh */,
 				414DD86A7AC96B15FE9D354D /* PrivateMessagingPanel.hh */,
-				07F14E5684220354824E14D7 /* SearchResultsWindow.hh */,
+				567D6C91AD1A7AECBFB7A034 /* SearchResultsWindow.hh */,
 			);
 			name = GUI;
 			sourceTree = "<Group>";
@@ -135,14 +137,15 @@
 				41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */,
 				7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */,
 				889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */,
+				E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */,
 			);
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4CDC517118077C7700A34ADC /* Products */ = {
+		4CC3D6531808465F0023A2F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CDC517018077C7700A34ADC /* Peerster.app */,
+				4CC3D6521808465F0023A2F7 /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,7 +204,7 @@
 				09F1CB6767DEF02B3D0C635C /* FilePanel.cc */,
 				09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */,
 				AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */,
-				81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */,
+				2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */,
 			);
 			name = GUI;
 			sourceTree = "<Group>";
@@ -267,7 +270,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4CDC517018077C7700A34ADC /* Peerster.app */;
+			productReference = 4CC3D6521808465F0023A2F7 /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -286,7 +289,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4CDC517118077C7700A34ADC /* Products */;
+			productRefGroup = 4CC3D6531808465F0023A2F7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -344,7 +347,7 @@
 				9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */,
 				98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */,
 				C9110DA8E4557A383FA293DF /* PrivateMessagingPanel.cc in Build Sources */,
-				96975A09ED96892309CD49A4 /* SearchResultsWindow.cc in Build Sources */,
+				0966E220859B941E7CAF3FD3 /* SearchResultsWindow.cc in Build Sources */,
 				80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */,
 				2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */,
 				76356B4B41D599A6B6D1DA8D /* Message.cc in Build Sources */,
@@ -357,6 +360,7 @@
 				B986F2E8D95A535775A0C085 /* moc_FilePanel.cpp in Build Sources */,
 				A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */,
 				02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */,
+				55518DF469BF55DF78E2437C /* moc_SearchResultsWindow.cpp in Build Sources */,
 			);
 			name = "Build Sources";
 			runOnlyForDeploymentPostprocessing = 0;
