@@ -56,6 +56,7 @@ private:
     PrivateMessagingPanel *privateMessagingPanel;
     QSignalMapper *signalMapper;
     QPushButton *searchButton;
+    QString searchQuery;
     QLineEdit *searchTextBox;
     QPushButton *selectFilesButton;
     QUdpSocket *socket;

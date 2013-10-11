@@ -23,7 +23,7 @@
 		80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */; settings = {ATTRIBUTES = (); }; };
 		899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E0BBC85E7EBD497B22D3B33E /* Messages.cc */; settings = {ATTRIBUTES = (); }; };
-		96975A09ED96892309CD49A4 /* SearchResultsPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 81F16F22DD6D94EB00889E5E /* SearchResultsPanel.cc */; settings = {ATTRIBUTES = (); }; };
+		96975A09ED96892309CD49A4 /* SearchResultsWindow.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */; settings = {ATTRIBUTES = (); }; };
 		98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */; settings = {ATTRIBUTES = (); }; };
 		98FA7E9E8B04EA8147C25827 /* Socket.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 68376373146216DB7F574AD9 /* Socket.cc */; settings = {ATTRIBUTES = (); }; };
 		9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09F1CB6767DEF02B3D0C635C /* FilePanel.cc */; settings = {ATTRIBUTES = (); }; };
@@ -38,7 +38,7 @@
 
 /* Begin PBXFileReference section */
 		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
-		07F14E5684220354824E14D7 /* SearchResultsPanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResultsPanel.hh; path = GUI/SearchResultsPanel.hh; sourceTree = SOURCE_ROOT; };
+		07F14E5684220354824E14D7 /* SearchResultsWindow.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResultsWindow.hh; path = GUI/SearchResultsWindow.hh; sourceTree = SOURCE_ROOT; };
 		09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrivateChatDialog.cc; path = GUI/PrivateChatDialog.cc; sourceTree = SOURCE_ROOT; };
 		09F1CB6767DEF02B3D0C635C /* FilePanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilePanel.cc; path = GUI/FilePanel.cc; sourceTree = SOURCE_ROOT; };
 		0C2021078A3A8CBCB9A3A01E /* Chatbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Chatbox.hh; path = GUI/Chatbox.hh; sourceTree = SOURCE_ROOT; };
@@ -59,7 +59,7 @@
 		7517BF99384862A85367FB95 /* BlockRequestMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockRequestMessage.cc; path = Messages/BlockRequestMessage.cc; sourceTree = SOURCE_ROOT; };
 		7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FilePanel.hh; path = GUI/FilePanel.hh; sourceTree = SOURCE_ROOT; };
 		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
-		81F16F22DD6D94EB00889E5E /* SearchResultsPanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchResultsPanel.cc; path = GUI/SearchResultsPanel.cc; sourceTree = SOURCE_ROOT; };
+		81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchResultsWindow.cc; path = GUI/SearchResultsWindow.cc; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
 		889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateMessagingPanel.cpp; sourceTree = SOURCE_ROOT; };
 		8F4D43B6AF93B867F58C5CC8 /* Constants.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hh; sourceTree = SOURCE_ROOT; };
@@ -120,7 +120,7 @@
 				7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */,
 				DFC2D44A436C35D52AA946A8 /* PrivateChatDialog.hh */,
 				414DD86A7AC96B15FE9D354D /* PrivateMessagingPanel.hh */,
-				07F14E5684220354824E14D7 /* SearchResultsPanel.hh */,
+				07F14E5684220354824E14D7 /* SearchResultsWindow.hh */,
 			);
 			name = GUI;
 			sourceTree = "<Group>";
@@ -201,7 +201,7 @@
 				09F1CB6767DEF02B3D0C635C /* FilePanel.cc */,
 				09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */,
 				AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */,
-				81F16F22DD6D94EB00889E5E /* SearchResultsPanel.cc */,
+				81F16F22DD6D94EB00889E5E /* SearchResultsWindow.cc */,
 			);
 			name = GUI;
 			sourceTree = "<Group>";
@@ -344,7 +344,7 @@
 				9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */,
 				98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */,
 				C9110DA8E4557A383FA293DF /* PrivateMessagingPanel.cc in Build Sources */,
-				96975A09ED96892309CD49A4 /* SearchResultsPanel.cc in Build Sources */,
+				96975A09ED96892309CD49A4 /* SearchResultsWindow.cc in Build Sources */,
 				80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */,
 				2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */,
 				76356B4B41D599A6B6D1DA8D /* Message.cc in Build Sources */,

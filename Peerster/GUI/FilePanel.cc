@@ -70,6 +70,12 @@ void FilePanel::buttonClicked(QString buttonName) {
             messageBox.show();
         }
     }
+    else if (buttonName == button3text) {
+        searchQuery = searchTextBox->text();
+        searchTextBox->clear();
+        
+        // send search query to search results panel
+    }
 }
 
 // Show file selection dialog
