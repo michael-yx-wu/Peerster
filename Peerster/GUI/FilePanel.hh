@@ -16,13 +16,13 @@
 #include <QtCrypto>
 
 #include "PrivateMessagingPanel.hh"
-#include "SearchResult.hh"
 #include "../Messages/Message.hh"
 #include "../Messages/BlockReplyMessage.hh"
 #include "../Messages/BlockRequestMessage.hh"
 #include "../Messages/SearchReplyMessage.hh"
 #include "../Messages/SearchRequestMessage.hh"
 #include "../FileSharing/PeersterFile.hh"
+#include "../FileSharing/SearchResult.hh"
 #include "../Peer.hh"
 
 class FilePanel : public QObject {
