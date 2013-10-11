@@ -263,8 +263,6 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     quint32 hoplimit;
     QByteArray blockRequest, blockReply, data;
     QVariantList matchNames, matchIDs;
-    qDebug() << "Got private message";
-    qDebug() << hostname;
     
     // Get data from the datapacket
     dest = datapacket.value(Constants::xDest).toString();
@@ -300,12 +298,15 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     
     // Determine type of message to forward
     if (!blockReply.isEmpty()) {
+        qDebug() << "Got block reply message";
         privateMessage = BlockReplyMessage(origin, dest, hoplimit, blockReply, data);
     }
     else if (!blockRequest.isEmpty()) {
+        qDebug() << "Got block request message";
         privateMessage = BlockRequestMessage(origin, dest, hoplimit, blockRequest);
     }
     else if (!searchReply.isEmpty()) {
+        qDebug() << "Got search reply message";
         privateMessage = SearchReplyMessage(origin, dest, hoplimit, searchReply, matchNames, matchIDs);
     }
     else if (!message.isEmpty()) {
