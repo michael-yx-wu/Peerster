@@ -4,10 +4,11 @@ const QString FilePanel::button1text = "Add Files(s)";
 const QString FilePanel::button2text = "Download File";
 const QString FilePanel::button3text = "Search";
 
-FilePanel::FilePanel(QString someOrigin) {
+FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
     origin = someOrigin;
     isWaitingForMetafile = isWaitingForFile = false;
     filesDownloaded = 0;
+    peers = somePeers;
     
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
@@ -80,9 +81,10 @@ void FilePanel::buttonClicked(QString buttonName) {
 }
 
 void FilePanel::downloadFile(QListWidgetItem *item) {
+    qDebug() << "Dowloading file: " + item->text();
     const QString filename = item->text();
-    QString targetNode = searchResultMap.value(filename).getOrigin();
-    QByteArray metafileHash = searchResultMap.value(filename).getHash();
+    QString targetNode = searchResultMap.value(filename)._origin;
+    QByteArray metafileHash = searchResultMap.value(filename)._hash;
     sendBlockRequest(targetNode, metafileHash);
 }
 
@@ -202,7 +204,14 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
 #pragma mark - Handle Search Reply
 
 void FilePanel::handleSearchReply(Message message) {
-    
+    QVariantList filenames = message.getMatchNames();
+    QVariantList metafileHashes = message.getMatchIDs();
+    for (int i = 0; i < filenames.size(); i++) {
+        QString filename = filenames.value(i).toString();
+        QByteArray metafileHash = metafileHashes.value(i).toByteArray();
+        searchResults->addItem(filename);
+        searchResultMap.insert(filename, SearchResult(filename, message.getOrigin(), metafileHash));
+    }
 }
 
 #pragma mark - Handle Search Request
@@ -224,6 +233,29 @@ void FilePanel::handleSearchRequest(Message message) {
     if (!filenames.isEmpty()) {
         sendSearchReply(message.getOrigin(), query, filenames, metafileHashes);
     }
+    
+    // Pass this request to some of our peers
+    else {
+        // Spread the budget
+        quint32 budget = message.getBudget()-1;
+        QList<quint32> budgetSpread;
+        for (quint32 i = 0; i < peers->size(); i++) {
+            budgetSpread.append(0);
+        }
+        for (quint32 i = 0; i < budget; i = (i + 1)%peers->size()) {
+            budgetSpread.insert(i, budgetSpread.value(i));
+        }
+        
+        // Forward search requests to peers
+        while (!budgetSpread.isEmpty()) {
+            quint32 newBudget = budgetSpread.back();
+            budgetSpread.pop_back();
+            if (newBudget != 0) {
+                sendSearchRequest(query, newBudget);
+            }
+        }
+    }
+    
 }
 
 void FilePanel::sendSearchReply(QString targetNode, QString searchReply, QVariantList matchNames, QVariantList matchIDs) {
@@ -251,10 +283,6 @@ QGroupBox* FilePanel::getGroupBox() {
 
 void FilePanel::setPrivateMessagingPanel(PrivateMessagingPanel *somePanel) {
     privateMessagingPanel = somePanel;
-}
-
-void FilePanel::setPeers(std::vector<Peer> *p) {
-    peers = p;
 }
 
 void FilePanel::setSocket(QUdpSocket *parentSocket) {

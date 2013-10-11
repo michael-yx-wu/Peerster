@@ -29,7 +29,7 @@ class FilePanel : public QObject {
     Q_OBJECT
     
 public:
-    FilePanel(QString someOrigin);
+    FilePanel(QString someOrigin, std::vector<Peer> *somePeers);
     QGroupBox* getGroupBox();
     
     void handleBlockReply(Message message);
@@ -37,7 +37,6 @@ public:
     void handleSearchReply(Message message);
     void handleSearchRequest(Message message);
     void setPrivateMessagingPanel(PrivateMessagingPanel *somePanel);
-    void setPeers(std::vector<Peer> *p);
     void setSocket(QUdpSocket *parentSocket);
     
     public slots:
