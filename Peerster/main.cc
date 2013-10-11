@@ -25,7 +25,7 @@ ChatDialog::ChatDialog() {
 	textview->setReadOnly(true);
 	chatbox = new Chatbox(this);
     addHostBox = new Chatbox(this);
-    filePanel = new FilePanel(hostname);
+    filePanel = new FilePanel(hostname, &peers);
     privateMessagingPanel = new PrivateMessagingPanel();
     
 	QGridLayout *layout = new QGridLayout();
@@ -176,11 +176,11 @@ void ChatDialog::processPendingDatagrams() {
         stream >> datapacket;
         
         // Process the datapacket
-        if (datapacket.contains(Constants::xOrigin)) {
-            processRumorMessage(datapacket, sender, senderPort);
-        }
-        else if (datapacket.contains(Constants::xDest)) {
+        if (datapacket.contains(Constants::xDest)) {
             processPrivateMessage(datapacket);
+        }
+        else if (datapacket.contains(Constants::xOrigin)) {
+            processRumorMessage(datapacket, sender, senderPort);
         }
         else {
             processStatusMessage(datapacket, sender, senderPort);
@@ -196,6 +196,12 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     bool routeUpdated = false;
     Message msg;
     Peer p;
+    
+    // If search request message pass to FilePanel and finish
+    if (datapacket.contains(Constants::xSearchRequest)) {
+        filePanel->handleSearchRequest(SearchRequestMessage(datapacket.value(Constants::xOrigin).toString(), datapacket.value(Constants::xSearchRequest).toString(), datapacket.value(Constants::xBudget).toUInt()));
+        return;
+    }
     
     // Check to see if we have already seen this rumor message
     origin = datapacket.value(Constants::xOrigin).toString();
@@ -253,20 +259,30 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     Message privateMessage;
-    QString origin, dest, message;
+    QString origin, dest, message, searchReply;
     quint32 hoplimit;
     QByteArray blockRequest, blockReply, data;
+    QVariantList matchNames, matchIDs;
     qDebug() << "Got private message";
     qDebug() << hostname;
     
     // Get data from the datapacket
     dest = datapacket.value(Constants::xDest).toString();
-    hoplimit = datapacket.value(Constants::xHopLimit).toUInt();
+    hoplimit = datapacket.value(Constants::xHopLimit).toUInt()-1;
     if (datapacket.contains(Constants::xBlockReply)) {
         blockReply = datapacket.value(Constants::xBlockReply).toByteArray();
     }
     if (datapacket.contains(Constants::xBlockRequest)) {
         blockRequest = datapacket.value(Constants::xBlockRequest).toByteArray();
+    }
+    if (datapacket.contains(Constants::xSearchReply)) {
+        searchReply = datapacket.value(Constants::xSearchReply).toString();
+    }
+    if (datapacket.contains(Constants::xMatchNames)) {
+        matchNames = datapacket.value(Constants::xMatchNames).toList();
+    }
+    if (datapacket.contains(Constants::xMatchIDs)) {
+        matchIDs = datapacket.value(Constants::xMatchIDs).toList();
     }
     if (datapacket.contains(Constants::xChatText)) {
         message = datapacket.value(Constants::xChatText).toString();
@@ -289,6 +305,9 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     else if (!blockRequest.isEmpty()) {
         privateMessage = BlockRequestMessage(origin, dest, hoplimit, blockRequest);
     }
+    else if (!searchReply.isEmpty()) {
+        privateMessage = SearchReplyMessage(origin, dest, hoplimit, searchReply, matchNames, matchIDs);
+    }
     else if (!message.isEmpty()) {
         privateMessage = Message(dest, message, hoplimit);
     }
@@ -307,8 +326,12 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         else if (!blockRequest.isEmpty()) {
             filePanel->handleBlockRequest(privateMessage);
         }
-        
+        // Process search reply
+        else if (!searchReply.isEmpty()) {
+            filePanel->handleSearchReply(privateMessage);
+        }
     }
+    
     // Forward message if -noforward not specified and hopLimit not reached
     else if (shouldForwardMessages && hoplimit > 0) {
         QByteArray datagram = privateMessage.getSerializedMessage();

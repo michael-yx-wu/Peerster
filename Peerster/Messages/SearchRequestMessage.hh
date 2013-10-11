@@ -3,14 +3,13 @@
 
 #include "Message.hh"
 
-class SearchMessage : public Message {
+class SearchRequestMessage : public Message {
 public:
-    // Search Request
-    SearchMessage(const QString someOrigin, const QString someQuery, const quint32 someBudget);
+    SearchRequestMessage(const QString someOrigin, const QString someQuery, const quint32 someBudget);
     
 protected:
     QByteArray serializeSearchRequestMessage();
-
+    
 };
 
 #endif

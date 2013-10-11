@@ -4,10 +4,11 @@ const QString FilePanel::button1text = "Add Files(s)";
 const QString FilePanel::button2text = "Download File";
 const QString FilePanel::button3text = "Search";
 
-FilePanel::FilePanel(QString someOrigin) {
+FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
     origin = someOrigin;
     isWaitingForMetafile = isWaitingForFile = false;
     filesDownloaded = 0;
+    peers = somePeers;
     
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
@@ -41,9 +42,11 @@ FilePanel::FilePanel(QString someOrigin) {
     searchButton = new QPushButton(button3text);
     signalMapper->setMapping(searchButton, button3text);
     connect(searchButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    searchResults = new QListWidget();
+    connect(searchResults, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(downloadFile(QListWidgetItem*)));
     fileShareBoxLayout->addWidget(searchTextBox, 3, 0);
     fileShareBoxLayout->addWidget(searchButton, 3, 1);
-    
+    fileShareBoxLayout->addWidget(searchResults, 4, 0);
 }
 
 #pragma mark - GUI Actions
@@ -73,9 +76,16 @@ void FilePanel::buttonClicked(QString buttonName) {
     else if (buttonName == button3text) {
         searchQuery = searchTextBox->text();
         searchTextBox->clear();
-        
-        // send search query to search results panel
+        sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
     }
+}
+
+void FilePanel::downloadFile(QListWidgetItem *item) {
+    qDebug() << "Dowloading file: " + item->text();
+    const QString filename = item->text();
+    QString targetNode = searchResultMap.value(filename)._origin;
+    QByteArray metafileHash = searchResultMap.value(filename)._hash;
+    sendBlockRequest(targetNode, metafileHash);
 }
 
 // Show file selection dialog
@@ -150,7 +160,7 @@ bool FilePanel::validBlockReply(QByteArray hash, QByteArray block) {
 void FilePanel::handleBlockRequest(Message message) {
     QByteArray blockRequest = message.getBlockRequest();
     int i = 0;
-    foreach(PeersterFile *f, files) {
+    foreach (PeersterFile *f, files) {
         QByteArray blockRequest = message.getBlockRequest();
         // Send metafile
         if (blockRequest == f->getBlocklistHash()) {
@@ -166,14 +176,12 @@ void FilePanel::handleBlockRequest(Message message) {
     }
 }
 
-// Send block request to the specified node
 void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
     qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
     Message message = BlockRequestMessage(origin, targetNode, Constants::HOPLIMIT, hash);
     sendMessage(targetNode, message);
 }
 
-// Send metafile to the specified node
 void FilePanel::sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash) {
     qDebug() << "Sending metafile to " + targetNode;
     Message message = BlockReplyMessage(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
@@ -191,6 +199,80 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+}
+
+#pragma mark - Handle Search Reply
+
+void FilePanel::handleSearchReply(Message message) {
+    QVariantList filenames = message.getMatchNames();
+    QVariantList metafileHashes = message.getMatchIDs();
+    for (int i = 0; i < filenames.size(); i++) {
+        QString filename = filenames.value(i).toString();
+        QByteArray metafileHash = metafileHashes.value(i).toByteArray();
+        searchResults->addItem(filename);
+        searchResultMap.insert(filename, SearchResult(filename, message.getOrigin(), metafileHash));
+    }
+}
+
+#pragma mark - Handle Search Request
+
+void FilePanel::handleSearchRequest(Message message) {
+    QString query = message.getSearchRequest();
+    QVariantList filenames;
+    QVariantList metafileHashes;
+    
+    // Local search
+    foreach (PeersterFile *f, files) {
+        if (f->getFilename().contains(query)) {
+            filenames.append(f->getFilename());
+            metafileHashes.append(f->getBlocklistHash());
+        }
+    }
+    
+    // Send search reply if we found something
+    if (!filenames.isEmpty()) {
+        sendSearchReply(message.getOrigin(), query, filenames, metafileHashes);
+    }
+    
+    // Pass this request to some of our peers
+    else {
+        // Spread the budget
+        quint32 budget = message.getBudget()-1;
+        QList<quint32> budgetSpread;
+        for (quint32 i = 0; i < peers->size(); i++) {
+            budgetSpread.append(0);
+        }
+        for (quint32 i = 0; i < budget; i = (i + 1)%peers->size()) {
+            budgetSpread.insert(i, budgetSpread.value(i));
+        }
+        
+        // Forward search requests to peers
+        while (!budgetSpread.isEmpty()) {
+            quint32 newBudget = budgetSpread.back();
+            budgetSpread.pop_back();
+            if (newBudget != 0) {
+                sendSearchRequest(query, newBudget);
+            }
+        }
+    }
+    
+}
+
+void FilePanel::sendSearchReply(QString targetNode, QString searchReply, QVariantList matchNames, QVariantList matchIDs) {
+    Message message = SearchReplyMessage(origin, targetNode, Constants::HOPLIMIT, searchReply, matchNames, matchIDs);
+    sendMessage(targetNode, message);
+}
+
+void FilePanel::sendSearchRequest(QString query, quint32 budget) {
+    qDebug() << "Sending search request";
+    Message message = SearchRequestMessage(origin, query, budget);
+    Peer peer = peers->at(rand() % peers->size());
+    sendMessage(peer, message);
+}
+
+void FilePanel::sendMessage(Peer peer, Message message) {
+    QByteArray datagram = message.getSerializedMessage();
+    socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
 }
 
 #pragma mark - Accessor Methods
