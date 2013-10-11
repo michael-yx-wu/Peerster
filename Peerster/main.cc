@@ -176,11 +176,11 @@ void ChatDialog::processPendingDatagrams() {
         stream >> datapacket;
         
         // Process the datapacket
-        if (datapacket.contains(Constants::xOrigin)) {
-            processRumorMessage(datapacket, sender, senderPort);
-        }
-        else if (datapacket.contains(Constants::xDest)) {
+        if (datapacket.contains(Constants::xDest)) {
             processPrivateMessage(datapacket);
+        }
+        else if (datapacket.contains(Constants::xOrigin)) {
+            processRumorMessage(datapacket, sender, senderPort);
         }
         else {
             processStatusMessage(datapacket, sender, senderPort);
@@ -196,6 +196,12 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     bool routeUpdated = false;
     Message msg;
     Peer p;
+    
+    // If search request message pass to FilePanel and finish
+    if (datapacket.contains(Constants::xSearchRequest)) {
+        filePanel->handleSearchRequest(SearchRequestMessage(datapacket.value(Constants::xOrigin).toString(), datapacket.value(Constants::xSearchRequest).toString(), datapacket.value(Constants::xBudget).toUInt()));
+        return;
+    }
     
     // Check to see if we have already seen this rumor message
     origin = datapacket.value(Constants::xOrigin).toString();
