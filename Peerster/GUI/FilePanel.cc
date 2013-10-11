@@ -53,7 +53,6 @@ FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
 
 // Process button clicking
 void FilePanel::buttonClicked(QString buttonName) {
-    qDebug() << "Clicked";
     if (buttonName == button1text) {
         showDialog();
     }
@@ -204,6 +203,7 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
 #pragma mark - Handle Search Reply
 
 void FilePanel::handleSearchReply(Message message) {
+    qDebug() << "Got search reply";
     QVariantList filenames = message.getMatchNames();
     QVariantList metafileHashes = message.getMatchIDs();
     for (int i = 0; i < filenames.size(); i++) {
@@ -217,6 +217,7 @@ void FilePanel::handleSearchReply(Message message) {
 #pragma mark - Handle Search Request
 
 void FilePanel::handleSearchRequest(Message message) {
+    qDebug() << "Got search request";
     QString query = message.getSearchRequest();
     QVariantList filenames;
     QVariantList metafileHashes;
