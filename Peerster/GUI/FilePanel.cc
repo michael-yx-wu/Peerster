@@ -80,7 +80,7 @@ void FilePanel::buttonClicked(QString buttonName) {
 }
 
 void FilePanel::downloadFile(QListWidgetItem *item) {
-    qDebug() << "Dowloading file: " + item->text();
+    qDebug() << "Downloading file: " + item->text();
     const QString filename = item->text();
     QString targetNode = searchResultMap.value(filename)._origin;
     QByteArray metafileHash = searchResultMap.value(filename)._hash;
@@ -99,6 +99,7 @@ void FilePanel::showDialog() {
 #pragma mark - Handle Block Reply
 
 void FilePanel::handleBlockReply(Message message) {
+    qDebug() << "Got block reply";
     QByteArray blockReply = message.getBlockReply();
     QByteArray data = message.getData();
     
@@ -157,6 +158,7 @@ bool FilePanel::validBlockReply(QByteArray hash, QByteArray block) {
 #pragma mark - Handle Block Request
 
 void FilePanel::handleBlockRequest(Message message) {
+    qDebug() << "Got block request";
     QByteArray blockRequest = message.getBlockRequest();
     int i = 0;
     foreach (PeersterFile *f, files) {
