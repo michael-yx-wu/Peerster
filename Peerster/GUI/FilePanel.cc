@@ -200,6 +200,7 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+    qDebug() << "Sent message to " + targetIP.toString() + " port: " + QString::number(targetPort);
 }
 
 #pragma mark - Handle Search Reply
