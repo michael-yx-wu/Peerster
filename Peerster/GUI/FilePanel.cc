@@ -33,6 +33,9 @@ FilePanel::FilePanel(QString someOrigin) {
     fileShareBoxLayout->addWidget(targetNodeTextBox, 1, 0);
     fileShareBoxLayout->addWidget(hashTextBox, 2, 0);
     fileShareBoxLayout->addWidget(downloadFileButton, 2, 1);
+    
+    // Search file GUI
+    
 }
 
 #pragma mark - GUI Actions
