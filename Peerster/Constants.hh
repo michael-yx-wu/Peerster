@@ -29,6 +29,7 @@ public:
     static const QString HASHTYPE;
     static const quint32 HOPLIMIT;
     static QString SAVE_DIRECTORY;
+    static const quint32 MAX_SEARCH_BUDGET;
     
     static void setApplicationDirectory(QString path);
 };

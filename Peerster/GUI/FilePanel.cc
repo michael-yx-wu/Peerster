@@ -41,9 +41,11 @@ FilePanel::FilePanel(QString someOrigin) {
     searchButton = new QPushButton(button3text);
     signalMapper->setMapping(searchButton, button3text);
     connect(searchButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    searchResults = new QListWidget();
+    connect(searchResults, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(downloadFile(QListWidgetItem*)));
     fileShareBoxLayout->addWidget(searchTextBox, 3, 0);
     fileShareBoxLayout->addWidget(searchButton, 3, 1);
-    
+    fileShareBoxLayout->addWidget(searchResults, 4, 0);
 }
 
 #pragma mark - GUI Actions
@@ -73,9 +75,15 @@ void FilePanel::buttonClicked(QString buttonName) {
     else if (buttonName == button3text) {
         searchQuery = searchTextBox->text();
         searchTextBox->clear();
-        
-        // send search query to search results panel
+        sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
     }
+}
+
+void FilePanel::downloadFile(QListWidgetItem *item) {
+    const QString filename = item->text();
+    QString targetNode = searchResultMap.value(filename).getOrigin();
+    QByteArray metafileHash = searchResultMap.value(filename).getHash();
+    sendBlockRequest(targetNode, metafileHash);
 }
 
 // Show file selection dialog
@@ -150,7 +158,7 @@ bool FilePanel::validBlockReply(QByteArray hash, QByteArray block) {
 void FilePanel::handleBlockRequest(Message message) {
     QByteArray blockRequest = message.getBlockRequest();
     int i = 0;
-    foreach(PeersterFile *f, files) {
+    foreach (PeersterFile *f, files) {
         QByteArray blockRequest = message.getBlockRequest();
         // Send metafile
         if (blockRequest == f->getBlocklistHash()) {
@@ -166,14 +174,12 @@ void FilePanel::handleBlockRequest(Message message) {
     }
 }
 
-// Send block request to the specified node
 void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
     qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
     Message message = BlockRequestMessage(origin, targetNode, Constants::HOPLIMIT, hash);
     sendMessage(targetNode, message);
 }
 
-// Send metafile to the specified node
 void FilePanel::sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash) {
     qDebug() << "Sending metafile to " + targetNode;
     Message message = BlockReplyMessage(origin, targetNode, Constants::HOPLIMIT, hash, f->getBlocklistMetafile());
@@ -193,6 +199,50 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
 }
 
+#pragma mark - Handle Search Reply
+
+void FilePanel::handleSearchReply(Message message) {
+    
+}
+
+#pragma mark - Handle Search Request
+
+void FilePanel::handleSearchRequest(Message message) {
+    QString query = message.getSearchRequest();
+    QVariantList filenames;
+    QVariantList metafileHashes;
+    
+    // Local search
+    foreach (PeersterFile *f, files) {
+        if (f->getFilename().contains(query)) {
+            filenames.append(f->getFilename());
+            metafileHashes.append(f->getBlocklistHash());
+        }
+    }
+    
+    // Send search reply if we found something
+    if (!filenames.isEmpty()) {
+        sendSearchReply(message.getOrigin(), query, filenames, metafileHashes);
+    }
+}
+
+void FilePanel::sendSearchReply(QString targetNode, QString searchReply, QVariantList matchNames, QVariantList matchIDs) {
+    Message message = SearchReplyMessage(origin, targetNode, Constants::HOPLIMIT, searchReply, matchNames, matchIDs);
+    sendMessage(targetNode, message);
+}
+
+void FilePanel::sendSearchRequest(QString query, quint32 budget) {
+    qDebug() << "Sending search request";
+    Message message = SearchRequestMessage(origin, query, budget);
+    Peer peer = peers->at(rand() % peers->size());
+    sendMessage(peer, message);
+}
+
+void FilePanel::sendMessage(Peer peer, Message message) {
+    QByteArray datagram = message.getSerializedMessage();
+    socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
+}
+
 #pragma mark - Accessor Methods
 
 QGroupBox* FilePanel::getGroupBox() {
@@ -201,6 +251,10 @@ QGroupBox* FilePanel::getGroupBox() {
 
 void FilePanel::setPrivateMessagingPanel(PrivateMessagingPanel *somePanel) {
     privateMessagingPanel = somePanel;
+}
+
+void FilePanel::setPeers(std::vector<Peer> *p) {
+    peers = p;
 }
 
 void FilePanel::setSocket(QUdpSocket *parentSocket) {

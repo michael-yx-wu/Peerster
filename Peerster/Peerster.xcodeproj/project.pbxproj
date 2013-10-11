@@ -5,402 +5,915 @@
 	};
 	objectVersion = 46;
 	objects = {
-
-/* Begin PBXBuildFile section */
-		02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */; settings = {ATTRIBUTES = (); }; };
-		072DEAF199EC832351D00217 /* PeersterFile.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = CDE39949937C61391EFE9219 /* PeersterFile.cc */; settings = {ATTRIBUTES = (); }; };
-		0966E220859B941E7CAF3FD3 /* SearchResultsWindow.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */; settings = {ATTRIBUTES = (); }; };
-		0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D759577E53E2CE061239002D /* main.cc */; settings = {ATTRIBUTES = (); }; };
-		1CFE0C78A64F3E598E833754 /* SearchReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = D6C4748E93948F6970358485 /* SearchReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
-		2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 7517BF99384862A85367FB95 /* BlockRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
-		4225BDDC5A035898D15E89AB /* moc_Socket.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */; settings = {ATTRIBUTES = (); }; };
-		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
-		50F1A0A6C62C20D272991B90 /* moc_PeersterFile.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */; settings = {ATTRIBUTES = (); }; };
-		522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
-		55518DF469BF55DF78E2437C /* moc_SearchResultsWindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
-		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
-		745BBB7F397F58ACA0BB35F5 /* Constants.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 98DDAEC184A723DABF37678E /* Constants.cc */; settings = {ATTRIBUTES = (); }; };
-		76356B4B41D599A6B6D1DA8D /* Message.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 705E536B508D27DF51691DCA /* Message.cc */; settings = {ATTRIBUTES = (); }; };
-		80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */; settings = {ATTRIBUTES = (); }; };
-		83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */; settings = {ATTRIBUTES = (); }; };
-		899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = E0BBC85E7EBD497B22D3B33E /* Messages.cc */; settings = {ATTRIBUTES = (); }; };
-		98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */; settings = {ATTRIBUTES = (); }; };
-		98FA7E9E8B04EA8147C25827 /* Socket.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 68376373146216DB7F574AD9 /* Socket.cc */; settings = {ATTRIBUTES = (); }; };
-		9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 09F1CB6767DEF02B3D0C635C /* FilePanel.cc */; settings = {ATTRIBUTES = (); }; };
-		A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */; settings = {ATTRIBUTES = (); }; };
-		B986F2E8D95A535775A0C085 /* moc_FilePanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */; settings = {ATTRIBUTES = (); }; };
-		C9110DA8E4557A383FA293DF /* PrivateMessagingPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */; settings = {ATTRIBUTES = (); }; };
-		D33B1E115874F491151176CF /* Peer.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2E3BA334344441BCDAAC8724 /* Peer.cc */; settings = {ATTRIBUTES = (); }; };
-		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
-		DA4D4CE46F4AB231CAF06EC9 /* Chatbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 6AFA255CA62CFAC8563E5B39 /* Chatbox.cc */; settings = {ATTRIBUTES = (); }; };
-		FAEBE99181C9C0C233C2F90B /* qca in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = E4532E33CA7B0E0B47E58779 /* qca */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
-		000F2A1E9067A79452CB9855 /* main.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hh; sourceTree = SOURCE_ROOT; };
-		09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrivateChatDialog.cc; path = GUI/PrivateChatDialog.cc; sourceTree = SOURCE_ROOT; };
-		09F1CB6767DEF02B3D0C635C /* FilePanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilePanel.cc; path = GUI/FilePanel.cc; sourceTree = SOURCE_ROOT; };
-		0C2021078A3A8CBCB9A3A01E /* Chatbox.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Chatbox.hh; path = GUI/Chatbox.hh; sourceTree = SOURCE_ROOT; };
-		12CE19638E6C844EFEBA5234 /* Peer.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Peer.hh; sourceTree = SOURCE_ROOT; };
-		2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchResultsWindow.cc; path = GUI/SearchResultsWindow.cc; sourceTree = SOURCE_ROOT; };
-		24A8DD62E000C3CB83BE9741 /* SearchRequestMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchRequestMessage.hh; path = Messages/SearchRequestMessage.hh; sourceTree = SOURCE_ROOT; };
-		2E3BA334344441BCDAAC8724 /* Peer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peer.cc; sourceTree = SOURCE_ROOT; };
-		414DD86A7AC96B15FE9D354D /* PrivateMessagingPanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PrivateMessagingPanel.hh; path = GUI/PrivateMessagingPanel.hh; sourceTree = SOURCE_ROOT; };
-		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
-		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
-		4BF8915F4A4CED4C258BF8E9 /* Socket.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hh; sourceTree = SOURCE_ROOT; };
-		4CC3D6521808465F0023A2F7 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
-		567D6C91AD1A7AECBFB7A034 /* SearchResultsWindow.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResultsWindow.hh; path = GUI/SearchResultsWindow.hh; sourceTree = SOURCE_ROOT; };
-		5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockReplyMessage.cc; path = Messages/BlockReplyMessage.cc; sourceTree = SOURCE_ROOT; };
-		5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Socket.cpp; sourceTree = SOURCE_ROOT; };
-		68376373146216DB7F574AD9 /* Socket.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cc; sourceTree = SOURCE_ROOT; };
-		6AFA255CA62CFAC8563E5B39 /* Chatbox.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Chatbox.cc; path = GUI/Chatbox.cc; sourceTree = SOURCE_ROOT; };
-		705E536B508D27DF51691DCA /* Message.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Message.cc; path = Messages/Message.cc; sourceTree = SOURCE_ROOT; };
-		7517BF99384862A85367FB95 /* BlockRequestMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockRequestMessage.cc; path = Messages/BlockRequestMessage.cc; sourceTree = SOURCE_ROOT; };
-		7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FilePanel.hh; path = GUI/FilePanel.hh; sourceTree = SOURCE_ROOT; };
-		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
-		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
-		889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateMessagingPanel.cpp; sourceTree = SOURCE_ROOT; };
-		8F4D43B6AF93B867F58C5CC8 /* Constants.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hh; sourceTree = SOURCE_ROOT; };
-		98DDAEC184A723DABF37678E /* Constants.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cc; sourceTree = SOURCE_ROOT; };
-		A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchRequestMessage.cc; path = Messages/SearchRequestMessage.cc; sourceTree = SOURCE_ROOT; };
-		AA9D9004ACE84CD1D55FED5F /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtGui.framework; sourceTree = "<absolute>"; };
-		AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrivateMessagingPanel.cc; path = GUI/PrivateMessagingPanel.cc; sourceTree = SOURCE_ROOT; };
-		B31C1B2A87B91FBCEEF39C1A /* BlockRequestMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BlockRequestMessage.hh; path = Messages/BlockRequestMessage.hh; sourceTree = SOURCE_ROOT; };
-		C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Chatbox.cpp; sourceTree = SOURCE_ROOT; };
-		CB09C7DF25F9B793C4548E42 /* PeersterFile.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PeersterFile.hh; path = FileSharing/PeersterFile.hh; sourceTree = SOURCE_ROOT; };
-		CDE39949937C61391EFE9219 /* PeersterFile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PeersterFile.cc; path = FileSharing/PeersterFile.cc; sourceTree = SOURCE_ROOT; };
-		D06B10E7FEE48B264D2B821B /* Message.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Message.hh; path = Messages/Message.hh; sourceTree = SOURCE_ROOT; };
-		D6C4748E93948F6970358485 /* SearchReplyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchReplyMessage.cc; path = Messages/SearchReplyMessage.cc; sourceTree = SOURCE_ROOT; };
-		D759577E53E2CE061239002D /* main.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cc; sourceTree = SOURCE_ROOT; };
-		D98F638C7798CC1DDA980D9A /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtCore.framework; sourceTree = "<absolute>"; };
-		DFC2D44A436C35D52AA946A8 /* PrivateChatDialog.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PrivateChatDialog.hh; path = GUI/PrivateChatDialog.hh; sourceTree = SOURCE_ROOT; };
-		E053DB79E08E889603079086 /* SearchReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchReplyMessage.hh; path = Messages/SearchReplyMessage.hh; sourceTree = SOURCE_ROOT; };
-		E0BBC85E7EBD497B22D3B33E /* Messages.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Messages.cc; sourceTree = SOURCE_ROOT; };
-		E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PeersterFile.cpp; sourceTree = SOURCE_ROOT; };
-		E4532E33CA7B0E0B47E58779 /* qca */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = qca; path = /usr/local/Cellar/qt/4.8.5/lib/libqca.2.0.3.dylib; sourceTree = "<absolute>"; };
-		E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_SearchResultsWindow.cpp; sourceTree = SOURCE_ROOT; };
-		F3AFBE020864EC80D6EE4A8E /* BlockReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BlockReplyMessage.hh; path = Messages/BlockReplyMessage.hh; sourceTree = SOURCE_ROOT; };
-		F41053476CF4B2C49EF187F7 /* moc_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_main.cpp; sourceTree = SOURCE_ROOT; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		2A1043669E6E5A7426EA502A /* Frameworks & Libraries */ = {
-			isa = PBXFrameworksBuildPhase;
+		D7BA7D76DAB5DD13389D6332 = {
 			buildActionMask = 2147483647;
 			files = (
-				FAEBE99181C9C0C233C2F90B /* qca in Frameworks & Libraries */,
-				6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */,
-				49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */,
-				64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */,
-			);
-			name = "Frameworks & Libraries";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		05596AB53D8D521C69802C27 /* Peerster */ = {
-			isa = PBXGroup;
-			children = (
-				FB61758D0F0FDA4BA867C3D5 /* Sources */,
-				46E892BBB6BB6952967E0561 /* Temporary Sources */,
-				883D7615C4D2DE3FA1218F12 /* Headers */,
-				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
-				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4CC3D6531808465F0023A2F7 /* Products */,
-			);
-			name = Peerster;
-			sourceTree = "<Group>";
-		};
-		3AEF65145630C14980FF3540 /* GUI */ = {
-			isa = PBXGroup;
-			children = (
-				0C2021078A3A8CBCB9A3A01E /* Chatbox.hh */,
-				7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */,
-				DFC2D44A436C35D52AA946A8 /* PrivateChatDialog.hh */,
-				414DD86A7AC96B15FE9D354D /* PrivateMessagingPanel.hh */,
-				567D6C91AD1A7AECBFB7A034 /* SearchResultsWindow.hh */,
-			);
-			name = GUI;
-			sourceTree = "<Group>";
-		};
-		46E892BBB6BB6952967E0561 /* Temporary Sources */ = {
-			isa = PBXGroup;
-			children = (
-				F41053476CF4B2C49EF187F7 /* moc_main.cpp */,
-				5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */,
-				E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */,
-				C832DDC57F87205C7C0B3562 /* moc_Chatbox.cpp */,
-				41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */,
-				7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */,
-				889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */,
-				E8B6F7F2CC41B8E89CF8BEF4 /* moc_SearchResultsWindow.cpp */,
-			);
-			name = "Temporary Sources";
-			sourceTree = "<Group>";
-		};
-		4CC3D6531808465F0023A2F7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CC3D6521808465F0023A2F7 /* Peerster.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		7CABE3C80E79AD2B307756D2 /* Sources [qmake] */ = {
-			isa = PBXGroup;
-			children = (
-				453E80AD538D7B6495C54E54 /* peerster.pro */,
-			);
-			name = "Sources [qmake]";
-			sourceTree = "<Group>";
-		};
-		883D7615C4D2DE3FA1218F12 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				8F4D43B6AF93B867F58C5CC8 /* Constants.hh */,
-				000F2A1E9067A79452CB9855 /* main.hh */,
-				4F2C0F4C926D8A65CB56838D /* Messages.hh */,
-				12CE19638E6C844EFEBA5234 /* Peer.hh */,
-				4BF8915F4A4CED4C258BF8E9 /* Socket.hh */,
-				F3CBD0A0FB1A9631AF3F519F /* FileSharing */,
-				3AEF65145630C14980FF3540 /* GUI */,
-				DB4E544D20C69265B97902C2 /* Messages */,
-			);
-			name = Headers;
-			sourceTree = "<Group>";
-		};
-		AB0D1D2317F75517559788CC /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */,
-				7517BF99384862A85367FB95 /* BlockRequestMessage.cc */,
-				705E536B508D27DF51691DCA /* Message.cc */,
-				D6C4748E93948F6970358485 /* SearchReplyMessage.cc */,
-				A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */,
-			);
-			name = Messages;
-			sourceTree = "<Group>";
-		};
-		DB4E544D20C69265B97902C2 /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				F3AFBE020864EC80D6EE4A8E /* BlockReplyMessage.hh */,
-				B31C1B2A87B91FBCEEF39C1A /* BlockRequestMessage.hh */,
-				D06B10E7FEE48B264D2B821B /* Message.hh */,
-				E053DB79E08E889603079086 /* SearchReplyMessage.hh */,
-				24A8DD62E000C3CB83BE9741 /* SearchRequestMessage.hh */,
-			);
-			name = Messages;
-			sourceTree = "<Group>";
-		};
-		E0EE58F6C13E28618FC619A0 /* GUI */ = {
-			isa = PBXGroup;
-			children = (
-				6AFA255CA62CFAC8563E5B39 /* Chatbox.cc */,
-				09F1CB6767DEF02B3D0C635C /* FilePanel.cc */,
-				09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */,
-				AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */,
-				2287F1C6B5973245412C86A1 /* SearchResultsWindow.cc */,
-			);
-			name = GUI;
-			sourceTree = "<Group>";
-		};
-		E35702F4247689E2CFF237FA /* FileSharing */ = {
-			isa = PBXGroup;
-			children = (
-				CDE39949937C61391EFE9219 /* PeersterFile.cc */,
-			);
-			name = FileSharing;
-			sourceTree = "<Group>";
-		};
-		ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				E4532E33CA7B0E0B47E58779 /* qca */,
-				AA9D9004ACE84CD1D55FED5F /* QtGui.framework */,
-				D98F638C7798CC1DDA980D9A /* QtCore.framework */,
-				883EF222A803862A8D41343B /* QtNetwork.framework */,
-			);
-			name = "External Frameworks and Libraries";
-			sourceTree = "<Group>";
-		};
-		F3CBD0A0FB1A9631AF3F519F /* FileSharing */ = {
-			isa = PBXGroup;
-			children = (
-				CB09C7DF25F9B793C4548E42 /* PeersterFile.hh */,
-			);
-			name = FileSharing;
-			sourceTree = "<Group>";
-		};
-		FB61758D0F0FDA4BA867C3D5 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				98DDAEC184A723DABF37678E /* Constants.cc */,
-				D759577E53E2CE061239002D /* main.cc */,
-				E0BBC85E7EBD497B22D3B33E /* Messages.cc */,
-				2E3BA334344441BCDAAC8724 /* Peer.cc */,
-				68376373146216DB7F574AD9 /* Socket.cc */,
-				E35702F4247689E2CFF237FA /* FileSharing */,
-				E0EE58F6C13E28618FC619A0 /* GUI */,
-				AB0D1D2317F75517559788CC /* Messages */,
-			);
-			name = Sources;
-			sourceTree = "<Group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		856CF5836FB6CF0CBEEFA0F6 /* Peerster */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "Peerster" */;
-			buildPhases = (
-				D7BA7D76DAB5DD13389D6332 /* Qt Qmake */,
-				A0A52A2ADF7A1E2A99738674 /* Qt Preprocessors */,
-				C29B8785722055ED95EF7B57 /* Build Sources */,
-				2A1043669E6E5A7426EA502A /* Frameworks & Libraries */,
-				3787F99312C85FF0073FD7BA /* Bundle Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Peerster;
-			productName = Peerster;
-			productReference = 4CC3D6521808465F0023A2F7 /* Peerster.app */;
-			productType = "com.apple.product-type.application";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		91B15E841AA80083484172DE /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0500;
-			};
-			buildConfigurationList = CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Peerster" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 1;
-			knownRegions = (
-				en,
-			);
-			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4CC3D6531808465F0023A2F7 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				856CF5836FB6CF0CBEEFA0F6 /* Peerster */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		3787F99312C85FF0073FD7BA /* Bundle Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "Bundle Resources";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A0A52A2ADF7A1E2A99738674 /* Qt Preprocessors */ = {
+				);
+			generatedFileNames = (
+				);
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "Qt Preprocessors";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster -f 'Peerster.xcodeproj/qt_preprocess.mak'";
-		};
-		D7BA7D76DAB5DD13389D6332 /* Qt Qmake */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
 			name = "Qt Qmake";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster -f 'Peerster.xcodeproj/qt_makeqmake.mak'";
+			neededFileNames = (
+				);
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster\ -f\ \'Peerster.xcodeproj/qt_makeqmake.mak\'";
 		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		C29B8785722055ED95EF7B57 /* Build Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		98DDAEC184A723DABF37678E = {
+			isa = PBXFileReference;
+			name = "Constants.cc";
+			path = "Constants.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		745BBB7F397F58ACA0BB35F5 = {
+			fileRef = "98DDAEC184A723DABF37678E";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		D759577E53E2CE061239002D = {
+			isa = PBXFileReference;
+			name = "main.cc";
+			path = "main.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		0F92C7DE5A6D0ECD279B47C7 = {
+			fileRef = "D759577E53E2CE061239002D";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E0BBC85E7EBD497B22D3B33E = {
+			isa = PBXFileReference;
+			name = "Messages.cc";
+			path = "Messages.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		899BB0EB47C608AC8D49247D = {
+			fileRef = "E0BBC85E7EBD497B22D3B33E";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		2E3BA334344441BCDAAC8724 = {
+			isa = PBXFileReference;
+			name = "Peer.cc";
+			path = "Peer.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D33B1E115874F491151176CF = {
+			fileRef = "2E3BA334344441BCDAAC8724";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		68376373146216DB7F574AD9 = {
+			isa = PBXFileReference;
+			name = "Socket.cc";
+			path = "Socket.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		98FA7E9E8B04EA8147C25827 = {
+			fileRef = "68376373146216DB7F574AD9";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		CDE39949937C61391EFE9219 = {
+			isa = PBXFileReference;
+			name = "PeersterFile.cc";
+			path = "FileSharing/PeersterFile.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		072DEAF199EC832351D00217 = {
+			fileRef = "CDE39949937C61391EFE9219";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		18900FB0F7BEFFEAB58AC807 = {
+			isa = PBXFileReference;
+			name = "SearchResult.cc";
+			path = "FileSharing/SearchResult.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		018085EE9C1D3F7A08D15C19 = {
+			fileRef = "18900FB0F7BEFFEAB58AC807";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6AFA255CA62CFAC8563E5B39 = {
+			isa = PBXFileReference;
+			name = "Chatbox.cc";
+			path = "GUI/Chatbox.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		DA4D4CE46F4AB231CAF06EC9 = {
+			fileRef = "6AFA255CA62CFAC8563E5B39";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		09F1CB6767DEF02B3D0C635C = {
+			isa = PBXFileReference;
+			name = "FilePanel.cc";
+			path = "GUI/FilePanel.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		9CF5E04B47B885A68F04E4E4 = {
+			fileRef = "09F1CB6767DEF02B3D0C635C";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		09C7396B117FFFE50668D7FF = {
+			isa = PBXFileReference;
+			name = "PrivateChatDialog.cc";
+			path = "GUI/PrivateChatDialog.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		98F6E50FD27D79713C5C735B = {
+			fileRef = "09C7396B117FFFE50668D7FF";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		AD0390B0FFD3BCF522495B57 = {
+			isa = PBXFileReference;
+			name = "PrivateMessagingPanel.cc";
+			path = "GUI/PrivateMessagingPanel.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		C9110DA8E4557A383FA293DF = {
+			fileRef = "AD0390B0FFD3BCF522495B57";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		5C94018625A99BEBABE1F8FB = {
+			isa = PBXFileReference;
+			name = "BlockReplyMessage.cc";
+			path = "Messages/BlockReplyMessage.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		80E6030A5A227409AEB461D4 = {
+			fileRef = "5C94018625A99BEBABE1F8FB";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7517BF99384862A85367FB95 = {
+			isa = PBXFileReference;
+			name = "BlockRequestMessage.cc";
+			path = "Messages/BlockRequestMessage.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		2DF425D22AF0ABFCC22067E3 = {
+			fileRef = "7517BF99384862A85367FB95";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		705E536B508D27DF51691DCA = {
+			isa = PBXFileReference;
+			name = "Message.cc";
+			path = "Messages/Message.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		76356B4B41D599A6B6D1DA8D = {
+			fileRef = "705E536B508D27DF51691DCA";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		D6C4748E93948F6970358485 = {
+			isa = PBXFileReference;
+			name = "SearchReplyMessage.cc";
+			path = "Messages/SearchReplyMessage.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		1CFE0C78A64F3E598E833754 = {
+			fileRef = "D6C4748E93948F6970358485";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		A574E41F3411DAA24B417E9D = {
+			isa = PBXFileReference;
+			name = "SearchRequestMessage.cc";
+			path = "Messages/SearchRequestMessage.cc";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		522FF07A82AF3B592BA63B2B = {
+			fileRef = "A574E41F3411DAA24B417E9D";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		F41053476CF4B2C49EF187F7 = {
+			isa = PBXFileReference;
+			name = "moc_main.cpp";
+			path = "moc_main.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D8AD7ED0F9946A097F668BBF = {
+			fileRef = "F41053476CF4B2C49EF187F7";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		5FB62051C2EE9DC3AC51E5C6 = {
+			isa = PBXFileReference;
+			name = "moc_Socket.cpp";
+			path = "moc_Socket.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		4225BDDC5A035898D15E89AB = {
+			fileRef = "5FB62051C2EE9DC3AC51E5C6";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E3C7A882E505E70D8DC72F67 = {
+			isa = PBXFileReference;
+			name = "moc_PeersterFile.cpp";
+			path = "moc_PeersterFile.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		50F1A0A6C62C20D272991B90 = {
+			fileRef = "E3C7A882E505E70D8DC72F67";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C832DDC57F87205C7C0B3562 = {
+			isa = PBXFileReference;
+			name = "moc_Chatbox.cpp";
+			path = "moc_Chatbox.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		83851638952334F2840590B9 = {
+			fileRef = "C832DDC57F87205C7C0B3562";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		41BA27C6A5B07B2EDD1E5699 = {
+			isa = PBXFileReference;
+			name = "moc_FilePanel.cpp";
+			path = "moc_FilePanel.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B986F2E8D95A535775A0C085 = {
+			fileRef = "41BA27C6A5B07B2EDD1E5699";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7DE906D1ECF664B05D56C61C = {
+			isa = PBXFileReference;
+			name = "moc_PrivateChatDialog.cpp";
+			path = "moc_PrivateChatDialog.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		A4ADB60AE2066B582BCCFC98 = {
+			fileRef = "7DE906D1ECF664B05D56C61C";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		889294B69789F4487B51D91D = {
+			isa = PBXFileReference;
+			name = "moc_PrivateMessagingPanel.cpp";
+			path = "moc_PrivateMessagingPanel.cpp";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		02CDC179FAB60254546689BF = {
+			fileRef = "889294B69789F4487B51D91D";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		8F4D43B6AF93B867F58C5CC8 = {
+			isa = PBXFileReference;
+			name = "Constants.hh";
+			path = "Constants.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		000F2A1E9067A79452CB9855 = {
+			isa = PBXFileReference;
+			name = "main.hh";
+			path = "main.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4F2C0F4C926D8A65CB56838D = {
+			isa = PBXFileReference;
+			name = "Messages.hh";
+			path = "Messages.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		12CE19638E6C844EFEBA5234 = {
+			isa = PBXFileReference;
+			name = "Peer.hh";
+			path = "Peer.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4BF8915F4A4CED4C258BF8E9 = {
+			isa = PBXFileReference;
+			name = "Socket.hh";
+			path = "Socket.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CB09C7DF25F9B793C4548E42 = {
+			isa = PBXFileReference;
+			name = "PeersterFile.hh";
+			path = "FileSharing/PeersterFile.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F972E0C99B13662818F401B1 = {
+			isa = PBXFileReference;
+			name = "SearchResult.hh";
+			path = "FileSharing/SearchResult.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		0C2021078A3A8CBCB9A3A01E = {
+			isa = PBXFileReference;
+			name = "Chatbox.hh";
+			path = "GUI/Chatbox.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7B2CA41EBBE1C5DE94428332 = {
+			isa = PBXFileReference;
+			name = "FilePanel.hh";
+			path = "GUI/FilePanel.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DFC2D44A436C35D52AA946A8 = {
+			isa = PBXFileReference;
+			name = "PrivateChatDialog.hh";
+			path = "GUI/PrivateChatDialog.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		414DD86A7AC96B15FE9D354D = {
+			isa = PBXFileReference;
+			name = "PrivateMessagingPanel.hh";
+			path = "GUI/PrivateMessagingPanel.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F3AFBE020864EC80D6EE4A8E = {
+			isa = PBXFileReference;
+			name = "BlockReplyMessage.hh";
+			path = "Messages/BlockReplyMessage.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B31C1B2A87B91FBCEEF39C1A = {
+			isa = PBXFileReference;
+			name = "BlockRequestMessage.hh";
+			path = "Messages/BlockRequestMessage.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D06B10E7FEE48B264D2B821B = {
+			isa = PBXFileReference;
+			name = "Message.hh";
+			path = "Messages/Message.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		E053DB79E08E889603079086 = {
+			isa = PBXFileReference;
+			name = "SearchReplyMessage.hh";
+			path = "Messages/SearchReplyMessage.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		24A8DD62E000C3CB83BE9741 = {
+			isa = PBXFileReference;
+			name = "SearchRequestMessage.hh";
+			path = "Messages/SearchRequestMessage.hh";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		453E80AD538D7B6495C54E54 = {
+			isa = PBXFileReference;
+			name = "peerster.pro";
+			path = "peerster.pro";
+			refType = 4;
+			sourceTree = "SOURCE_ROOT";
+		};
+		883D7615C4D2DE3FA1218F12 = {
+			isa = PBXGroup;
+			children = (
+				"8F4D43B6AF93B867F58C5CC8",
+				"000F2A1E9067A79452CB9855",
+				"4F2C0F4C926D8A65CB56838D",
+				"12CE19638E6C844EFEBA5234",
+				"4BF8915F4A4CED4C258BF8E9",
+				"F3CBD0A0FB1A9631AF3F519F",
+				"3AEF65145630C14980FF3540",
+				"DB4E544D20C69265B97902C2");
+			name = "Headers";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		F3CBD0A0FB1A9631AF3F519F = {
+			isa = PBXGroup;
+			children = (
+				"CB09C7DF25F9B793C4548E42",
+				"F972E0C99B13662818F401B1");
+			name = "FileSharing";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		3AEF65145630C14980FF3540 = {
+			isa = PBXGroup;
+			children = (
+				"0C2021078A3A8CBCB9A3A01E",
+				"7B2CA41EBBE1C5DE94428332",
+				"DFC2D44A436C35D52AA946A8",
+				"414DD86A7AC96B15FE9D354D");
+			name = "GUI";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		DB4E544D20C69265B97902C2 = {
+			isa = PBXGroup;
+			children = (
+				"F3AFBE020864EC80D6EE4A8E",
+				"B31C1B2A87B91FBCEEF39C1A",
+				"D06B10E7FEE48B264D2B821B",
+				"E053DB79E08E889603079086",
+				"24A8DD62E000C3CB83BE9741");
+			name = "Messages";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		E35702F4247689E2CFF237FA = {
+			isa = PBXGroup;
+			children = (
+				"CDE39949937C61391EFE9219",
+				"18900FB0F7BEFFEAB58AC807");
+			name = "FileSharing";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		E0EE58F6C13E28618FC619A0 = {
+			isa = PBXGroup;
+			children = (
+				"6AFA255CA62CFAC8563E5B39",
+				"09F1CB6767DEF02B3D0C635C",
+				"09C7396B117FFFE50668D7FF",
+				"AD0390B0FFD3BCF522495B57");
+			name = "GUI";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		AB0D1D2317F75517559788CC = {
+			isa = PBXGroup;
+			children = (
+				"5C94018625A99BEBABE1F8FB",
+				"7517BF99384862A85367FB95",
+				"705E536B508D27DF51691DCA",
+				"D6C4748E93948F6970358485",
+				"A574E41F3411DAA24B417E9D");
+			name = "Messages";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		FB61758D0F0FDA4BA867C3D5 = {
+			isa = PBXGroup;
+			children = (
+				"98DDAEC184A723DABF37678E",
+				"D759577E53E2CE061239002D",
+				"E0BBC85E7EBD497B22D3B33E",
+				"2E3BA334344441BCDAAC8724",
+				"68376373146216DB7F574AD9",
+				"E35702F4247689E2CFF237FA",
+				"E0EE58F6C13E28618FC619A0",
+				"AB0D1D2317F75517559788CC");
+			name = "Sources";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		7CABE3C80E79AD2B307756D2 = {
+			isa = PBXGroup;
+			children = (
+				"453E80AD538D7B6495C54E54");
+			name = "Sources [qmake]";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		46E892BBB6BB6952967E0561 = {
+			isa = PBXGroup;
+			children = (
+				"F41053476CF4B2C49EF187F7",
+				"5FB62051C2EE9DC3AC51E5C6",
+				"E3C7A882E505E70D8DC72F67",
+				"C832DDC57F87205C7C0B3562",
+				"41BA27C6A5B07B2EDD1E5699",
+				"7DE906D1ECF664B05D56C61C",
+				"889294B69789F4487B51D91D");
+			name = "Temporary Sources";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		A0A52A2ADF7A1E2A99738674 = {
 			buildActionMask = 2147483647;
 			files = (
-				745BBB7F397F58ACA0BB35F5 /* Constants.cc in Build Sources */,
-				0F92C7DE5A6D0ECD279B47C7 /* main.cc in Build Sources */,
-				899BB0EB47C608AC8D49247D /* Messages.cc in Build Sources */,
-				D33B1E115874F491151176CF /* Peer.cc in Build Sources */,
-				98FA7E9E8B04EA8147C25827 /* Socket.cc in Build Sources */,
-				072DEAF199EC832351D00217 /* PeersterFile.cc in Build Sources */,
-				DA4D4CE46F4AB231CAF06EC9 /* Chatbox.cc in Build Sources */,
-				9CF5E04B47B885A68F04E4E4 /* FilePanel.cc in Build Sources */,
-				98F6E50FD27D79713C5C735B /* PrivateChatDialog.cc in Build Sources */,
-				C9110DA8E4557A383FA293DF /* PrivateMessagingPanel.cc in Build Sources */,
-				0966E220859B941E7CAF3FD3 /* SearchResultsWindow.cc in Build Sources */,
-				80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */,
-				2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */,
-				76356B4B41D599A6B6D1DA8D /* Message.cc in Build Sources */,
-				1CFE0C78A64F3E598E833754 /* SearchReplyMessage.cc in Build Sources */,
-				522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */,
-				D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */,
-				4225BDDC5A035898D15E89AB /* moc_Socket.cpp in Build Sources */,
-				50F1A0A6C62C20D272991B90 /* moc_PeersterFile.cpp in Build Sources */,
-				83851638952334F2840590B9 /* moc_Chatbox.cpp in Build Sources */,
-				B986F2E8D95A535775A0C085 /* moc_FilePanel.cpp in Build Sources */,
-				A4ADB60AE2066B582BCCFC98 /* moc_PrivateChatDialog.cpp in Build Sources */,
-				02CDC179FAB60254546689BF /* moc_PrivateMessagingPanel.cpp in Build Sources */,
-				55518DF469BF55DF78E2437C /* moc_SearchResultsWindow.cpp in Build Sources */,
-			);
+				);
+			generatedFileNames = (
+				"745BBB7F397F58ACA0BB35F5",
+				"0F92C7DE5A6D0ECD279B47C7",
+				"899BB0EB47C608AC8D49247D",
+				"D33B1E115874F491151176CF",
+				"98FA7E9E8B04EA8147C25827",
+				"072DEAF199EC832351D00217",
+				"018085EE9C1D3F7A08D15C19",
+				"DA4D4CE46F4AB231CAF06EC9",
+				"9CF5E04B47B885A68F04E4E4",
+				"98F6E50FD27D79713C5C735B",
+				"C9110DA8E4557A383FA293DF",
+				"80E6030A5A227409AEB461D4",
+				"2DF425D22AF0ABFCC22067E3",
+				"76356B4B41D599A6B6D1DA8D",
+				"1CFE0C78A64F3E598E833754",
+				"522FF07A82AF3B592BA63B2B",
+				"D8AD7ED0F9946A097F668BBF",
+				"4225BDDC5A035898D15E89AB",
+				"50F1A0A6C62C20D272991B90",
+				"83851638952334F2840590B9",
+				"B986F2E8D95A535775A0C085",
+				"A4ADB60AE2066B582BCCFC98",
+				"02CDC179FAB60254546689BF");
+			isa = PBXShellScriptBuildPhase;
+			name = "Qt Preprocessors";
+			neededFileNames = (
+				"745BBB7F397F58ACA0BB35F5",
+				"0F92C7DE5A6D0ECD279B47C7",
+				"899BB0EB47C608AC8D49247D",
+				"D33B1E115874F491151176CF",
+				"98FA7E9E8B04EA8147C25827",
+				"072DEAF199EC832351D00217",
+				"018085EE9C1D3F7A08D15C19",
+				"DA4D4CE46F4AB231CAF06EC9",
+				"9CF5E04B47B885A68F04E4E4",
+				"98F6E50FD27D79713C5C735B",
+				"C9110DA8E4557A383FA293DF",
+				"80E6030A5A227409AEB461D4",
+				"2DF425D22AF0ABFCC22067E3",
+				"76356B4B41D599A6B6D1DA8D",
+				"1CFE0C78A64F3E598E833754",
+				"522FF07A82AF3B592BA63B2B",
+				"D8AD7ED0F9946A097F668BBF",
+				"4225BDDC5A035898D15E89AB",
+				"50F1A0A6C62C20D272991B90",
+				"83851638952334F2840590B9",
+				"B986F2E8D95A535775A0C085",
+				"A4ADB60AE2066B582BCCFC98",
+				"02CDC179FAB60254546689BF");
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster\ -f\ \'Peerster.xcodeproj/qt_preprocess.mak\'";
+		};
+		C29B8785722055ED95EF7B57 = {
+			buildActionMask = 2147483647;
+			files = (
+				"745BBB7F397F58ACA0BB35F5",
+				"0F92C7DE5A6D0ECD279B47C7",
+				"899BB0EB47C608AC8D49247D",
+				"D33B1E115874F491151176CF",
+				"98FA7E9E8B04EA8147C25827",
+				"072DEAF199EC832351D00217",
+				"018085EE9C1D3F7A08D15C19",
+				"DA4D4CE46F4AB231CAF06EC9",
+				"9CF5E04B47B885A68F04E4E4",
+				"98F6E50FD27D79713C5C735B",
+				"C9110DA8E4557A383FA293DF",
+				"80E6030A5A227409AEB461D4",
+				"2DF425D22AF0ABFCC22067E3",
+				"76356B4B41D599A6B6D1DA8D",
+				"1CFE0C78A64F3E598E833754",
+				"522FF07A82AF3B592BA63B2B",
+				"D8AD7ED0F9946A097F668BBF",
+				"4225BDDC5A035898D15E89AB",
+				"50F1A0A6C62C20D272991B90",
+				"83851638952334F2840590B9",
+				"B986F2E8D95A535775A0C085",
+				"A4ADB60AE2066B582BCCFC98",
+				"02CDC179FAB60254546689BF");
+			isa = PBXSourcesBuildPhase;
 			name = "Build Sources";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin XCBuildConfiguration section */
-		4B72B24813252891014BCF61 /* Debug */ = {
+		E4532E33CA7B0E0B47E58779 = {
+			isa = PBXFileReference;
+			name = "qca";
+			path = "/usr/local/Cellar/qt/4.8.5/lib/libqca.2.0.3.dylib";
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		FAEBE99181C9C0C233C2F90B = {
+			fileRef = "E4532E33CA7B0E0B47E58779";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		AA9D9004ACE84CD1D55FED5F = {
+			isa = PBXFileReference;
+			name = "QtGui.framework";
+			path = "/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		6FFE813FFE36D19F0C307231 = {
+			fileRef = "AA9D9004ACE84CD1D55FED5F";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		D98F638C7798CC1DDA980D9A = {
+			isa = PBXFileReference;
+			name = "QtCore.framework";
+			path = "/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		49776FFF3F684830E553ECE4 = {
+			fileRef = "D98F638C7798CC1DDA980D9A";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		883EF222A803862A8D41343B = {
+			isa = PBXFileReference;
+			name = "QtNetwork.framework";
+			path = "/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework";
+			refType = 0;
+			sourceTree = "<absolute>";
+			lastKnownFileType = "wrapper.framework";
+		};
+		64A33A9558C33BD514ED753F = {
+			fileRef = "883EF222A803862A8D41343B";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		ED1E82605DD74B483AF3C982 = {
+			children = (
+				"E4532E33CA7B0E0B47E58779",
+				"AA9D9004ACE84CD1D55FED5F",
+				"D98F638C7798CC1DDA980D9A",
+				"883EF222A803862A8D41343B");
+			isa = PBXGroup;
+			name = "External Frameworks and Libraries";
+			path = "";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		2A1043669E6E5A7426EA502A = {
+			buildActionMask = 2147483647;
+			files = (
+				"FAEBE99181C9C0C233C2F90B",
+				"6FFE813FFE36D19F0C307231",
+				"49776FFF3F684830E553ECE4",
+				"64A33A9558C33BD514ED753F");
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		3787F99312C85FF0073FD7BA = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXResourcesBuildPhase;
+			name = "Bundle Resources";
+		};
+		05596AB53D8D521C69802C27 = {
+			children = (
+				"FB61758D0F0FDA4BA867C3D5",
+				"46E892BBB6BB6952967E0561",
+				"883D7615C4D2DE3FA1218F12",
+				"7CABE3C80E79AD2B307756D2",
+				"ED1E82605DD74B483AF3C982");
+			isa = PBXGroup;
+			name = "Peerster";
+			path = "";
+			refType = 4;
+			sourceTree = "<Group>";
+		};
+		E8D6D8DD768DBCE43A460F27 = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.application";
+			path = "Peerster.app";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		068F80C7519D0528FB08E821 = {
+			children = (
+				"E8D6D8DD768DBCE43A460F27");
+			isa = PBXGroup;
+			name = "Products";
+			refType = 4;
+		};
+		856CF5836FB6CF0CBEEFA0F6 = {
+			buildPhases = (
+				"D7BA7D76DAB5DD13389D6332",
+				"A0A52A2ADF7A1E2A99738674",
+				"C29B8785722055ED95EF7B57",
+				"2A1043669E6E5A7426EA502A",
+				"3787F99312C85FF0073FD7BA");
+			buildSettings = {
+				CC = "/usr/bin/gcc";
+				CPLUSPLUS = "/usr/bin/g++";
+				LEXFLAGS = "";
+				YACCFLAGS = "-d";
+				OTHER_REZFLAGS = "";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "";
+				PREBINDING = NO;
+				INFOPLIST_FILE = "Info.plist";
+				BUILD_ROOT = "/Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster";
+				OTHER_LDFLAGS = (
+						"-headerpad_max_install_names",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/opt/X11/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib");
+				DYLIB_CURRENT_VERSION = "1.0.0";
+				DYLIB_COMPATIBILITY_VERSION = "1.0";
+				MACOSX_DEPLOYMENT_TARGET = "10.4";
+				PRODUCT_NAME = "Peerster";
+			};
+			conditionalBuildSettings = {
+			};
+			dependencies = (
+				);
+			productReference = "E8D6D8DD768DBCE43A460F27";
+			shouldUseHeadermap = 1;
+			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E;
+			isa = PBXNativeTarget;
+			productType = "com.apple.product-type.application";
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
+<plist version=\"0.9\">
+<dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+ 	<key>CFBundleGetInfoString</key>
+	<string>Created by Qt/QMake</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleExecutable</key>
+	<string>Peerster</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.Peerster</string>
+	<key>NOTE</key>
+	<string>This file was generated by Qt/QMake.</string>
+</dict>
+</plist>
+";
+			name = "Peerster";
+			productName = "Peerster";
+			startupPath = "<<ProjectDirectory>>";
+		};
+		4B72B24813252891014BCF61 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "Peerster";
 				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/include,
-					.,
-					/usr/local/Cellar/qt/4.8.5/include/QtCrypto,
-					.,
-					/usr/local/include,
-					/System/Library/Frameworks/CarbonCore.framework/Headers,
-					"/usr/local/Cellar/qt/4.8.5/mkspecs/macx-xcode",
-				);
-				INFOPLIST_FILE = Info.plist;
+					"/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/include",
+					".",
+					"/usr/local/Cellar/qt/4.8.5/include/QtCrypto",
+					".",
+					"/usr/local/include",
+					"/System/Library/Frameworks/CarbonCore.framework/Headers",
+					"/usr/local/Cellar/qt/4.8.5/mkspecs/macx-xcode");
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/opt/X11/lib,
-				);
-				ONLY_ACTIVE_ARCH = YES;
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/opt/X11/lib");
+				FRAMEWORK_SEARCH_PATHS = (
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib");
+				INFOPLIST_FILE = "Info.plist";
 				OTHER_CFLAGS = (
 					"-pipe",
 					"-O2",
@@ -410,8 +923,7 @@
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CORE_LIB",
-					"-DQT_SHARED",
-				);
+					"-DQT_SHARED");
 				OTHER_CPLUSPLUSFLAGS = (
 					"-pipe",
 					"-O2",
@@ -421,72 +933,70 @@
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CORE_LIB",
-					"-DQT_SHARED",
-				);
+					"-DQT_SHARED");
 				OTHER_LDFLAGS = (
-					"-headerpad_max_install_names",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
-					"-F/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/opt/X11/lib",
-					"-F/usr/local/Cellar/qt/4.8.5/lib",
+						"-headerpad_max_install_names",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/opt/X11/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib");
+				ARCHS = "x86_64";
+			};
+			name = "Debug";
+		};
+		BEC09A62E69C3553534FF35E = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "Peerster";
+				PRODUCT_NAME = "Peerster";
+			};
+			name = "Debug";
+		};
+		2C641C3335766025DD51B7BD = {
+			buildRules = (
 				);
-				PRODUCT_NAME = Peerster;
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "Peerster";
 			};
-			name = Debug;
+			isa = "PBXBuildStyle";
+			name = "Debug";
 		};
-		8C7174830A1E4DCBA0332EC1 /* Release */ = {
+		D70590BEB531B51029F711BB = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				PRODUCT_NAME = Peerster;
-			};
-			name = Release;
-		};
-		BEC09A62E69C3553534FF35E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = Peerster;
-			};
-			name = Debug;
-		};
-		D70590BEB531B51029F711BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-				);
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "Peerster";
 				HEADER_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
-					/usr/local/Cellar/qt/4.8.5/include,
-					.,
-					/usr/local/Cellar/qt/4.8.5/include/QtCrypto,
-					.,
-					/usr/local/include,
-					/System/Library/Frameworks/CarbonCore.framework/Headers,
-					"/usr/local/Cellar/qt/4.8.5/mkspecs/macx-xcode",
-				);
-				INFOPLIST_FILE = Info.plist;
+					"/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtCore.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers",
+					"/usr/local/Cellar/qt/4.8.5/include",
+					".",
+					"/usr/local/Cellar/qt/4.8.5/include/QtCrypto",
+					".",
+					"/usr/local/include",
+					"/System/Library/Frameworks/CarbonCore.framework/Headers",
+					"/usr/local/Cellar/qt/4.8.5/mkspecs/macx-xcode");
 				LIBRARY_SEARCH_PATHS = (
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
-					/opt/X11/lib,
-				);
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/opt/X11/lib");
+				FRAMEWORK_SEARCH_PATHS = (
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib",
+					"/usr/local/Cellar/qt/4.8.5/lib");
+				INFOPLIST_FILE = "Info.plist";
 				OTHER_CFLAGS = (
 					"-pipe",
 					"-O2",
@@ -496,8 +1006,7 @@
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CORE_LIB",
-					"-DQT_SHARED",
-				);
+					"-DQT_SHARED");
 				OTHER_CPLUSPLUSFLAGS = (
 					"-pipe",
 					"-O2",
@@ -507,42 +1016,67 @@
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CORE_LIB",
-					"-DQT_SHARED",
-				);
+					"-DQT_SHARED");
 				OTHER_LDFLAGS = (
-					"-headerpad_max_install_names",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
-					"-F/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/opt/X11/lib",
-					"-F/usr/local/Cellar/qt/4.8.5/lib",
-				);
-				PRODUCT_NAME = Peerster;
+						"-headerpad_max_install_names",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/usr/local/Cellar/qt/4.8.5/lib",
+						"-L/opt/X11/lib",
+						"-F/usr/local/Cellar/qt/4.8.5/lib");
+				ARCHS = "x86_64";
 			};
-			name = Release;
+			name = "Release";
 		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "Peerster" */ = {
+		8C7174830A1E4DCBA0332EC1 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "Peerster";
+				PRODUCT_NAME = "Peerster";
+			};
+			name = "Release";
+		};
+		26DE8D2AEA4B3714B41E931F = {
+			buildRules = (
+				);
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "Peerster";
+			};
+			isa = "PBXBuildStyle";
+			name = "Release";
+		};
+		CC82A9286117DFED018F418F = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BEC09A62E69C3553534FF35E /* Debug */,
-				8C7174830A1E4DCBA0332EC1 /* Release */,
-			);
+				"4B72B24813252891014BCF61",
+				"D70590BEB531B51029F711BB");
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationIsName = "Release";
 		};
-		CC82A9286117DFED018F418F /* Build configuration list for PBXProject "Peerster" */ = {
+		17B3380A4D6A7D415E7F2E1E = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4B72B24813252891014BCF61 /* Debug */,
-				D70590BEB531B51029F711BB /* Release */,
-			);
+				"BEC09A62E69C3553534FF35E",
+				"8C7174830A1E4DCBA0332EC1");
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationIsName = "Release";
 		};
-/* End XCConfigurationList section */
+		91B15E841AA80083484172DE = {
+			buildStyles = (
+				"2C641C3335766025DD51B7BD",
+				"26DE8D2AEA4B3714B41E931F");
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = "05596AB53D8D521C69802C27";
+			buildConfigurationList = "CC82A9286117DFED018F418F";
+			projectDirPath = "";
+			targets = (
+				"856CF5836FB6CF0CBEEFA0F6");
+		};
 	};
-	rootObject = 91B15E841AA80083484172DE /* Project object */;
+	rootObject = "91B15E841AA80083484172DE";
 }
