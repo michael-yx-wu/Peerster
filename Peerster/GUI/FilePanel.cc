@@ -237,6 +237,7 @@ void FilePanel::handleSearchRequest(Message message) {
     
     // Pass this request to some of our peers
     else {
+        qDebug() << "Did not find " + query;
         // Spread the budget
         quint32 budget = message.getBudget()-1;
         QList<quint32> budgetSpread;
