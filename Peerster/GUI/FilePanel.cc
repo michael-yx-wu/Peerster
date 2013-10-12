@@ -77,14 +77,9 @@ void FilePanel::buttonClicked(QString buttonName) {
         }
     }
     else if (buttonName == button3text) {
-        if (!isWaitingForFile && !isWaitingForMetafile) {
-            searchQuery = searchTextBox->text();
-            searchTextBox->clear();
-            sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
-        }
-        else {
-            filePanelBusy();
-        }
+        searchQuery = searchTextBox->text();
+        searchTextBox->clear();
+        sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
     }
 }
 
@@ -317,7 +312,6 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
 void FilePanel::sendMessage(Peer peer, Message message) {
     QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
-    downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
 }
 
 #pragma mark - Accessor Methods
