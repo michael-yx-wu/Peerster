@@ -224,8 +224,10 @@ void FilePanel::handleSearchReply(Message message) {
     for (int i = 0; i < filenames.size(); i++) {
         QString filename = filenames.value(i).toString();
         QByteArray metafileHash = metafileHashes.value(i).toByteArray();
-        searchResults->addItem(filename);
-        searchResultMap.insert(filename, SearchResult(filename, message.getOrigin(), metafileHash));
+        if (!searchResultMap.contains(filename)){
+            searchResults->addItem(filename);
+            searchResultMap.insert(filename, SearchResult(filename, message.getOrigin(), metafileHash));
+        }
     }
 }
 
