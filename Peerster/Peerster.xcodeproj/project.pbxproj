@@ -31,9 +31,9 @@
 		B986F2E8D95A535775A0C085 /* moc_FilePanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */; settings = {ATTRIBUTES = (); }; };
 		C9110DA8E4557A383FA293DF /* PrivateMessagingPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */; settings = {ATTRIBUTES = (); }; };
 		D33B1E115874F491151176CF /* Peer.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 2E3BA334344441BCDAAC8724 /* Peer.cc */; settings = {ATTRIBUTES = (); }; };
+		D4C6C82444385503E4EE191F /* qca.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = F8A61352F7EF58B5CB7DF30A /* qca.framework */; };
 		D8AD7ED0F9946A097F668BBF /* moc_main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = F41053476CF4B2C49EF187F7 /* moc_main.cpp */; settings = {ATTRIBUTES = (); }; };
 		DA4D4CE46F4AB231CAF06EC9 /* Chatbox.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 6AFA255CA62CFAC8563E5B39 /* Chatbox.cc */; settings = {ATTRIBUTES = (); }; };
-		FAEBE99181C9C0C233C2F90B /* qca in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = E4532E33CA7B0E0B47E58779 /* qca */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +49,7 @@
 		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4BF8915F4A4CED4C258BF8E9 /* Socket.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hh; sourceTree = SOURCE_ROOT; };
-		4CC3D663180878780023A2F7 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CC3D6691808F96B0023A2F7 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockReplyMessage.cc; path = Messages/BlockReplyMessage.cc; sourceTree = SOURCE_ROOT; };
 		5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_Socket.cpp; sourceTree = SOURCE_ROOT; };
@@ -78,9 +78,9 @@
 		E053DB79E08E889603079086 /* SearchReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchReplyMessage.hh; path = Messages/SearchReplyMessage.hh; sourceTree = SOURCE_ROOT; };
 		E0BBC85E7EBD497B22D3B33E /* Messages.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Messages.cc; sourceTree = SOURCE_ROOT; };
 		E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PeersterFile.cpp; sourceTree = SOURCE_ROOT; };
-		E4532E33CA7B0E0B47E58779 /* qca */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = qca; path = /usr/local/Cellar/qt/4.8.5/lib/libqca.2.0.3.dylib; sourceTree = "<absolute>"; };
 		F3AFBE020864EC80D6EE4A8E /* BlockReplyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BlockReplyMessage.hh; path = Messages/BlockReplyMessage.hh; sourceTree = SOURCE_ROOT; };
 		F41053476CF4B2C49EF187F7 /* moc_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_main.cpp; sourceTree = SOURCE_ROOT; };
+		F8A61352F7EF58B5CB7DF30A /* qca.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = qca.framework; path = /usr/local/Cellar/qca/2.0.3/lib/qca.framework; sourceTree = "<absolute>"; };
 		F972E0C99B13662818F401B1 /* SearchResult.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SearchResult.hh; path = FileSharing/SearchResult.hh; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAEBE99181C9C0C233C2F90B /* qca in Frameworks & Libraries */,
+				D4C6C82444385503E4EE191F /* qca.framework in Frameworks & Libraries */,
 				6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */,
 				49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */,
 				64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */,
@@ -108,7 +108,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4CC3D664180878780023A2F7 /* Products */,
+				4CC3D66A1808F96B0023A2F7 /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -138,10 +138,10 @@
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4CC3D664180878780023A2F7 /* Products */ = {
+		4CC3D66A1808F96B0023A2F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4CC3D663180878780023A2F7 /* Peerster.app */,
+				4CC3D6691808F96B0023A2F7 /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 		ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				E4532E33CA7B0E0B47E58779 /* qca */,
+				F8A61352F7EF58B5CB7DF30A /* qca.framework */,
 				AA9D9004ACE84CD1D55FED5F /* QtGui.framework */,
 				D98F638C7798CC1DDA980D9A /* QtCore.framework */,
 				883EF222A803862A8D41343B /* QtNetwork.framework */,
@@ -267,7 +267,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4CC3D663180878780023A2F7 /* Peerster.app */;
+			productReference = 4CC3D6691808F96B0023A2F7 /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -286,7 +286,7 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4CC3D664180878780023A2F7 /* Products */;
+			productRefGroup = 4CC3D66A1808F96B0023A2F7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -371,6 +371,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
+					/usr/local/Cellar/qca/2.0.3/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -384,7 +385,7 @@
 					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
 					/usr/local/Cellar/qt/4.8.5/include,
 					.,
-					/usr/local/Cellar/qt/4.8.5/include/QtCrypto,
+					/usr/local/Cellar/qca/2.0.3/lib/qca.framework/Versions/2/Headers,
 					.,
 					/usr/local/include,
 					/System/Library/Frameworks/CarbonCore.framework/Headers,
@@ -393,8 +394,9 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
+					/usr/local/Cellar/qca/2.0.3/lib,
 					/opt/X11/lib,
+					/usr/local/Cellar/qt/4.8.5/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -423,8 +425,9 @@
 					"-headerpad_max_install_names",
 					"-L/usr/local/Cellar/qt/4.8.5/lib",
 					"-F/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
+					"-F/usr/local/Cellar/qca/2.0.3/lib",
 					"-L/opt/X11/lib",
+					"-L/usr/local/Cellar/qt/4.8.5/lib",
 					"-F/usr/local/Cellar/qt/4.8.5/lib",
 				);
 				PRODUCT_NAME = Peerster;
@@ -459,6 +462,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
+					/usr/local/Cellar/qca/2.0.3/lib,
 					/usr/local/Cellar/qt/4.8.5/lib,
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -471,7 +475,7 @@
 					/usr/local/Cellar/qt/4.8.5/lib/QtGui.framework/Versions/4/Headers,
 					/usr/local/Cellar/qt/4.8.5/include,
 					.,
-					/usr/local/Cellar/qt/4.8.5/include/QtCrypto,
+					/usr/local/Cellar/qca/2.0.3/lib/qca.framework/Versions/2/Headers,
 					.,
 					/usr/local/include,
 					/System/Library/Frameworks/CarbonCore.framework/Headers,
@@ -480,8 +484,9 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/qt/4.8.5/lib,
-					/usr/local/Cellar/qt/4.8.5/lib,
+					/usr/local/Cellar/qca/2.0.3/lib,
 					/opt/X11/lib,
+					/usr/local/Cellar/qt/4.8.5/lib,
 				);
 				OTHER_CFLAGS = (
 					"-pipe",
@@ -509,8 +514,9 @@
 					"-headerpad_max_install_names",
 					"-L/usr/local/Cellar/qt/4.8.5/lib",
 					"-F/usr/local/Cellar/qt/4.8.5/lib",
-					"-L/usr/local/Cellar/qt/4.8.5/lib",
+					"-F/usr/local/Cellar/qca/2.0.3/lib",
 					"-L/opt/X11/lib",
+					"-L/usr/local/Cellar/qt/4.8.5/lib",
 					"-F/usr/local/Cellar/qt/4.8.5/lib",
 				);
 				PRODUCT_NAME = Peerster;
