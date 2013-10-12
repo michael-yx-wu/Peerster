@@ -46,6 +46,8 @@ ChatDialog::ChatDialog() {
         exit(1);
     }
     
+    updatePrivateMessagingPanel(hostname, myIP, myport, 1, true);
+    
     filePanel->setSocket(socket);
     filePanel->setPrivateMessagingPanel(privateMessagingPanel);
     privateMessagingPanel->setSocket(socket);

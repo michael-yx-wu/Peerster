@@ -247,7 +247,6 @@ void FilePanel::handleSearchRequest(Message message) {
     
     // Send search reply if we found something
     if (!filenames.isEmpty()) {
-        qDebug() << "Send search Reply";
         sendSearchReply(message.getOrigin(), query, filenames, metafileHashes);
     }
     
@@ -278,6 +277,7 @@ void FilePanel::handleSearchRequest(Message message) {
 }
 
 void FilePanel::sendSearchReply(QString targetNode, QString searchReply, QVariantList matchNames, QVariantList matchIDs) {
+    qDebug() << "Send search reply";
     Message message = SearchReplyMessage(origin, targetNode, Constants::HOPLIMIT, searchReply, matchNames, matchIDs);
     sendMessage(targetNode, message);
 }
