@@ -247,6 +247,7 @@ void FilePanel::handleSearchRequest(Message message) {
     
     // Send search reply if we found something
     if (!filenames.isEmpty()) {
+        qDebug() << "Send search Reply";
         sendSearchReply(message.getOrigin(), query, filenames, metafileHashes);
     }
     
