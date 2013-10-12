@@ -248,9 +248,10 @@ void FilePanel::handleSearchRequest(Message message) {
             budgetSpread.append(0);
         }
         qDebug() << "Spread";
-        for (quint32 i = 0; i < budget; i = (i + 1)%peers->size()) {
-            quint32 old = budgetSpread.value(i);
-            budgetSpread.insert(i, old);
+        for (quint32 i = 0; i < budget; i++) {
+            int index = i%peers->size();
+            quint32 old = budgetSpread.value(index);
+            budgetSpread.insert(index, old+1);
         }
         qDebug() << "Forward request";
         // Forward search requests to peers
