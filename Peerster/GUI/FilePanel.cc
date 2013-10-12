@@ -67,9 +67,7 @@ void FilePanel::buttonClicked(QString buttonName) {
             sendBlockRequest(targetNode, hashTextBoxText);
         }
         else {
-            QMessageBox messageBox;
-            messageBox.setText("Please wait. Busy downloading file.");
-            messageBox.show();
+            filePanelBusy();
         }
     }
     else if (buttonName == button3text) {
@@ -81,10 +79,22 @@ void FilePanel::buttonClicked(QString buttonName) {
 
 void FilePanel::downloadFile(QListWidgetItem *item) {
     qDebug() << "Downloading file: " + item->text();
+    // Do not download file while busy
+    if (isWaitingForMetafile || isWaitingForFile) {
+        filePanelBusy();
+        return;
+    }
+    isWaitingForMetafile = isWaitingForFile = true;
     const QString filename = item->text();
     QString targetNode = searchResultMap.value(filename)._origin;
     QByteArray metafileHash = searchResultMap.value(filename)._hash;
     sendBlockRequest(targetNode, metafileHash);
+}
+
+void FilePanel::filePanelBusy() {
+    QMessageBox messageBox;
+    messageBox.setText("Please wait. Busy downloading file.");
+    messageBox.show();
 }
 
 // Show file selection dialog
@@ -206,7 +216,6 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
-    qDebug() << "Sent message to " + targetIP.toString() + " port: " + QString::number(targetPort);
 }
 
 #pragma mark - Handle Search Reply

@@ -73,6 +73,7 @@ private:
     QLineEdit *targetNodeTextBox;
     QLineEdit *hashTextBox;
     
+    void filePanelBusy();
     QByteArray getMetaBlock(QByteArray qbArray, int blockNumber);
     QString saveDownloadedFile(QByteArray data);
     void sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex);
