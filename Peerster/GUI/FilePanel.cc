@@ -146,7 +146,7 @@ void FilePanel::handleBlockReply(Message message) {
         if (blocksDownloaded == numBlocksToDownload) {
             // Stop downloading, add the file to our list of files
             isWaitingForFile = false;
-            files.append(new PeersterFile(saveDownloadedFile(dataForPendingFile)));
+            saveDownloadedFile(dataForPendingFile);
             return;
         }
         
@@ -160,8 +160,8 @@ QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
 }
 
 QString FilePanel::saveDownloadedFile(QByteArray data) {
-    qDebug() << "Saving to Downloads folder";
     QString filename = Constants::SAVE_DIRECTORY + "/Downloads/file" + QString::number(filesDownloaded++);
+    qDebug() << "Saving to Downloads folder: " + filename;
     QFile *f = new QFile(filename);
     f->open(QIODevice::WriteOnly);
     f->write(data);
