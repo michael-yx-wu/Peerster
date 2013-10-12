@@ -17,6 +17,7 @@ FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
     fileShareBox->setLayout(fileShareBoxLayout);
 
     downloadTimeoutTimer = new QTimer(this);
+    downloadTimeoutTimer->setSingleShot(true);
     connect(downloadTimeoutTimer, SIGNAL(timeout()), this, SLOT(requestTimeout()));
     
     // Create signal mapper
