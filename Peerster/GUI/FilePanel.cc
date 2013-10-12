@@ -10,7 +10,7 @@ FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
     filesDownloaded = 0;
     peers = somePeers;
     busyBox.setText("Busy downloading. Please try again later.");
-    timeoutBox.setText("Download timeout.");
+    timeoutBox.setText("Download timeout. Perhaps file no longer exists.");
 
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
@@ -77,9 +77,14 @@ void FilePanel::buttonClicked(QString buttonName) {
         }
     }
     else if (buttonName == button3text) {
-        searchQuery = searchTextBox->text();
-        searchTextBox->clear();
-        sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
+        if (!isWaitingForFile && !isWaitingForMetafile) {
+            searchQuery = searchTextBox->text();
+            searchTextBox->clear();
+            sendSearchRequest(searchQuery, Constants::MAX_SEARCH_BUDGET);
+        }
+        else {
+            filePanelBusy();
+        }
     }
 }
 
@@ -153,9 +158,6 @@ void FilePanel::handleBlockReply(Message message) {
         // Send block request for next block in sequence
         sendBlockRequest(message.getOrigin(), getMetaBlock(metafileForPendingFile, blocksDownloaded));
     }
-    else {
-        qDebug() << "handle blockreply error";
-    }
 }
 
 QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
@@ -198,7 +200,7 @@ void FilePanel::handleBlockRequest(Message message) {
 }
 
 void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
-    qDebug() << "Sending blockrequest to " + targetNode + "with hash" << hash;
+    qDebug() << "Sending blockrequest to " + targetNode + "with hash " << hash;
     Message message = BlockRequestMessage(origin, targetNode, Constants::HOPLIMIT, hash);
     sendMessage(targetNode, message);
 }
@@ -297,10 +299,6 @@ void FilePanel::forwardSearchRequest(QString origin, QString query, quint32 budg
     sendMessage(peer, message);
 }
 
-void FilePanel::sendMessage(Peer peer, Message message) {
-    QByteArray datagram = message.getSerializedMessage();
-    socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
-}
 #pragma mark - Other File Download Methods
 
 void FilePanel::requestTimeout() {
@@ -313,6 +311,12 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+    downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
+}
+
+void FilePanel::sendMessage(Peer peer, Message message) {
+    QByteArray datagram = message.getSerializedMessage();
+    socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
     downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
 }
 
