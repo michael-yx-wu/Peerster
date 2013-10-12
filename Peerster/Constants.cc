@@ -21,8 +21,9 @@ const qint64 Constants::BLOCKSIZE = 8192;
 const int Constants::HASHSIZE = 32;
 const QString Constants::HASHTYPE = "sha256";
 const quint32 Constants::HOPLIMIT = 10;
-const quint32 Constants::MAX_SEARCH_BUDGET = 10;
 QString Constants::SAVE_DIRECTORY;
+const quint32 Constants::MAX_SEARCH_BUDGET = 10;
+const int Constants::PACKET_TIMEOUT = 5000;
 
 void Constants::setApplicationDirectory(QString path) {
     SAVE_DIRECTORY = path;

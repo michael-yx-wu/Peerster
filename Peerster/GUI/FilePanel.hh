@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSignalMapper>
+#include <QTimer>
 #include <QVBoxLayout>
 #include <QUdpSocket>
 #include <QtCrypto>
@@ -42,19 +43,23 @@ public:
     public slots:
     void buttonClicked(QString buttonName);
     void downloadFile(QListWidgetItem *item);
+    void requestTimeout();
     
 private:
     int blocksDownloaded;
+    QMessageBox busyBox;
     static const QString button1text;
     static const QString button2text;
     static const QString button3text;
     QByteArray dataForPendingFile;
     QPushButton *downloadFileButton;
+    QTimer *downloadTimeoutTimer;
     QList<PeersterFile*> files;
     int filesDownloaded;
     QGroupBox *fileShareBox;
     QGridLayout *fileShareBoxLayout;
     QFileDialog *fileDialog;
+    QLineEdit *hashTextBox;
     bool isWaitingForFile;
     bool isWaitingForMetafile;
     QByteArray metafileForPendingFile;
@@ -71,10 +76,11 @@ private:
     QPushButton *selectFilesButton;
     QUdpSocket *socket;
     QLineEdit *targetNodeTextBox;
-    QLineEdit *hashTextBox;
+    QMessageBox timeoutBox;
     
     void filePanelBusy();
     QByteArray getMetaBlock(QByteArray qbArray, int blockNumber);
+    void forwardSearchRequest(QString origin, QString query, quint32 budget);
     QString saveDownloadedFile(QByteArray data);
     void sendBlockReply(QString targetNode, PeersterFile *f, QByteArray hash, int blockIndex);
     void sendBlockRequest(QString targetNode, QByteArray hash);

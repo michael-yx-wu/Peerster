@@ -9,10 +9,15 @@ FilePanel::FilePanel(QString someOrigin, std::vector<Peer> *somePeers) {
     isWaitingForMetafile = isWaitingForFile = false;
     filesDownloaded = 0;
     peers = somePeers;
-    
+    busyBox.setText("Busy downloading. Please try again later.");
+    timeoutBox.setText("Download timeout.");
+
     fileShareBox = new QGroupBox("File Sharing");
     fileShareBoxLayout = new QGridLayout();
     fileShareBox->setLayout(fileShareBoxLayout);
+
+    downloadTimeoutTimer = new QTimer(this);
+    connect(downloadTimeoutTimer, SIGNAL(timeout()), this, SLOT(requestTimeout()));
     
     // Create signal mapper
     signalMapper = new QSignalMapper(this);
@@ -84,8 +89,7 @@ void FilePanel::downloadFile(QListWidgetItem *item) {
         filePanelBusy();
         return;
     }
-    isWaitingForMetafile = true;
-    isWaitingForFile = true;
+    isWaitingForMetafile = isWaitingForFile = true;
     const QString filename = item->text();
     QString targetNode = searchResultMap.value(filename)._origin;
     QByteArray metafileHash = searchResultMap.value(filename)._hash;
@@ -93,9 +97,7 @@ void FilePanel::downloadFile(QListWidgetItem *item) {
 }
 
 void FilePanel::filePanelBusy() {
-    QMessageBox messageBox;
-    messageBox.setText("Please wait. Busy downloading file.");
-    messageBox.show();
+    busyBox.show();
 }
 
 // Show file selection dialog
@@ -111,6 +113,7 @@ void FilePanel::showDialog() {
 
 void FilePanel::handleBlockReply(Message message) {
     qDebug() << "Got block reply";
+    downloadTimeoutTimer->stop();
     QByteArray blockReply = message.getBlockReply();
     QByteArray data = message.getData();
     
@@ -159,8 +162,7 @@ QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
 }
 
 QString FilePanel::saveDownloadedFile(QByteArray data) {
-    QString filename = Constants::SAVE_DIRECTORY + QString::number(filesDownloaded++);
-    qDebug() << "Saving file: " + filename;
+    QString filename = Constants::SAVE_DIRECTORY + "/" + QString::number(filesDownloaded++);
     QFile *f = new QFile(filename);
     f->open(QIODevice::WriteOnly);
     f->write(data);
@@ -212,17 +214,11 @@ void FilePanel::sendBlockReply(QString targetNode, PeersterFile *f, QByteArray h
     sendMessage(targetNode, message);
 }
 
-void FilePanel::sendMessage(QString targetNode, Message message) {
-    QByteArray datagram = message.getSerializedMessage();
-    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
-    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
-    socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
-}
-
 #pragma mark - Handle Search Reply
 
 void FilePanel::handleSearchReply(Message message) {
     qDebug() << "Got search reply";
+    downloadTimeoutTimer->stop();
     QVariantList filenames = message.getMatchNames();
     QVariantList metafileHashes = message.getMatchIDs();
     for (int i = 0; i < filenames.size(); i++) {
@@ -273,7 +269,7 @@ void FilePanel::handleSearchRequest(Message message) {
             quint32 newBudget = budgetSpread.front();
             budgetSpread.pop_front();
             if (newBudget != 0) {
-                sendSearchRequest(query, newBudget);
+                forwardSearchRequest(message.getOrigin(), query, newBudget);
             }
         }
     }
@@ -292,9 +288,30 @@ void FilePanel::sendSearchRequest(QString query, quint32 budget) {
     sendMessage(peer, message);
 }
 
+void FilePanel::forwardSearchRequest(QString origin, QString query, quint32 budget) {
+    qDebug() << "Forwarding search request";
+    Message message = SearchRequestMessage(origin, query, budget);
+    Peer peer = peers->at(rand() % peers->size());
+    sendMessage(peer, message);
+}
+
 void FilePanel::sendMessage(Peer peer, Message message) {
     QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), peer.address, peer.port);
+}
+#pragma mark - Other File Download Methods
+
+void FilePanel::requestTimeout() {
+    isWaitingForFile = isWaitingForMetafile = false;
+    timeoutBox.show();
+}
+
+void FilePanel::sendMessage(QString targetNode, Message message) {
+    QByteArray datagram = message.getSerializedMessage();
+    QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
+    quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
+    socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
+    downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
 }
 
 #pragma mark - Accessor Methods
