@@ -65,7 +65,7 @@ ChatDialog::ChatDialog() {
     
     // Start timers
     antiEntropyTimer->start(2000);
-    routingTimer->start(60000);//change to once per minute
+    routingTimer->start(10000);//change to once per minute
     QTimer::singleShot(1000, this, SLOT(routeMonger()));
     
     // Add the ports in my port range to my peer list

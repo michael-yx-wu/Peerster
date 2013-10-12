@@ -163,7 +163,7 @@ QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
 }
 
 QString FilePanel::saveDownloadedFile(QByteArray data) {
-    QString filename = Constants::SAVE_DIRECTORY + "/" + QString::number(filesDownloaded++);
+    QString filename = Constants::SAVE_DIRECTORY + "/download" + QString::number(filesDownloaded++);
     QFile *f = new QFile(filename);
     f->open(QIODevice::WriteOnly);
     f->write(data);
@@ -284,6 +284,7 @@ void FilePanel::sendSearchReply(QString targetNode, QString searchReply, QVarian
 
 void FilePanel::sendSearchRequest(QString query, quint32 budget) {
     qDebug() << "Sending search request";
+    if (peers->size() == 0) return;
     Message message = SearchRequestMessage(origin, query, budget);
     Peer peer = peers->at(rand() % peers->size());
     sendMessage(peer, message);
