@@ -250,11 +250,11 @@ void FilePanel::handleSearchRequest(Message message) {
         for (quint32 i = 0; i < budget; i = (i + 1)%peers->size()) {
             budgetSpread.insert(i, budgetSpread.value(i));
         }
-        
+        qDebug() << "Forward request";
         // Forward search requests to peers
         while (!budgetSpread.isEmpty()) {
-            quint32 newBudget = budgetSpread.back();
-            budgetSpread.pop_back();
+            quint32 newBudget = budgetSpread.front();
+            budgetSpread.pop_front();
             if (newBudget != 0) {
                 sendSearchRequest(query, newBudget);
             }
