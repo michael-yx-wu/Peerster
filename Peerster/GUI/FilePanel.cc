@@ -199,6 +199,7 @@ void FilePanel::sendBlockRequest(QString targetNode, QByteArray hash) {
     qDebug() << "Sending blockrequest to " + targetNode + "with hash " << hash;
     Message message = BlockRequestMessage(origin, targetNode, Constants::HOPLIMIT, hash);
     sendMessage(targetNode, message);
+    downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
 }
 
 void FilePanel::sendMetafileReply(QString targetNode, PeersterFile *f, QByteArray hash) {
@@ -307,7 +308,6 @@ void FilePanel::sendMessage(QString targetNode, Message message) {
     QHostAddress targetIP = privateMessagingPanel->getOriginMap().value(targetNode).first;
     quint16 targetPort = privateMessagingPanel->getOriginMap().value(targetNode).second;
     socket->writeDatagram(datagram.data(), datagram.size(), targetIP, targetPort);
-    downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
 }
 
 void FilePanel::sendMessage(Peer peer, Message message) {
