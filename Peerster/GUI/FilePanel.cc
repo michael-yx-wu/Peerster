@@ -161,6 +161,7 @@ QByteArray FilePanel::getMetaBlock(QByteArray qbArray, int blockNumber) {
 
 QString FilePanel::saveDownloadedFile(QByteArray data) {
     QString filename = Constants::SAVE_DIRECTORY + "/download" + QString::number(filesDownloaded++);
+    qDebug() << "Saving file as: " + filename;
     QFile *f = new QFile(filename);
     f->open(QIODevice::WriteOnly);
     f->write(data);
