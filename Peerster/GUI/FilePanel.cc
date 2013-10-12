@@ -84,7 +84,8 @@ void FilePanel::downloadFile(QListWidgetItem *item) {
         filePanelBusy();
         return;
     }
-    isWaitingForMetafile = isWaitingForFile = true;
+    isWaitingForMetafile = true;
+    isWaitingForFile = true;
     const QString filename = item->text();
     QString targetNode = searchResultMap.value(filename)._origin;
     QByteArray metafileHash = searchResultMap.value(filename)._hash;
