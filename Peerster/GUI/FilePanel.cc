@@ -105,11 +105,13 @@ void FilePanel::handleBlockReply(Message message) {
     
     // Drop invalid block replies
     if (!validBlockReply(blockReply, data)) {
+        qDebug() << "Invalid block";
         return;
     }
     
     // Got a metafile -- start requesting data blocks
     if (isWaitingForMetafile && isWaitingForFile) {
+        qDebug() << "Got metafile";
         isWaitingForMetafile = false;
         blocksDownloaded = 0;
         numBlocksToDownload = data.size()/Constants::HASHSIZE;
@@ -135,6 +137,9 @@ void FilePanel::handleBlockReply(Message message) {
         
         // Send block request for next block in sequence
         sendBlockRequest(message.getOrigin(), getMetaBlock(metafileForPendingFile, blocksDownloaded));
+    }
+    else {
+        qDebug() << "handle blockreply error";
     }
 }
 
