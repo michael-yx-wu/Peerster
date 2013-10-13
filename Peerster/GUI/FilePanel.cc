@@ -121,6 +121,7 @@ void FilePanel::handleBlockReply(Message message) {
     // Drop invalid block replies
     if (!validBlockReply(blockReply, data)) {
         qDebug() << "Invalid block";
+        downloadTimeoutTimer->start(Constants::PACKET_TIMEOUT);
         return;
     }
     
