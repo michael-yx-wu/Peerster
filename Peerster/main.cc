@@ -69,13 +69,6 @@ ChatDialog::ChatDialog() {
     antiEntropyTimer->start(2000);
     routingTimer->start(10000);//change to once per minute
     QTimer::singleShot(1000, this, SLOT(routeMonger()));
-    
-    // Add the ports in my port range to my peer list
-    //    for (int i = minport; i <= maxport; i++) {
-    //        if (i != myport) {
-    //            ChatDialog::updatePeerList(myIP, i);
-    //        }
-    //    }
 }
 
 // Attempt to bind to a UDP port in range
@@ -120,7 +113,7 @@ void ChatDialog::resolvePeer(QString hostPort) {
 void ChatDialog::lookupHostResults(const QHostInfo &host) {
     if (host.error() != QHostInfo::NoError) {
         qDebug() << "Lookup failed: " << host.errorString();
-        return;
+        exit(1);
     }
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;
@@ -208,6 +201,7 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
     // Check to see if we have already seen this rumor message
     origin = datapacket.value(Constants::xOrigin).toString();
     seqno = datapacket.value(Constants::xSeqNo).toUInt();
+    qDebug() << "Seqno: " + QString::number(seqno);
     if (messages.hasMessage(origin, seqno)) {
         return;
     }

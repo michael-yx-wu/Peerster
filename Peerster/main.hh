@@ -21,6 +21,7 @@
 #include "GUI/Chatbox.hh"
 #include "GUI/FilePanel.hh"
 #include "GUI/PrivateMessagingPanel.hh"
+#include "GUI/VoipPanel.hh"
 #include "Messages/Message.hh"
 #include "Messages/BlockReplyMessage.hh"
 #include "Messages/BlockRequestMessage.hh"
