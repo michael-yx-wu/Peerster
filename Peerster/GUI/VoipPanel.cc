@@ -27,14 +27,13 @@ QGroupBox* VoipPanel::getButtonGroupBox() {
 }
 
 void VoipPanel::buttonClicked(QString buttonName) {
-    qDebug() << "Button clicked";
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
         if (listening) {
-            qDebug() << "Listening ON\n";
+            qDebug() << "Listening ON";
         }
         else {
-            qDebug() << "Listening OFF\n";
+            qDebug() << "Listening OFF";
         }
     }
 }
