@@ -1,7 +1,12 @@
 #ifndef __Peerster__VoipPanel__
 #define __Peerster__VoipPanel__
 
+#include <QtMultimedia/QAudioDeviceInfo>
+#include <QtMultimedia/QAudioInput>
+#include <QtMultimedia/QAudioFormat>
+#include <QtMultimedia/QAudioOutput>
 #include <QButtonGroup>
+#include <QBuffer>
 #include <QGroupBox>
 #include <QDebug>
 #include <QPushButton>
@@ -34,6 +39,9 @@ private:
     QSignalMapper* buttonMapper;
     
     QTimer *recordingTimer;
+    
+    // File recording
+    QBuffer buffer;
     
 };
 

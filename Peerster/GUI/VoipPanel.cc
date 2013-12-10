@@ -29,10 +29,6 @@ VoipPanel::VoipPanel(QString origin) {
     
 }
 
-QGroupBox* VoipPanel::getButtonGroupBox() {
-    return buttonGroupBox;
-}
-
 void VoipPanel::buttonClicked(QString buttonName) {
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
@@ -50,4 +46,11 @@ void VoipPanel::buttonClicked(QString buttonName) {
 void VoipPanel::recordingTimeout() {
     
 }
+
+#pragma mark - Accessor Methods
+
+QGroupBox* VoipPanel::getButtonGroupBox() {
+    return buttonGroupBox;
+}
+
 
