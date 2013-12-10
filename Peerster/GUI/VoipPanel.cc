@@ -1,5 +1,7 @@
 #include "VoipPanel.hh"
 
+const QString startVoIPButtonText = "Group VoIP Toggle";
+const int recordingTime = 1000;
 VoipPanel::VoipPanel(QString origin) {
     this->origin = origin;
     
@@ -20,6 +22,11 @@ VoipPanel::VoipPanel(QString origin) {
     
     // VoIP is off by default
     listening = false;
+    
+    // Connect timer
+    recordingTimer = new QTimer(this);
+    connect(recordingTimer, SIGNAL(timeout()), this, SLOT(recordingTimeout()));
+    
 }
 
 QGroupBox* VoipPanel::getButtonGroupBox() {
@@ -31,9 +38,16 @@ void VoipPanel::buttonClicked(QString buttonName) {
         listening = !listening;
         if (listening) {
             qDebug() << "Listening ON";
+            recordingTimer->start(1000);
         }
         else {
             qDebug() << "Listening OFF";
+            recordingTimer->stop();
         }
     }
 }
+
+void VoipPanel::recordingTimeout() {
+    
+}
+

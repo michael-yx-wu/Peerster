@@ -7,8 +7,8 @@
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QString>
+#include <QTimer>
 #include <QVBoxLayout>
-
 #include <stdio.h>
 
 class VoipPanel : public QObject {
@@ -21,7 +21,7 @@ public:
     
     public slots:
     void buttonClicked(QString buttonName);
-
+    void recordingTimeout();
 private:
     bool listening;
     
@@ -31,8 +31,9 @@ private:
     QVBoxLayout* buttonGroupList;
     
     QPushButton* startVoIPButton;
-    QString startVoIPButtonText = "Group VoIP Toggle";
     QSignalMapper* buttonMapper;
+    
+    QTimer *recordingTimer;
     
 };
 
