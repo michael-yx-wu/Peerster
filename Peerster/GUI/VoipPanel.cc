@@ -2,6 +2,7 @@
 
 const QString startVoIPButtonText = "Group VoIP Toggle";
 const int recordingTime = 1000;
+
 VoipPanel::VoipPanel(QString origin) {
     this->origin = origin;
     
@@ -27,6 +28,23 @@ VoipPanel::VoipPanel(QString origin) {
     recordingTimer = new QTimer(this);
     connect(recordingTimer, SIGNAL(timeout()), this, SLOT(recordingTimeout()));
     
+    // Format audio
+    formatAudio();
+}
+
+void VoipPanel::formatAudio() {
+    format.setFrequency(8000);
+    format.setChannels(1);
+    format.setSampleSize(8);
+    format.setCodec("audio/pcm");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::UnSignedInt);
+    
+    deviceInfo = QAudioDeviceInfo::defaultInputDevice();
+    if (!deviceInfo.isFormatSupported(format)) {
+        qWarning() << "Format not supported. Trying nearest format.";
+        format = deviceInfo.nearestFormat(format);
+    }
 }
 
 void VoipPanel::buttonClicked(QString buttonName) {
@@ -44,7 +62,12 @@ void VoipPanel::buttonClicked(QString buttonName) {
 }
 
 void VoipPanel::recordingTimeout() {
+    // do something with full buffer
     
+    // Start recording into buffer
+    buffer.open(QIODevice::WriteOnly);
+    
+    // Format
 }
 
 #pragma mark - Accessor Methods

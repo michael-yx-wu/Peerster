@@ -4,10 +4,10 @@
 
 CONFIG += crypto
 TEMPLATE = app
-TARGET = 
+TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
-QT += network
+QT += network multimedia
 
 # Input
 #HEADERS += main.hh BlockReplyMessage.hh BlockRequestMessage.hh Chatbox.hh Constants.hh FilePanel.hh Message.hh Messages.hh Peer.hh PeersterFile.hh PrivateMessagingPanel.hh PrivateChatDialog.hh SearchReplyMessage.hh SearchRequestMessage.hh
