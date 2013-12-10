@@ -27,13 +27,15 @@ ChatDialog::ChatDialog() {
     addHostBox = new Chatbox(this);
     filePanel = new FilePanel(hostname, &peers);
     privateMessagingPanel = new PrivateMessagingPanel();
+    voipPanel = new VoipPanel(hostname);
     
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
-    layout->addWidget(privateMessagingPanel->getOriginBox(), 0, 1);
-    layout->addWidget(filePanel->getGroupBox(), 1, 1);
+        layout->addWidget(voipPanel->getButtonGroupBox(), 0, 1);
+    layout->addWidget(privateMessagingPanel->getOriginBox(), 1, 1);
+    layout->addWidget(filePanel->getGroupBox(), 2, 1);
     
 	setLayout(layout);
     chatbox->setFocus();

@@ -12,7 +12,7 @@ class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
-    VoipPanel(QString origin);
+    VoipPanel(QString someOrigin);
     
     QGroupBox* getButtonGroupBox();
     
@@ -21,6 +21,8 @@ public:
 
 private:
     bool listening;
+    
+    QString origin;
     
     QGroupBox* buttonGroupBox;
     QVBoxLayout* buttonGroupList;

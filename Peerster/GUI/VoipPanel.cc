@@ -1,6 +1,8 @@
 #include "VoipPanel.hh"
 
 VoipPanel::VoipPanel(QString origin) {
+    this->origin = origin;
+    
     // VoIP Panel Setup
     buttonGroupBox = new QGroupBox("VoIP");
     buttonGroupList = new QVBoxLayout;

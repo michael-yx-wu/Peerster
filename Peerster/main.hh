@@ -82,6 +82,9 @@ private:
     // File sharing
     FilePanel *filePanel;
     
+    // Voip
+    VoipPanel *voipPanel;
+    
     bool bind();
     void processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void processPrivateMessage(QMap<QString, QVariant> datapacket);
