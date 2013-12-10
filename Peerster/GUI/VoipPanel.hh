@@ -8,6 +8,8 @@
 #include <QString>
 #include <QVBoxLayout>
 
+#include <stdio.h>
+
 class VoipPanel : public QObject {
     Q_OBJECT
     
