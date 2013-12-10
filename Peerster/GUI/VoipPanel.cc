@@ -12,9 +12,10 @@ VoipPanel::VoipPanel(QString origin) {
     buttonMapper = new QSignalMapper(this);
     connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
     
-    // Initialize VoIP button
+    // Initialize and connect VoIP button
     startVoIPButton = new QPushButton(startVoIPButtonText);
     buttonMapper->setMapping(startVoIPButton, startVoIPButton->text());
+    connect(startVoIPButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
     buttonGroupList->addWidget(startVoIPButton);
     
     // VoIP is off by default

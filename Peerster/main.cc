@@ -19,7 +19,7 @@ ChatDialog::ChatDialog() {
     loop.exec();
     while (loop.isRunning());
 	
-    // Create and add widgets to our ChatDialog
+    // Create widgets
     setWindowTitle(hostname);
 	textview = new QTextEdit(this);
 	textview->setReadOnly(true);
@@ -29,11 +29,12 @@ ChatDialog::ChatDialog() {
     privateMessagingPanel = new PrivateMessagingPanel();
     voipPanel = new VoipPanel(hostname);
     
+    // Add widgets
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(textview);
 	layout->addWidget(chatbox);
     layout->addWidget(addHostBox);
-        layout->addWidget(voipPanel->getButtonGroupBox(), 0, 1);
+    layout->addWidget(voipPanel->getButtonGroupBox(), 0, 1);
     layout->addWidget(privateMessagingPanel->getOriginBox(), 1, 1);
     layout->addWidget(filePanel->getGroupBox(), 2, 1);
     
@@ -49,7 +50,6 @@ ChatDialog::ChatDialog() {
     }
     
     updatePrivateMessagingPanel(hostname, myIP, myport, 1, true);
-    
     filePanel->setSocket(socket);
     filePanel->setPrivateMessagingPanel(privateMessagingPanel);
     privateMessagingPanel->setSocket(socket);
@@ -252,7 +252,7 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
             }
         }
     }
-
+    
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
