@@ -3,6 +3,7 @@
 
 #include <QButtonGroup>
 #include <QGroupBox>
+#include <QDebug>
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QString>

@@ -10,7 +10,7 @@ VoipPanel::VoipPanel(QString origin) {
     
     // Initialize signal mapper
     buttonMapper = new QSignalMapper(this);
-    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(Qstring)));
+    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
     
     // Initialize VoIP button
     startVoIPButton = new QPushButton(startVoIPButtonText);
@@ -26,14 +26,13 @@ QGroupBox* VoipPanel::getButtonGroupBox() {
 }
 
 void VoipPanel::buttonClicked(QString buttonName) {
-    fprintf(stderr, "button clicked\n");
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
         if (listening) {
-            fprintf(stderr, "Listening ON\n");
+            qDebug() << "Listening ON\n";
         }
         else {
-            fprintf(stderr, "Listening OFF\n");
+            qDebug() << "Listening OFF\n";
         }
     }
 }
