@@ -45,6 +45,8 @@ void VoipPanel::formatAudio() {
         qWarning() << "Format not supported. Trying nearest format.";
         format = deviceInfo.nearestFormat(format);
     }
+    
+    audioInput = new QAudioInput(format, this);
 }
 
 void VoipPanel::buttonClicked(QString buttonName) {
@@ -53,21 +55,31 @@ void VoipPanel::buttonClicked(QString buttonName) {
         if (listening) {
             qDebug() << "Listening ON";
             recordingTimer->start(1000);
+            recordingTimeout();
         }
         else {
             qDebug() << "Listening OFF";
-            recordingTimer->stop();
         }
     }
 }
 
 void VoipPanel::recordingTimeout() {
+    audioInput->stop();
+    if (buffer.size() != 0) {
+        
+    }
+    
     // do something with full buffer
+    //
     
     // Start recording into buffer
-    buffer.open(QIODevice::WriteOnly);
+    buffer.open(QIODevice::ReadWrite);
+    audioInput->start(&buffer);
     
-    // Format
+    
+    if (!listening) {
+        recordingTimer->stop();
+    }
 }
 
 #pragma mark - Accessor Methods

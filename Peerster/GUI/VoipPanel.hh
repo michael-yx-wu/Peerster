@@ -40,13 +40,12 @@ private:
     QPushButton* startVoIPButton;
     QSignalMapper* buttonMapper;
     
-    QTimer *recordingTimer;
-    
     // File recording
+    QAudioInput *audioInput;
     QBuffer buffer;
     QAudioDeviceInfo deviceInfo;
     QAudioFormat format;
-    
+    QTimer *recordingTimer;
     void formatAudio();
 };
 
