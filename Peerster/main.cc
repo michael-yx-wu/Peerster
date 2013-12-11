@@ -11,6 +11,7 @@ ChatDialog::ChatDialog() {
     
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
+    qDebug() << QHostInfo::localHostName();
     
     QEventLoop loop;
     connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
@@ -114,7 +115,7 @@ void ChatDialog::resolvePeer(QString hostPort) {
 void ChatDialog::lookupHostResults(const QHostInfo &host) {
     if (host.error() != QHostInfo::NoError) {
         qDebug() << "Lookup failed: " << host.errorString();
-        exit(1);
+        return;
     }
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;
@@ -126,7 +127,7 @@ void ChatDialog::lookupHostResults(const QHostInfo &host) {
 void ChatDialog::myIPResults(const QHostInfo &host) {
     if (host.error() != QHostInfo::NoError) {
         qDebug() << "Lookup failed: " << host.errorString();
-        return;
+        exit(1);
     }
     foreach (const QHostAddress &address, host.addresses()) {
         qDebug() << "Found address: " << address;

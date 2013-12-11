@@ -65,17 +65,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
     }
 }
 
-void VoipPanel::dequeueOutput(QAudio::State state) {
-    // Dequeue audio clip and data regardless of stopped or suspended
-    if (state == QAudio::StoppedState || state == QAudio::SuspendedState) {
-        QAudioOutput *output = outputs.dequeue();
-        QBuffer *buffer = buffers.dequeue();
-        output->stop();
-        buffer->close();
-        delete output;
-        delete buffer;
-    }
-}
+# pragma mark - Audio Input
 
 void VoipPanel::recordingTimeout() {
     audioInput->stop();
@@ -105,6 +95,8 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     }
 }
 
+# pragma mark - Audio Output
+
 void VoipPanel::playAudioMessage(QByteArray audioData) {
     qDebug() << "Playing audio message";
     QBuffer *buffer = new QBuffer(&audioData);
@@ -116,7 +108,20 @@ void VoipPanel::playAudioMessage(QByteArray audioData) {
     buffers.enqueue(buffer);
     output->start(buffer);
     connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
-    output->start(buffer);
+    qDebug() << "Successful audio start";
+}
+
+void VoipPanel::dequeueOutput(QAudio::State state) {
+    // Dequeue audio clip and data regardless of stopped or suspended
+    qDebug() << "Audio dequeue";
+    if (state == QAudio::StoppedState || state == QAudio::SuspendedState) {
+        QAudioOutput *output = outputs.dequeue();
+        QBuffer *buffer = buffers.dequeue();
+        output->stop();
+        buffer->close();
+        delete output;
+        delete buffer;
+    }
 }
 
 #pragma mark - Accessor Methods
