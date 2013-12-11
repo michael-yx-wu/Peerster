@@ -186,6 +186,7 @@ void ChatDialog::processPendingDatagrams() {
 }
 
 void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
+    qDebug() << "Got audio message";
     QByteArray audioData = datapacket.value(Constants::xAudioData).toByteArray();
     voipPanel->playAudioMessage(audioData);
 }

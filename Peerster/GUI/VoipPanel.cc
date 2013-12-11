@@ -99,15 +99,19 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 
 void VoipPanel::playAudioMessage(QByteArray audioData) {
     qDebug() << "Playing audio message";
-    QBuffer *buffer = new QBuffer(&audioData);
-    buffer->open(QIODevice::ReadOnly);
+    
+    QFile *audioFile = new QFile(audioData);
+    audioFile->open(QIODevice::ReadOnly);
+//    QBuffer *buffer = new QBuffer(&audioData);
+//    buffer->open(QIODevice::ReadOnly);
     
     // Play audio message and enqueue
     QAudioOutput *output = new QAudioOutput(format, this);
     outputs.enqueue(output);
-    buffers.enqueue(buffer);
+//    buffers.enqueue(buffer);
+    buffers.enqueue(audioFile);
     connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
-    output->start(buffer);
+    output->start(audioFile);
     qDebug() << "Successful audio start";
 }
 
@@ -116,11 +120,12 @@ void VoipPanel::dequeueOutput(QAudio::State state) {
     if (state == QAudio::IdleState) {
         qDebug() << "Audio dequeue";
         QAudioOutput *output = outputs.dequeue();
-        QBuffer *buffer = buffers.dequeue();
+//        QBuffer *buffer = buffers.dequeue();
+        QFile *buffer = buffers.dequeue();
         output->stop();
         buffer->close();
-//        delete output;
-//        delete buffer;
+        delete output;
+        delete buffer;
     }
 }
 

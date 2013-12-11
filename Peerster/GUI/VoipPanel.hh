@@ -6,6 +6,7 @@
 #include <QAudioFormat>
 #include <QAudioOutput>
 #include <QBuffer>
+#include <QFile>
 #include <QTimer>
 
 #include <QButtonGroup>
@@ -64,7 +65,8 @@ private:
     
     // Audio playback
     QQueue<QAudioOutput*> outputs;
-    QQueue<QBuffer*> buffers;
+//    QQueue<QBuffer*> buffers;
+    QQueue<QFile*> buffers;
 };
 
 #endif
