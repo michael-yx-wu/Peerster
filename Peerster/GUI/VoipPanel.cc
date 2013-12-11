@@ -72,6 +72,8 @@ void VoipPanel::dequeueOutput(QAudio::State state) {
         QBuffer *buffer = buffers.dequeue();
         output->stop();
         buffer->close();
+        delete output;
+        delete buffer;
     }
 }
 
