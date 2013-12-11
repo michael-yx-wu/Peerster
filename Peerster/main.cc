@@ -15,7 +15,7 @@ ChatDialog::ChatDialog() {
     
     QEventLoop loop;
     connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));
-    QHostInfo::lookupHost(QHostInfo::localHostName()+"."+QHostInfo::localDomainName(), this, SLOT(myIPResults(QHostInfo)));
+    QHostInfo::lookupHost(QHostInfo::localHostName(), this, SLOT(myIPResults(QHostInfo)));
     loop.exec();
     while (loop.isRunning());
 	

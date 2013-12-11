@@ -66,10 +66,13 @@ void VoipPanel::buttonClicked(QString buttonName) {
 }
 
 void VoipPanel::dequeueOutput(QAudio::State state) {
-    QAudioOutput *output = outputs.dequeue();
-    QBuffer *buffer = buffers.dequeue();
-    output->stop();
-    buffer->close();
+    // Dequeue audio clip and data regardless of stopped or suspended
+    if (state == QAudio::StoppedState || state == QAudio::SuspendedState) {
+        QAudioOutput *output = outputs.dequeue();
+        QBuffer *buffer = buffers.dequeue();
+        output->stop();
+        buffer->close();
+    }
 }
 
 void VoipPanel::recordingTimeout() {
@@ -77,6 +80,7 @@ void VoipPanel::recordingTimeout() {
     if (buffer.size() != 0) {
         // send buffer data
         AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), buffer.data());
+        sendAudioMessage(message);
         buffer.close();
     }
     
@@ -91,6 +95,7 @@ void VoipPanel::recordingTimeout() {
 
 void VoipPanel::sendAudioMessage(AudioMessage message) {
     // Send to all immediate peers
+    qDebug() << "Sending Audio Message";
     unsigned i;
     QByteArray datagram = message.getSerializedMessage();
     for (i = 0; i < peers->size(); i++) {
@@ -99,13 +104,15 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 }
 
 void VoipPanel::playAudioMessage(QByteArray audioData) {
+    qDebug() << "Playing audio message";
     QBuffer *buffer = new QBuffer(&audioData);
     buffer->open(QIODevice::ReadOnly);
     
-    // create new audio output, add to array
+    // Play audio message and enqueue
     QAudioOutput *output = new QAudioOutput(format, this);
     outputs.enqueue(output);
     buffers.enqueue(buffer);
+    output->start(buffer);
     connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
     output->start(buffer);
 }
