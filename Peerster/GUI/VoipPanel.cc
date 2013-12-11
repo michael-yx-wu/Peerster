@@ -35,7 +35,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
 }
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(800);
+    format.setSampleRate(500);
     format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/pcm");
@@ -106,21 +106,21 @@ void VoipPanel::playAudioMessage(QByteArray audioData) {
     QAudioOutput *output = new QAudioOutput(format, this);
     outputs.enqueue(output);
     buffers.enqueue(buffer);
-    output->start(buffer);
     connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
+    output->start(buffer);
     qDebug() << "Successful audio start";
 }
 
 void VoipPanel::dequeueOutput(QAudio::State state) {
     // Dequeue audio clip and data regardless of stopped or suspended
-    qDebug() << "Audio dequeue";
-    if (state == QAudio::StoppedState || state == QAudio::SuspendedState) {
+    if (state == QAudio::IdleState) {
+        qDebug() << "Audio dequeue";
         QAudioOutput *output = outputs.dequeue();
         QBuffer *buffer = buffers.dequeue();
         output->stop();
         buffer->close();
-        delete output;
-        delete buffer;
+//        delete output;
+//        delete buffer;
     }
 }
 
