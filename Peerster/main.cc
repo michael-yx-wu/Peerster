@@ -19,6 +19,14 @@ ChatDialog::ChatDialog() {
     loop.exec();
     while (loop.isRunning());
 	
+    // Initialize the socket and bind it to a UDP port
+    minport = 32768 + (getuid() % 4096)*4;
+    maxport = minport + 3;
+    socket = new QUdpSocket(this);
+    if (!bind()) {
+        exit(1);
+    }
+    
     // Create widgets
     setWindowTitle(hostname);
 	textview = new QTextEdit(this);
@@ -27,7 +35,7 @@ ChatDialog::ChatDialog() {
     addHostBox = new Chatbox(this);
     filePanel = new FilePanel(hostname, &peers);
     privateMessagingPanel = new PrivateMessagingPanel();
-    voipPanel = new VoipPanel(hostname);
+    voipPanel = new VoipPanel(hostname, socket);
     
     // Add widgets
 	QGridLayout *layout = new QGridLayout();
@@ -40,14 +48,6 @@ ChatDialog::ChatDialog() {
     
 	setLayout(layout);
     chatbox->setFocus();
-    
-    // Initialize the socket and bind it to a UDP port
-    minport = 32768 + (getuid() % 4096)*4;
-    maxport = minport + 3;
-    socket = new QUdpSocket(this);
-    if (!bind()) {
-        exit(1);
-    }
     
     updatePrivateMessagingPanel(hostname, myIP, myport, 1, true);
     filePanel->setSocket(socket);

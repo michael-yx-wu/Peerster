@@ -10,12 +10,15 @@ const QString Constants::xLastIP = "LastIP";
 const QString Constants::xLastPort = "LastPort";
 const QString Constants::xBlockRequest = "BlockRequest";
 const QString Constants::xBlockReply = "BlockReply";
-const QString Constants::xData = "Data";
+const QString Constants::xData = "FileData";
 const QString Constants::xSearchRequest = "Search";
 const QString Constants::xSearchReply = "SearchReply";
 const QString Constants::xBudget = "Budget";
 const QString Constants::xMatchNames = "MatchNames";
 const QString Constants::xMatchIDs = "MatchIDs";
+const QString Constants::xTimestamp = "Timestamp";
+const QString Constants::xAudioData = "AudioData";
+
 
 const qint64 Constants::BLOCKSIZE = 8192;
 const int Constants::HASHSIZE = 32;

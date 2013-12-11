@@ -21,7 +21,9 @@ public:
     static const QString xSearchReply;
     static const QString xBudget;
     static const QString xMatchNames;
-    static const QString xMatchIDs; 
+    static const QString xMatchIDs;
+    static const QString xTimestamp;
+    static const QString xAudioData;
     
     // Application constants
     static const qint64 BLOCKSIZE;

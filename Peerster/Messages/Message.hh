@@ -1,6 +1,7 @@
 #ifndef __Peerster__Message__
 #define __Peerster__Message__
 
+#include <QDateTime>
 #include <QMap>
 #include <QString>
 #include <QVariant>
@@ -43,6 +44,8 @@ public:
     QString getSearchReply();
     quint32 getSeqno();
     QByteArray getSerializedMessage();
+    
+    bool isAudioMessage();
     bool isBlockReply();
     bool isBlockRequest();
     bool isChatMessage();
@@ -52,7 +55,6 @@ public:
     bool isSearchRequest();
     
 protected:
-    // Protected
     QByteArray blockReply;
     QByteArray blockRequest;
     quint32 budget;
@@ -69,6 +71,7 @@ protected:
     QString searchReply;
     quint32 seqno;
     QByteArray serializedMessage;
+    bool audioMessage;
     bool blockReplyMessage;
     bool blockRequestMessage;
     bool chatMessage;

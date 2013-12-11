@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QString>
+#include <QUdpSocket>
 #include <QVBoxLayout>
 #include <stdio.h>
 
@@ -21,7 +22,7 @@ class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
-    VoipPanel(QString someOrigin);
+    VoipPanel(QString someOrigin, QUdpSocket *socket);
     
     QGroupBox* getButtonGroupBox();
     
@@ -47,6 +48,9 @@ private:
     QAudioFormat format;
     QTimer *recordingTimer;
     void formatAudio();
+    
+    // Audio Messaging
+    QUdpSocket *socket;
 };
 
 #endif

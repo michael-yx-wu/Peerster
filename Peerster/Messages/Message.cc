@@ -104,6 +104,7 @@ void Message::decrementHopLimit() {
 }
 
 void Message::defaultBoolValues() {
+    audioMessage = false;
     blockReplyMessage = false;
     blockRequestMessage = false;
     chatMessage = false;
@@ -168,6 +169,10 @@ quint32 Message::getSeqno() {
 
 QByteArray Message::getSerializedMessage() {
     return serializedMessage;
+}
+
+bool Message::isAudioMessage() {
+    return audioMessage;
 }
 
 bool Message::isBlockReply() {

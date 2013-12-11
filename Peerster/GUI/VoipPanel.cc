@@ -3,8 +3,9 @@
 const QString startVoIPButtonText = "Group VoIP Toggle";
 const int recordingTime = 1000;
 
-VoipPanel::VoipPanel(QString origin) {
+VoipPanel::VoipPanel(QString origin, QUdpSocket *socket) {
     this->origin = origin;
+    this->socket = socket;
     
     // VoIP Panel Setup
     buttonGroupBox = new QGroupBox("VoIP");
@@ -66,20 +67,19 @@ void VoipPanel::buttonClicked(QString buttonName) {
 void VoipPanel::recordingTimeout() {
     audioInput->stop();
     if (buffer.size() != 0) {
-        
+        // send buffer data
+//        sendVoiceMsg(buffer.data()); //implement later
+        buffer.close();
     }
-    
-    // do something with full buffer
-    //
-    
-    // Start recording into buffer
-    buffer.open(QIODevice::ReadWrite);
-    audioInput->start(&buffer);
-    
     
     if (!listening) {
         recordingTimer->stop();
+    } else {
+        // Start recording into buffer
+        buffer.open(QIODevice::ReadWrite|QIODevice::Truncate);
+        audioInput->start(&buffer);
     }
+    
 }
 
 #pragma mark - Accessor Methods
