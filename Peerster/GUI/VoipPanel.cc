@@ -65,6 +65,13 @@ void VoipPanel::buttonClicked(QString buttonName) {
     }
 }
 
+void VoipPanel::dequeueOutput(QAudio::State state) {
+    QAudioOutput *output = outputs.dequeue();
+    QBuffer *buffer = buffers.dequeue();
+    output->stop();
+    buffer->close();
+}
+
 void VoipPanel::recordingTimeout() {
     audioInput->stop();
     if (buffer.size() != 0) {
@@ -91,10 +98,23 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     }
 }
 
+void VoipPanel::playAudioMessage(QByteArray audioData) {
+    QBuffer *buffer = new QBuffer(&audioData);
+    buffer->open(QIODevice::ReadOnly);
+    
+    // create new audio output, add to array
+    QAudioOutput *output = new QAudioOutput(format, this);
+    outputs.enqueue(output);
+    buffers.enqueue(buffer);
+    connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
+    output->start(buffer);
+}
+
 #pragma mark - Accessor Methods
 
 QGroupBox* VoipPanel::getButtonGroupBox() {
     return buttonGroupBox;
 }
+
 
 

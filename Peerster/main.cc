@@ -173,16 +173,21 @@ void ChatDialog::processPendingDatagrams() {
         stream >> datapacket;
         
         // Process the datapacket
-        if (datapacket.contains(Constants::xDest)) {
+        if (datapacket.contains(Constants::xAudioData)) {
+            processAudioMessage(datapacket);
+        } else if (datapacket.contains(Constants::xDest)) {
             processPrivateMessage(datapacket);
-        }
-        else if (datapacket.contains(Constants::xOrigin)) {
+        } else if (datapacket.contains(Constants::xOrigin)) {
             processRumorMessage(datapacket, sender, senderPort);
-        }
-        else {
+        } else {
             processStatusMessage(datapacket, sender, senderPort);
         }
     }
+}
+
+void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
+    QByteArray audioData = datapacket.value(Constants::xAudioData).toByteArray();
+    voipPanel->playAudioMessage(audioData);
 }
 
 void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {

@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QString>
+#include <QQueue>
 #include <QUdpSocket>
 #include <QVBoxLayout>
 #include <stdio.h>
@@ -29,10 +30,16 @@ public:
     
     QGroupBox* getButtonGroupBox();
     
-    public slots:
-    void buttonClicked(QString buttonName);
+    void playAudioMessage(QByteArray audioData);
     void recordingTimeout();
-
+    
+    public slots:
+    
+    void buttonClicked(QString buttonName);
+    void dequeueOutput(QAudio::State state);
+    
+    
+    
 private:
     bool listening;
     
@@ -57,6 +64,9 @@ private:
     std::vector<Peer> *peers;
     void sendAudioMessage(AudioMessage message);
     
+    // Audio playback
+    QQueue<QAudioOutput*> outputs;
+    QQueue<QBuffer*> buffers;
 };
 
 #endif
