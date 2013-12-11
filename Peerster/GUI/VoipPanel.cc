@@ -35,7 +35,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
 }
 
 void VoipPanel::formatAudio() {
-    format.setFrequency(8000);
+    format.setSampleRate(800);
     format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/pcm");
@@ -55,12 +55,12 @@ void VoipPanel::buttonClicked(QString buttonName) {
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
         if (listening) {
-            qDebug() << "Listening ON";
+            qDebug() << "Voice Chat ON";
             recordingTimer->start(1000);
             recordingTimeout();
         }
         else {
-            qDebug() << "Listening OFF";
+            qDebug() << "Voice Chat OFF";
         }
     }
 }
