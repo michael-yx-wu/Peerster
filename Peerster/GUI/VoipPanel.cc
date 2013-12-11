@@ -3,9 +3,10 @@
 const QString startVoIPButtonText = "Group VoIP Toggle";
 const int recordingTime = 1000;
 
-VoipPanel::VoipPanel(QString origin, QUdpSocket *socket) {
+VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
     this->origin = origin;
     this->socket = socket;
+    this->peers = peers;
     
     // VoIP Panel Setup
     buttonGroupBox = new QGroupBox("VoIP");
@@ -68,7 +69,7 @@ void VoipPanel::recordingTimeout() {
     audioInput->stop();
     if (buffer.size() != 0) {
         // send buffer data
-//        sendVoiceMsg(buffer.data()); //implement later
+        AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), buffer.data());
         buffer.close();
     }
     
@@ -79,7 +80,15 @@ void VoipPanel::recordingTimeout() {
         buffer.open(QIODevice::ReadWrite|QIODevice::Truncate);
         audioInput->start(&buffer);
     }
-    
+}
+
+void VoipPanel::sendAudioMessage(AudioMessage message) {
+    // Send to all immediate peers
+    unsigned i;
+    QByteArray datagram = message.getSerializedMessage();
+    for (i = 0; i < peers->size(); i++) {
+        socket->writeDatagram(datagram.data(), datagram.size(), peers->at(i).address, peers->at(i).port);
+    }
 }
 
 #pragma mark - Accessor Methods

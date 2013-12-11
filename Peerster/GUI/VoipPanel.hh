@@ -18,11 +18,14 @@
 #include <QVBoxLayout>
 #include <stdio.h>
 
+#include "Peer.hh"
+#include "../Messages/AudioMessage.hh"
+
 class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
-    VoipPanel(QString someOrigin, QUdpSocket *socket);
+    VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers);
     
     QGroupBox* getButtonGroupBox();
     
@@ -51,6 +54,9 @@ private:
     
     // Audio Messaging
     QUdpSocket *socket;
+    std::vector<Peer> *peers;
+    void sendAudioMessage(AudioMessage message);
+    
 };
 
 #endif

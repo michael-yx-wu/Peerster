@@ -35,7 +35,7 @@ ChatDialog::ChatDialog() {
     addHostBox = new Chatbox(this);
     filePanel = new FilePanel(hostname, &peers);
     privateMessagingPanel = new PrivateMessagingPanel();
-    voipPanel = new VoipPanel(hostname, socket);
+    voipPanel = new VoipPanel(hostname, socket, &peers);
     
     // Add widgets
 	QGridLayout *layout = new QGridLayout();
