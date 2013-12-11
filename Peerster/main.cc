@@ -11,7 +11,6 @@ ChatDialog::ChatDialog() {
     
     // Establish hostname as localhostname + pid
     hostname = QHostInfo::localHostName() + QString::number(rand()) + QString::number(rand());
-    qDebug() << QHostInfo::localHostName()+"."+QHostInfo::localDomainName();
     
     QEventLoop loop;
     connect(this, SIGNAL(lookupDone()), &loop, SLOT(quit()));

@@ -31,14 +31,12 @@ public:
     QGroupBox* getButtonGroupBox();
     
     void playAudioMessage(QByteArray audioData);
-    void recordingTimeout();
     
     public slots:
     
     void buttonClicked(QString buttonName);
     void dequeueOutput(QAudio::State state);
-    
-    
+    void recordingTimeout();    
     
 private:
     bool listening;
