@@ -65,8 +65,8 @@ private:
     
     // Audio playback
     QQueue<QAudioOutput*> outputs;
-    QQueue<QBuffer*> buffers;
-//    QQueue<QFile*> buffers;
+//    QQueue<QBuffer*> buffers;
+    QQueue<QFile*> buffers;
 };
 
 #endif
