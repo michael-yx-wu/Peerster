@@ -35,7 +35,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
 }
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(500);
+    format.setSampleRate(800);
     format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/pcm");
