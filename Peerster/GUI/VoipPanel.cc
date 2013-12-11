@@ -80,7 +80,7 @@ void VoipPanel::recordingTimeout() {
         recordingTimer->stop();
     } else {
         // Start recording into buffer
-        buffer.open(QIODevice::ReadWrite|QIODevice::Truncate);
+        buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
         audioInput->start(&buffer);
     }
 }
@@ -101,15 +101,15 @@ void VoipPanel::playAudioMessage(QByteArray audioData) {
     qDebug() << "Playing audio message";
     
     QFile *audioFile = new QFile(audioData);
-    audioFile->open(QIODevice::ReadOnly);
-//    QBuffer *buffer = new QBuffer(&audioData);
-//    buffer->open(QIODevice::ReadOnly);
+//    audioFile->open(QIODevice::ReadOnly);
+    QBuffer *buffer = new QBuffer(&audioData);
+    buffer->open(QIODevice::ReadOnly);
     
     // Play audio message and enqueue
     QAudioOutput *output = new QAudioOutput(format, this);
     outputs.enqueue(output);
-//    buffers.enqueue(buffer);
-    buffers.enqueue(audioFile);
+    buffers.enqueue(buffer);
+//    buffers.enqueue(audioFile);
     connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
     output->start(audioFile);
     qDebug() << "Successful audio start";
@@ -120,8 +120,8 @@ void VoipPanel::dequeueOutput(QAudio::State state) {
     if (state == QAudio::IdleState) {
         qDebug() << "Audio dequeue";
         QAudioOutput *output = outputs.dequeue();
-//        QBuffer *buffer = buffers.dequeue();
-        QFile *buffer = buffers.dequeue();
+        QBuffer *buffer = buffers.dequeue();
+//        QFile *buffer = buffers.dequeue();
         output->stop();
         buffer->close();
         delete output;
