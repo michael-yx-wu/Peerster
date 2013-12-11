@@ -101,10 +101,12 @@ void VoipPanel::playAudioMessage(QByteArray audioData) {
     qDebug() << "Playing audio message";
     
     QFile *audioFile = new QFile();
+    audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
     audioFile->open(QIODevice::WriteOnly);
     QDataStream out(audioFile);
     out << audioData;
     audioFile->close();
+    
     audioFile->open(QIODevice::ReadOnly);
 //    QBuffer *buffer = new QBuffer(&audioData);
 //    buffer->open(QIODevice::ReadOnly);
