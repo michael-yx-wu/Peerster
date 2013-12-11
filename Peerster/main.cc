@@ -464,7 +464,6 @@ void ChatDialog::rumorMonger(Message message, QHostAddress address, quint16 port
 void ChatDialog::mongerTimeout() {
     // If "heads", rumor monger again
     if (rand() % 2) {
-        qDebug() << "Trying to monger again";
         if (!newMessages.isEmpty()) {
             if (peers.size() == 0) return;
             Peer p = peers.at(rand() % peers.size());
@@ -485,7 +484,6 @@ void ChatDialog::antiEntropyTimeout() {
 
 // Monger route message to all peers
 void ChatDialog::routeMonger() {
-    qDebug() << "Route Mongering!";
     Message message = Message(hostname, messageNo);
     
     for(std::vector<Peer>::iterator it = peers.begin(); it != peers.end(); ++it) {
