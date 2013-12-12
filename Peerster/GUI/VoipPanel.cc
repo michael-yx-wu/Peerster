@@ -1,6 +1,7 @@
 #include "VoipPanel.hh"
 
 const QString startVoIPButtonText = "Group VoIP Toggle";
+const QString muteAll = "Mute All";
 const int recordingTime = 1000;
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
@@ -34,24 +35,8 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     formatAudio();
 }
 
-void VoipPanel::formatAudio() {
-    format.setSampleRate(800);
-    format.setChannels(1);
-    format.setSampleSize(8);
-    format.setCodec("audio/pcm");
-    format.setByteOrder(QAudioFormat::LittleEndian);
-    format.setSampleType(QAudioFormat::UnSignedInt);
-    
-    deviceInfo = QAudioDeviceInfo::defaultInputDevice();
-    if (!deviceInfo.isFormatSupported(format)) {
-        qWarning() << "Format not supported. Trying nearest format.";
-        format = deviceInfo.nearestFormat(format);
-    }
-    
-    audioInput = new QAudioInput(format, this);
-}
-
 void VoipPanel::buttonClicked(QString buttonName) {
+    // Micropphone toggle
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
         if (listening) {
@@ -93,6 +78,25 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     for (i = 0; i < peers->size(); i++) {
         socket->writeDatagram(datagram.data(), datagram.size(), peers->at(i).address, peers->at(i).port);
     }
+}
+
+# pragma mark - Audio Format
+
+void VoipPanel::formatAudio() {
+    format.setSampleRate(800);
+    format.setChannels(1);
+    format.setSampleSize(8);
+    format.setCodec("audio/none");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::UnSignedInt);
+    
+    deviceInfo = QAudioDeviceInfo::defaultInputDevice();
+    if (!deviceInfo.isFormatSupported(format)) {
+        qWarning() << "Format not supported. Trying nearest format.";
+        format = deviceInfo.nearestFormat(format);
+    }
+    
+    audioInput = new QAudioInput(format, this);
 }
 
 # pragma mark - Audio Output

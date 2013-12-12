@@ -42,13 +42,14 @@ public:
 private:
     bool listening;
     
-    QString origin;
+    // VoIP Panel Format
+    QGroupBox *buttonGroupBox;
+    QVBoxLayout *buttonGroupList;
     
-    QGroupBox* buttonGroupBox;
-    QVBoxLayout* buttonGroupList;
-    
-    QPushButton* startVoIPButton;
-    QSignalMapper* buttonMapper;
+    // Panel buttons
+    QPushButton *startVoIPButton;
+    QPushButton *muteAllButton;
+    QSignalMapper *buttonMapper;
     
     // File recording
     QAudioInput *audioInput;
@@ -58,9 +59,12 @@ private:
     QTimer *recordingTimer;
     void formatAudio();
     
+    // Other mongering data
+    QString origin;
+    std::vector<Peer> *peers;
+    
     // Audio Messaging
     QUdpSocket *socket;
-    std::vector<Peer> *peers;
     void sendAudioMessage(AudioMessage message);
     
     // Audio playback

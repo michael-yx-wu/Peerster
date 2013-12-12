@@ -19,7 +19,6 @@ const QString Constants::xMatchIDs = "MatchIDs";
 const QString Constants::xTimestamp = "Timestamp";
 const QString Constants::xAudioData = "AudioData";
 
-
 const qint64 Constants::BLOCKSIZE = 8192;
 const int Constants::HASHSIZE = 32;
 const QString Constants::HASHTYPE = "sha256";
