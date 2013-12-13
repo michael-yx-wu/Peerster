@@ -40,7 +40,6 @@ public:
     void recordingTimeout();    
     
 private:
-    bool listening;
     
     // VoIP Panel Format
     QGroupBox *buttonGroupBox;
@@ -68,8 +67,10 @@ private:
     void sendAudioMessage(AudioMessage message);
     
     // Audio playback
-    QQueue<QAudioOutput*> outputs;
     QQueue<QFile*> audioFiles;
+    QQueue<QAudioOutput*> outputs;
+    bool listening;
+    bool muteAll;
 };
 
 #endif

@@ -1,7 +1,9 @@
 #include "VoipPanel.hh"
 
 const QString startVoIPButtonText = "Group VoIP Toggle";
-const QString muteAll = "Mute All";
+const QString startVoIPButtonName = "GroupVoIPButton";
+const QString muteAllButtonText = "Mute All";
+const QString muteAllButtonName = "MuteAllButton";
 const int recordingTime = 1000;
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
@@ -18,14 +20,23 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     buttonMapper = new QSignalMapper(this);
     connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
     
-    // Initialize and connect VoIP button
+    // Connect VoIP button
     startVoIPButton = new QPushButton(startVoIPButtonText);
+    startVoIPButton->setObjectName(startVoIPButtonName);
+    startVoIPButton->setStyleSheet("./Off.qss");
     buttonMapper->setMapping(startVoIPButton, startVoIPButton->text());
     connect(startVoIPButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
     buttonGroupList->addWidget(startVoIPButton);
-    
-    // VoIP is off by default
     listening = false;
+    
+    // Connect mute all button
+    muteAllButton = new QPushButton(muteAllButtonText);
+    muteAllButton->setObjectName(muteAllButtonName);
+    muteAllButton->setStyleSheet("./On.qss");
+    buttonMapper->setMapping(muteAllButton, muteAllButtonText);
+    connect(muteAllButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
+    buttonGroupList->addWidget(muteAllButton);
+    muteAll = false;
     
     // Connect timer
     recordingTimer = new QTimer(this);
@@ -34,6 +45,14 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     // Format audio
     formatAudio();
 }
+
+#pragma mark - Accessor Methods
+
+QGroupBox* VoipPanel::getButtonGroupBox() {
+    return buttonGroupBox;
+}
+
+#pragma mark - GUI
 
 void VoipPanel::buttonClicked(QString buttonName) {
     // Micropphone toggle
@@ -45,9 +64,20 @@ void VoipPanel::buttonClicked(QString buttonName) {
             buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
             audioInput->start(&buffer);
             recordingTimeout();
+            startVoIPButton->setStyleSheet("./On.qss");
         }
         else {
             qDebug() << "Voice Chat OFF";
+            startVoIPButton->setStyleSheet("./Off.qss");
+        }
+    } else if (QString::compare(buttonName, muteAllButtonText) == 0) {
+        muteAll = !muteAll;
+        if (muteAll) {
+            qDebug() << "Mute All ON";
+            muteAllButton->setStyleSheet("./Off.qss");
+        } else {
+            qDebug() << "Mute All OFF";
+            muteAllButton->setStyleSheet("./On.qss");
         }
     }
 }
@@ -136,12 +166,3 @@ void VoipPanel::dequeueOutput(QAudio::State state) {
         delete audioFile;
     }
 }
-
-#pragma mark - Accessor Methods
-
-QGroupBox* VoipPanel::getButtonGroupBox() {
-    return buttonGroupBox;
-}
-
-
-

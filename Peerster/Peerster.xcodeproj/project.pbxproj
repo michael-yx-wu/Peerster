@@ -16,6 +16,8 @@
 		39C8D0FF8B9D434F8302D68D /* AudioMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = EEA1B92AEFFCBBCC62F39C1A /* AudioMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		4225BDDC5A035898D15E89AB /* moc_Socket.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 5FB62051C2EE9DC3AC51E5C6 /* moc_Socket.cpp */; settings = {ATTRIBUTES = (); }; };
 		49776FFF3F684830E553ECE4 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = D98F638C7798CC1DDA980D9A /* QtCore.framework */; };
+		4C344589185BB931008ACCEE /* On.qss in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 4C344588185BB931008ACCEE /* On.qss */; };
+		4C34458B185BB9D2008ACCEE /* Off.qss in Bundle Resources */ = {isa = PBXBuildFile; fileRef = 4C34458A185BB9D2008ACCEE /* Off.qss */; };
 		50F1A0A6C62C20D272991B90 /* moc_PeersterFile.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */; settings = {ATTRIBUTES = (); }; };
 		522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		57B23F2CFC96625AC58C1F8F /* VoipPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = B6D66755B73848DC55D2E61E /* VoipPanel.cc */; settings = {ATTRIBUTES = (); }; };
@@ -58,6 +60,8 @@
 		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4BF8915F4A4CED4C258BF8E9 /* Socket.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hh; sourceTree = SOURCE_ROOT; };
+		4C344588185BB931008ACCEE /* On.qss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = On.qss; sourceTree = SOURCE_ROOT; };
+		4C34458A185BB9D2008ACCEE /* Off.qss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Off.qss; sourceTree = SOURCE_ROOT; };
 		4C69D5851858E52F0004AD0B /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		5047022CEBDAD3272EE3C4D2 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
@@ -228,6 +232,8 @@
 				09C7396B117FFFE50668D7FF /* PrivateChatDialog.cc */,
 				AD0390B0FFD3BCF522495B57 /* PrivateMessagingPanel.cc */,
 				B6D66755B73848DC55D2E61E /* VoipPanel.cc */,
+				4C344588185BB931008ACCEE /* On.qss */,
+				4C34458A185BB9D2008ACCEE /* Off.qss */,
 			);
 			name = GUI;
 			sourceTree = "<Group>";
@@ -333,6 +339,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C34458B185BB9D2008ACCEE /* Off.qss in Bundle Resources */,
+				4C344589185BB931008ACCEE /* On.qss in Bundle Resources */,
 			);
 			name = "Bundle Resources";
 			runOnlyForDeploymentPostprocessing = 0;
