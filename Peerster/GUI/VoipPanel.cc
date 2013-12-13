@@ -1,9 +1,9 @@
 #include "VoipPanel.hh"
 
 const QString startVoIPButtonText = "Group VoIP Toggle";
-const QString startVoIPButtonName = "GroupVoIPButton";
 const QString muteAllButtonText = "Mute All";
-const QString muteAllButtonName = "MuteAllButton";
+const QString ON = "QPushButton { background-color: green; }";
+const QString OFF = "QPushButton { background-color: red;}";
 const int recordingTime = 1000;
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
@@ -22,8 +22,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     
     // Connect VoIP button
     startVoIPButton = new QPushButton(startVoIPButtonText);
-    startVoIPButton->setObjectName(startVoIPButtonName);
-    startVoIPButton->setStyleSheet("./Off.qss");
+    startVoIPButton->setStyleSheet(OFF);
     buttonMapper->setMapping(startVoIPButton, startVoIPButton->text());
     connect(startVoIPButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
     buttonGroupList->addWidget(startVoIPButton);
@@ -31,8 +30,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     
     // Connect mute all button
     muteAllButton = new QPushButton(muteAllButtonText);
-    muteAllButton->setObjectName(muteAllButtonName);
-    muteAllButton->setStyleSheet("./On.qss");
+    muteAllButton->setStyleSheet(ON);
     buttonMapper->setMapping(muteAllButton, muteAllButtonText);
     connect(muteAllButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
     buttonGroupList->addWidget(muteAllButton);
@@ -64,20 +62,20 @@ void VoipPanel::buttonClicked(QString buttonName) {
             buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
             audioInput->start(&buffer);
             recordingTimeout();
-            startVoIPButton->setStyleSheet("./On.qss");
+            startVoIPButton->setStyleSheet(ON);
         }
         else {
             qDebug() << "Voice Chat OFF";
-            startVoIPButton->setStyleSheet("./Off.qss");
+            startVoIPButton->setStyleSheet(OFF);
         }
     } else if (QString::compare(buttonName, muteAllButtonText) == 0) {
         muteAll = !muteAll;
         if (muteAll) {
             qDebug() << "Mute All ON";
-            muteAllButton->setStyleSheet("./Off.qss");
+            muteAllButton->setStyleSheet(OFF);
         } else {
             qDebug() << "Mute All OFF";
-            muteAllButton->setStyleSheet("./On.qss");
+            muteAllButton->setStyleSheet(ON);
         }
     }
 }
