@@ -133,23 +133,27 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 # pragma mark - Audio Output
 
 void VoipPanel::playAudioMessage(QByteArray audioData) {
-    qDebug() << "Playing audio message";
-    
-    QFile *audioFile = new QFile();
-    audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
-    audioFile->open(QIODevice::WriteOnly);
-    QDataStream out(audioFile);
-    out << audioData;
-    audioFile->close();
-    
-    audioFile->open(QIODevice::ReadOnly);
-    
-    // Play audio message and enqueue
-    QAudioOutput *output = new QAudioOutput(format, this);
-    outputs.enqueue(output);
-    audioFiles.enqueue(audioFile);
-    connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
-    output->start(audioFile);
+    if (!muteAll) {
+        qDebug() << "Playing audio message";
+        
+        QFile *audioFile = new QFile();
+        audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
+        audioFile->open(QIODevice::WriteOnly);
+        QDataStream out(audioFile);
+        out << audioData;
+        audioFile->close();
+        
+        audioFile->open(QIODevice::ReadOnly);
+        
+        // Play audio message and enqueue
+        QAudioOutput *output = new QAudioOutput(format, this);
+        outputs.enqueue(output);
+        audioFiles.enqueue(audioFile);
+        connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
+        output->start(audioFile);
+    } else {
+        qDebug() << "Group chat muted";
+    }
 }
 
 void VoipPanel::dequeueOutput(QAudio::State state) {
