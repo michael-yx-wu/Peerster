@@ -108,7 +108,7 @@ void VoipPanel::recordingTimeout() {
     sendAudioMessage(message);
     buffer.close();
     
-    if (listening ) {
+    if (listening) {
         // Start recording into buffer
         buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
         audioInput->resume();

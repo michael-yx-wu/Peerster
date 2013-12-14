@@ -68,6 +68,12 @@ private:
     Messages messages;
     quint32 messageNo;
     
+    // Voip Mongering
+    /* insert new variables here */
+    // <origin, timestamp>
+    // if message in table, stop mongering, else
+    // add to table, monger to peers
+    
     // Rumor Mongering
     QMap<QString, QVariant> status;
     QQueue<Message> newMessages;
