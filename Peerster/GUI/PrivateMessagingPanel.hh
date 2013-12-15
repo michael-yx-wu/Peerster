@@ -14,7 +14,7 @@ class PrivateMessagingPanel : public QObject {
     Q_OBJECT
 
 public:
-    PrivateMessagingPanel();
+    PrivateMessagingPanel(QString hostname);
     
     QGroupBox* getOriginBox();
     QMap<QString, QPair<QHostAddress, quint16> > getOriginMap();
@@ -26,6 +26,7 @@ public:
     void windowClosed(QString destinationName);
     
 private:
+    QString hostName;
     QSignalMapper *buttonMapper;
     QGroupBox *originBox;
     QVBoxLayout *originList;

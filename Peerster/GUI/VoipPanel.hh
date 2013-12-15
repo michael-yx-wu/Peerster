@@ -30,7 +30,8 @@ public:
     VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers,
               QMap<QString, QVariant> *voipStatus);
 
-    VoipPanel(QString destName, QUdpSocket *socket);
+    VoipPanel(QString someOrigin, QString destName, QUdpSocket *socket,
+            QMap<QString, QPair<QHostAddress, quint16> > *originMap);
     
     QGroupBox* getButtonGroupBox();
     
@@ -67,7 +68,7 @@ private:
     void formatAudio();
     
     // Other mongering data
-    QString origin;
+    QString hostname;
     std::vector<Peer> *peers;
     QMap<QString, QVariant> *voipStatus;
     
@@ -89,6 +90,9 @@ private:
     QString destinationName;
     quint16 destinationPort;
     quint32 hopLimit;
+    QMap<QString, QPair<QHostAddress, quint16> > *originMap;
+
+    void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort);
 };
 
 #endif

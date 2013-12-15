@@ -34,7 +34,7 @@ ChatDialog::ChatDialog() {
 	chatbox = new Chatbox(this);
     addHostBox = new Chatbox(this);
     filePanel = new FilePanel(hostname, &peers);
-    privateMessagingPanel = new PrivateMessagingPanel();
+    privateMessagingPanel = new PrivateMessagingPanel(hostname);
     voipPanel = new VoipPanel(hostname, socket, &peers, &voipStatus); 
     
     // Add widgets

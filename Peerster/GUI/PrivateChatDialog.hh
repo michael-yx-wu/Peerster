@@ -16,7 +16,8 @@ class PrivateChatDialog : public QDialog {
     
 public:
     PrivateChatDialog() {};
-    PrivateChatDialog(QString destName, QUdpSocket *parentSocket);
+    PrivateChatDialog(QString hostName, QString destName, QUdpSocket *parentSocket,
+                    QMap<QString, QPair<QHostAddress, quint16> > *originMap);
     ~PrivateChatDialog();
     
     void closeEvent(QCloseEvent *event);
@@ -40,6 +41,7 @@ private:
     QTextEdit *textview;
 
     //VoIP
+    QMap<QString, QPair<QHostAddress, quint16> > *originMap;
     VoipPanel *voipChat;
 };
 

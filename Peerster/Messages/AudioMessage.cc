@@ -9,6 +9,17 @@ AudioMessage::AudioMessage(const QString origin, const QDateTime dateTime, const
     serializedMessage = serializeAudioMessage();
 }
 
+//Private Message
+AudioMessage::AudioMessage(const QString audioDest, const quint32 audioHopLimit, QDateTime dateTime, const QByteArray audioData) {
+    defaultBoolValues();
+    audioMessage = true;
+    this->dest = audioDest;
+    this->hopLimit = audioHopLimit;
+    this->dateTime = dateTime;
+    this->audioData = audioData;
+    serializedMessage = serializeAudioPrivMessage();
+}
+
 QByteArray AudioMessage::serializeAudioMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(Constants::xOrigin, origin);
@@ -19,3 +30,17 @@ QByteArray AudioMessage::serializeAudioMessage() {
     stream << datapacket;
     return datagram;
 }
+
+QByteArray AudioMessage::serializeAudioPrivMessage() {
+    QMap<QString, QVariant> datapacket;
+    datapacket.insert(Constants::xDest, dest);
+    datapacket.insert(Constants::xHopLimit, hopLimit);
+    datapacket.insert(Constants::xTimestamp, dateTime);
+    datapacket.insert(Constants::xAudioData, audioData);
+    QByteArray datagram;
+    QDataStream stream(&datagram, QIODevice::WriteOnly);
+    stream << datapacket;
+    return datagram;
+}
+
+

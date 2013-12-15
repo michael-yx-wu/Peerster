@@ -7,12 +7,13 @@
 class AudioMessage : public Message {
 public:
     AudioMessage(const QString origin, const QDateTime dateTime, const QByteArray audioData);
-    
+    AudioMessage(const QString audioDest, const quint32 audioHopLimit, QDateTime dateTime, const QByteArray audioData);    
+
 protected:
     QDateTime dateTime;
     QByteArray audioData;
     QByteArray serializeAudioMessage();
-    
+    QByteArray serializeAudioPrivMessage();
 };
 
 #endif

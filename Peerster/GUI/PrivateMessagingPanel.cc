@@ -1,6 +1,7 @@
 #include "PrivateMessagingPanel.hh"
 
-PrivateMessagingPanel::PrivateMessagingPanel() {
+PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
+    hostName = hostname;
     originBox = new QGroupBox("Known Origins");
     originList = new QVBoxLayout;
     originBox->setLayout(originList);
@@ -77,7 +78,7 @@ bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
 
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
-    PrivateChatDialog *privateChat = new PrivateChatDialog(destinationName, socket);
+    PrivateChatDialog *privateChat = new PrivateChatDialog(hostName, destinationName, socket, &originMap);
     privateChat->updateDestinationIPandPort(originMap.value(destinationName).first, originMap.value(destinationName).second);
     privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
     connect(privateChat, SIGNAL(privateChatClosed()), privateChatMapper, SLOT(map()));

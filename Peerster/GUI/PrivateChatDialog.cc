@@ -1,13 +1,14 @@
 #include "PrivateChatDialog.hh"
 
-PrivateChatDialog::PrivateChatDialog(QString destName, QUdpSocket *parentSocket) {
+PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName, QUdpSocket *parentSocket,
+                                QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
     destinationName = destName;
     socket = parentSocket;
     hopLimit = 10;
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Chatbox(this);
-    voipChat = new VoipPanel(destName, socket); 
+    voipChat = new VoipPanel(hostName, destName, socket, originMap); 
     
     layout = new QGridLayout();
     layout->addWidget(textview);
@@ -26,6 +27,7 @@ PrivateChatDialog::~PrivateChatDialog() {
     delete textview;
     delete chatbox;
     delete layout;
+    delete voipChat;
 }
 
 void PrivateChatDialog::closeEvent(QCloseEvent *event) {
