@@ -58,7 +58,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
         listening = !listening;
         if (listening) {
             qDebug() << "Voice Chat ON";
-            recordingTimer->start(1000);
+            recordingTimer->start(recordingTime);
             inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
             audioInput->start(&inputBuffers[currentBuffer]);
 //            buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
@@ -104,6 +104,8 @@ void VoipPanel::formatAudio() {
 # pragma mark - Audio Input
 
 void VoipPanel::recordingTimeout() {
+    audioInput->stop();
+    
     // Switch buffers and continue recording
     currentBuffer = !currentBuffer;
     otherBuffer = !otherBuffer;
