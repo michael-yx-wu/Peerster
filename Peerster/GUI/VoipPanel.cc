@@ -58,8 +58,10 @@ void VoipPanel::buttonClicked(QString buttonName) {
         listening = !listening;
         if (listening) {
             qDebug() << "Voice Chat ON";
-            recordingTimer->start(recordingTime);
-            inputBuffer = audioInput->start();
+            recordingTimer->start(1000);
+            buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
+            audioInput->start(&buffer);
+            recordingTimeout();
             startVoIPButton->setStyleSheet(ON);
         }
         else {
@@ -81,8 +83,8 @@ void VoipPanel::buttonClicked(QString buttonName) {
 # pragma mark - Audio Format
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(512);
-    format.setChannels(2);
+    format.setSampleRate(800);
+    format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/none");
     format.setByteOrder(QAudioFormat::LittleEndian);
@@ -101,25 +103,20 @@ void VoipPanel::formatAudio() {
 
 void VoipPanel::recordingTimeout() {
     // Suspend audio input and send buffer data
-//    audioInput->stop();
-    audioInput->suspend();
-//    qDebug() << "Sending: " + QString::number(buffer.data().size());
-    QByteArray data = inputBuffer->readAll();
-    inputBuffer->seek(0);
-    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), data);
+    audioInput->stop();
+    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), buffer.data());
     sendAudioMessage(message);
-    qDebug() << "Data sent: " + QString::number(data.size());
+    buffer.close();
     
     if (listening) {
         // Start recording into buffer
-//        buffer.open(QIODevice::ReadWrite|QIODevice::Truncate);
-        audioInput->resume();
-//        audioInput->start(inputFile);
+        buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
+        audioInput->start(&buffer);
     } else {
         // No longer listening -- stop input and timer
         recordingTimer->stop();
         audioInput->stop();
-        inputBuffer->close();
+        
     }
 }
 
