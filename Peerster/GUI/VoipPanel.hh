@@ -52,7 +52,7 @@ private:
     
     // File recording
     QAudioInput *audioInput;
-    QBuffer buffer;
+    QIODevice *inputBuffer;
     QAudioDeviceInfo deviceInfo;
     QAudioFormat format;
     QTimer *recordingTimer;
@@ -69,6 +69,7 @@ private:
     // Audio playback
     QQueue<QFile*> audioFiles;
     QQueue<QAudioOutput*> outputs;
+    
     bool listening;
     bool muteAll;
 };
