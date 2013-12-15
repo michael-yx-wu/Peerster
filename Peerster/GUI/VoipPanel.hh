@@ -29,11 +29,15 @@ class VoipPanel : public QObject {
 public:
     VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers,
               QMap<QString, QVariant> *voipStatus);
+
+    VoipPanel(QString destName, QUdpSocket *socket);
     
     QGroupBox* getButtonGroupBox();
     
     void processAudioMessage(QMap<QString, QVariant> dataPacket);
     
+    void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
+
     public slots:
     
     void buttonClicked(QString buttonName);
@@ -77,6 +81,14 @@ private:
     bool muteAll;
     
     bool acceptableDelay(QDateTime timestamp);
+
+    //Private chat
+    bool privChat = false;
+
+    QHostAddress destinationIP;
+    QString destinationName;
+    quint16 destinationPort;
+    quint32 hopLimit;
 };
 
 #endif

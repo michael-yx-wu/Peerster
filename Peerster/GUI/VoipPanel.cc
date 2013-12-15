@@ -2,10 +2,14 @@
 
 const QString startVoIPButtonText = "Group VoIP Toggle";
 const QString muteAllButtonText = "Mute All";
+const QString startVoIPButtonPriv = "VoIP Toggle";
+const QString muteButtonText = "Mute";
 const QString ON = "QPushButton { background-color: green; }";
 const QString OFF = "QPushButton { background-color: red; }";
 const int recordingTime = 1000;
 const int delayThreshold = 5000;
+
+#pragma mark Constructors
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
                      std::vector<Peer> *peers,
@@ -14,6 +18,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     this->socket = socket;
     this->peers = peers;
     this->voipStatus = voipStatus;
+    privChat = false;
     
     // VoIP Panel Setup
     buttonGroupBox = new QGroupBox("VoIP");
@@ -49,6 +54,53 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     formatAudio();
 }
 
+#pragma mark - Private chat
+
+VoipPanel::VoipPanel(QString destName, QUdpSocket *socket) {
+    destinationName = destName; 
+    this->socket = socket;
+    hopLimit = 10;
+    privChat = true;
+    
+    // VoIP Panel Setup
+    buttonGroupBox = new QGroupBox("VoIP");
+    buttonGroupList = new QVBoxLayout;
+    buttonGroupBox->setLayout(buttonGroupList);
+    
+    // Initialize signal mapper
+    buttonMapper = new QSignalMapper(this);
+    connect(buttonMapper, SIGNAL(mapped(QString)), this,
+            SLOT(buttonClicked(QString)));
+    
+    // Connect VoIP button
+    startVoIPButton = new QPushButton(startVoIPButtonPriv);
+    startVoIPButton->setStyleSheet(OFF);
+    buttonMapper->setMapping(startVoIPButton, startVoIPButton->text());
+    connect(startVoIPButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
+    buttonGroupList->addWidget(startVoIPButton);
+    listening = false;
+    
+    // Connect mute all button
+    muteAllButton = new QPushButton(muteButtonText);
+    muteAllButton->setStyleSheet(ON);
+    buttonMapper->setMapping(muteAllButton, muteButtonText);
+    connect(muteAllButton, SIGNAL(clicked()), buttonMapper, SLOT(map()));
+    buttonGroupList->addWidget(muteAllButton);
+    muteAll = false;
+    
+    // Connect timer
+    recordingTimer = new QTimer(this);
+    connect(recordingTimer, SIGNAL(timeout()), this, SLOT(recordingTimeout()));
+    
+    // Format audio
+    formatAudio();
+}
+
+void VoipPanel::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {
+    destinationIP = destIP;
+    destinationPort = destPort;    
+}
+
 #pragma mark - Accessor Methods
 
 QGroupBox* VoipPanel::getButtonGroupBox() {
@@ -58,7 +110,7 @@ QGroupBox* VoipPanel::getButtonGroupBox() {
 #pragma mark - GUI
 
 void VoipPanel::buttonClicked(QString buttonName) {
-    // Micropphone toggle
+    // Microphone toggle
     if (QString::compare(buttonName, startVoIPButtonText) == 0) {
         listening = !listening;
         if (listening) {

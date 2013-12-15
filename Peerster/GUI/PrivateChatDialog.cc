@@ -7,10 +7,12 @@ PrivateChatDialog::PrivateChatDialog(QString destName, QUdpSocket *parentSocket)
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Chatbox(this);
+    voipChat = new VoipPanel(destName, socket); 
     
     layout = new QGridLayout();
     layout->addWidget(textview);
     layout->addWidget(chatbox);
+    layout->addWidget(voipChat->getButtonGroupBox());
     chatbox->setFocus();
     
     setAttribute(Qt::WA_DeleteOnClose);
@@ -37,7 +39,9 @@ QString PrivateChatDialog::getDestinationName() {
 
 void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {
     destinationIP = destIP;
-    destinationPort = destPort;    
+    destinationPort = destPort;
+
+    voipChat->updateDestinationIPandPort(destIP, destPort);    
 }
 
 void PrivateChatDialog::gotReturnPressedChatBox() {

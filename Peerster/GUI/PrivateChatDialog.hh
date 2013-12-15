@@ -9,6 +9,7 @@
 
 #include "Chatbox.hh"
 #include "../Messages/Message.hh"
+#include "VoipPanel.hh"
 
 class PrivateChatDialog : public QDialog {
     Q_OBJECT
@@ -37,6 +38,9 @@ private:
     QGridLayout *layout;
     QUdpSocket *socket;
     QTextEdit *textview;
+
+    //VoIP
+    VoipPanel *voipChat;
 };
 
 #endif
