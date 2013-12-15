@@ -59,8 +59,10 @@ void VoipPanel::buttonClicked(QString buttonName) {
         if (listening) {
             qDebug() << "Voice Chat ON";
             recordingTimer->start(1000);
-            buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
-            audioInput->start(&buffer);
+            inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
+            audioInput->start(&inputBuffers[currentBuffer]);
+//            buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
+//            audioInput->start(&buffer);
             recordingTimeout();
             startVoIPButton->setStyleSheet(ON);
         }
@@ -102,20 +104,27 @@ void VoipPanel::formatAudio() {
 # pragma mark - Audio Input
 
 void VoipPanel::recordingTimeout() {
-    // Suspend audio input and send buffer data
-    audioInput->stop();
-    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), buffer.data());
+    // Switch buffers and continue recording
+    currentBuffer = !currentBuffer;
+    otherBuffer = !otherBuffer;
+    inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
+    audioInput->start(&inputBuffers[currentBuffer]);
+    
+    // Send buffer data
+    QByteArray data = inputBuffers[otherBuffer].data();
+    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), data);
     sendAudioMessage(message);
-    buffer.close();
-
+    inputBuffers[otherBuffer].close();
+    
     if (listening) {
         // Start recording into buffer
-        buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
-        audioInput->start(&buffer);
+
+//        audioInput->start(&buffer);
     } else {
         // No longer listening -- stop input and timer
         recordingTimer->stop();
         audioInput->stop();
+        inputBuffers[currentBuffer].close();
     }
 }
 
