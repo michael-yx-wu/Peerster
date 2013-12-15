@@ -143,10 +143,11 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 
 # pragma mark - Audio Output
 
-void VoipPanel::playAudioMessage(QMap<QString, QVariant> dataPacket) {
+void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
     // Key is of format origin + timestamp
     QString origin = dataPacket.value(Constants::xOrigin).toString();
     QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
+    QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
     QString key = origin + timestamp.toString();
     
     // Consider playing audio message if we have not yet heard it
@@ -156,7 +157,6 @@ void VoipPanel::playAudioMessage(QMap<QString, QVariant> dataPacket) {
             qDebug() << "Playing audio message";
             
             // Write audio data to file
-            QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
             QFile *audioFile = new QFile();
             audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
             audioFile->open(QIODevice::WriteOnly);
@@ -173,12 +173,12 @@ void VoipPanel::playAudioMessage(QMap<QString, QVariant> dataPacket) {
             connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
             output->start(audioFile);
         } else {
-            qDebug() << "Group chat muted";
+            qDebug() << "Group chat muted: mongering, not playing";
         }
+        
+        // Monger the audio message to peers
+        sendAudioMessage(AudioMessage(origin, timestamp, audioData));
     }
-    
-    
-    
 }
 
 void VoipPanel::dequeueOutput(QAudio::State state) {

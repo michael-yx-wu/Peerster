@@ -187,17 +187,7 @@ void ChatDialog::processPendingDatagrams() {
 
 void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got audio message";
-//    QString origin = datapacket.value(Constants::xOrigin).toString();
-//    QDateTime timestamp = datapacket.value(Constants::xTimestamp).toDateTime();
-//    QString key = origin + timestamp.toString();
-//    
-//    // Consider playing/mongering the message if we haven't already heard it
-//    if (!voipStatus.contains(key)) {
-//        voipStatus.insert(key, QString());
-//        QByteArray audioData = datapacket.value(Constants::xAudioData).toByteArray();
-//        voipPanel->playAudioMessage(audioData);
-//    }
-    voipPanel->playAudioMessage(datapacket);
+    voipPanel->processAudioMessage(datapacket);
 }
 
 void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {

@@ -31,7 +31,7 @@ public:
     
     QGroupBox* getButtonGroupBox();
     
-    void playAudioMessage(QMap<QString, QVariant> dataPacket);
+    void processAudioMessage(QMap<QString, QVariant> dataPacket);
     
     public slots:
     
