@@ -3,7 +3,7 @@
 const QString startVoIPButtonText = "Group VoIP Toggle";
 const QString muteAllButtonText = "Mute All";
 const QString ON = "QPushButton { background-color: green; }";
-const QString OFF = "QPushButton { background-color: red;}";
+const QString OFF = "QPushButton { background-color: red; }";
 const int recordingTime = 1000;
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
