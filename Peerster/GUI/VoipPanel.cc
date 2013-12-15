@@ -173,6 +173,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         }
         
         // Monger the audio message to peers
+        qDebug() << "Mongering audio message to peers";
         sendAudioMessage(AudioMessage(origin, timestamp, audioData));
     }
 }
