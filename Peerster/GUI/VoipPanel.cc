@@ -83,7 +83,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
 # pragma mark - Audio Format
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(1000);
+    format.setSampleRate(2000);
     format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/none");
