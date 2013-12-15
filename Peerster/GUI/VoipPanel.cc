@@ -6,10 +6,11 @@ const QString ON = "QPushButton { background-color: green; }";
 const QString OFF = "QPushButton { background-color: red; }";
 const int recordingTime = 1000;
 
-VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
+VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers, QMap<QString, QVariant> *voipStatus) {
     this->origin = origin;
     this->socket = socket;
     this->peers = peers;
+    this->voipStatus = voipStatus;
     
     // VoIP Panel Setup
     buttonGroupBox = new QGroupBox("VoIP");
@@ -142,28 +143,42 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 
 # pragma mark - Audio Output
 
-void VoipPanel::playAudioMessage(QByteArray audioData) {
-    if (!muteAll) {
-        qDebug() << "Playing audio message";
-        
-        QFile *audioFile = new QFile();
-        audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
-        audioFile->open(QIODevice::WriteOnly);
-        QDataStream out(audioFile);
-        out << audioData;
-        audioFile->close();
-        
-        audioFile->open(QIODevice::ReadOnly);
-        
-        // Play audio message and enqueue
-        QAudioOutput *output = new QAudioOutput(format, this);
-        outputs.enqueue(output);
-        audioFiles.enqueue(audioFile);
-        connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
-        output->start(audioFile);
-    } else {
-        qDebug() << "Group chat muted";
+void VoipPanel::playAudioMessage(QMap<QString, QVariant> dataPacket) {
+    // Key is of format origin + timestamp
+    QString origin = dataPacket.value(Constants::xOrigin).toString();
+    QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
+    QString key = origin + timestamp.toString();
+    
+    // Consider playing audio message if we have not yet heard it
+    if (!voipStatus->contains(key)) {
+        voipStatus->insert(key, QString());
+        if (!muteAll) {
+            qDebug() << "Playing audio message";
+            
+            // Write audio data to file
+            QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
+            QFile *audioFile = new QFile();
+            audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
+            audioFile->open(QIODevice::WriteOnly);
+            QDataStream out(audioFile);
+            out << audioData;
+            audioFile->close();
+            
+            audioFile->open(QIODevice::ReadOnly);
+            
+            // Play audio message and enqueue
+            QAudioOutput *output = new QAudioOutput(format, this);
+            outputs.enqueue(output);
+            audioFiles.enqueue(audioFile);
+            connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
+            output->start(audioFile);
+        } else {
+            qDebug() << "Group chat muted";
+        }
     }
+    
+    
+    
 }
 
 void VoipPanel::dequeueOutput(QAudio::State state) {

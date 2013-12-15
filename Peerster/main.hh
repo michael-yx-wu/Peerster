@@ -73,6 +73,7 @@ private:
     // <origin, timestamp>
     // if message in table, stop mongering, else
     // add to table, monger to peers
+    QMap<QString, QVariant> voipStatus;
     
     // Rumor Mongering
     QMap<QString, QVariant> status;

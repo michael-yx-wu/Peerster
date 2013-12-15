@@ -27,11 +27,11 @@ class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
-    VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers);
+    VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers, QMap<QString, QVariant> *voipStatus);
     
     QGroupBox* getButtonGroupBox();
     
-    void playAudioMessage(QByteArray audioData);
+    void playAudioMessage(QMap<QString, QVariant> dataPacket);
     
     public slots:
     
@@ -63,6 +63,7 @@ private:
     // Other mongering data
     QString origin;
     std::vector<Peer> *peers;
+    QMap<QString, QVariant> *voipStatus;
     
     // Audio Messaging
     QUdpSocket *socket;
