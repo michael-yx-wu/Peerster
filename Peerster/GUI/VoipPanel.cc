@@ -119,11 +119,7 @@ void VoipPanel::recordingTimeout() {
     sendAudioMessage(message);
     inputBuffers[otherBuffer].close();
     
-    if (listening) {
-        // Start recording into buffer
-
-//        audioInput->start(&buffer);
-    } else {
+    if (!listening) {
         // No longer listening -- stop input and timer
         recordingTimer->stop();
         audioInput->stop();
