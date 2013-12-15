@@ -4,7 +4,7 @@ const QString startVoIPButtonText = "Group VoIP Toggle";
 const QString muteAllButtonText = "Mute All";
 const QString ON = "QPushButton { background-color: green; }";
 const QString OFF = "QPushButton { background-color: red; }";
-const int recordingTime = 2000;
+const int recordingTime = 500;
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers) {
     this->origin = origin;
@@ -81,7 +81,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
 # pragma mark - Audio Format
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(500);
+    format.setSampleRate(800);
     format.setChannels(2);
     format.setSampleSize(8);
     format.setCodec("audio/none");
