@@ -5,8 +5,11 @@ const QString muteAllButtonText = "Mute All";
 const QString ON = "QPushButton { background-color: green; }";
 const QString OFF = "QPushButton { background-color: red; }";
 const int recordingTime = 1000;
+const int delayThreshold = 5000;
 
-VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peers, QMap<QString, QVariant> *voipStatus) {
+VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
+                     std::vector<Peer> *peers,
+                     QMap<QString, QVariant> *voipStatus) {
     this->origin = origin;
     this->socket = socket;
     this->peers = peers;
@@ -19,7 +22,8 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket, std::vector<Peer> *peer
     
     // Initialize signal mapper
     buttonMapper = new QSignalMapper(this);
-    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
+    connect(buttonMapper, SIGNAL(mapped(QString)), this,
+            SLOT(buttonClicked(QString)));
     
     // Connect VoIP button
     startVoIPButton = new QPushButton(startVoIPButtonText);
@@ -60,10 +64,9 @@ void VoipPanel::buttonClicked(QString buttonName) {
         if (listening) {
             qDebug() << "Voice Chat ON";
             recordingTimer->start(recordingTime);
-            inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
+            inputBuffers[currentBuffer].open(QIODevice::ReadWrite |
+                                             QIODevice::Truncate);
             audioInput->start(&inputBuffers[currentBuffer]);
-//            buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
-//            audioInput->start(&buffer);
             recordingTimeout();
             startVoIPButton->setStyleSheet(ON);
         }
@@ -115,7 +118,8 @@ void VoipPanel::recordingTimeout() {
     
     // Send buffer data
     QByteArray data = inputBuffers[otherBuffer].data();
-    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), data);
+    AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(),
+                                        data);
     sendAudioMessage(message);
     inputBuffers[otherBuffer].close();
     
@@ -133,7 +137,8 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     unsigned i;
     QByteArray datagram = message.getSerializedMessage();
     for (i = 0; i < peers->size(); i++) {
-        socket->writeDatagram(datagram.data(), datagram.size(), peers->at(i).address, peers->at(i).port);
+        socket->writeDatagram(datagram.data(), datagram.size(),
+                              peers->at(i).address, peers->at(i).port);
     }
 }
 
@@ -149,12 +154,15 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
     // Consider playing audio message if we have not yet heard it
     if (!voipStatus->contains(key)) {
         voipStatus->insert(key, QString());
-        if (!muteAll) {
+        
+        // Play if mute is off and timestamp within accpetable delay threshold
+        if (!muteAll && acceptableDelay(timestamp)) {
             qDebug() << "Playing audio message";
             
             // Write audio data to file
             QFile *audioFile = new QFile();
-            audioFile->setFileName("./" + QString::number(rand()) + QString::number(rand()));
+            audioFile->setFileName("./" + QString::number(rand()) +
+                                   QString::number(rand()));
             audioFile->open(QIODevice::WriteOnly);
             QDataStream out(audioFile);
             out << audioData;
@@ -166,7 +174,8 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             QAudioOutput *output = new QAudioOutput(format, this);
             outputs.enqueue(output);
             audioFiles.enqueue(audioFile);
-            connect(output, SIGNAL(stateChanged(QAudio::State)), this, SLOT(dequeueOutput(QAudio::State)));
+            connect(output, SIGNAL(stateChanged(QAudio::State)), this,
+                    SLOT(dequeueOutput(QAudio::State)));
             output->start(audioFile);
         } else {
             qDebug() << "Group chat muted: mongering, not playing";
@@ -178,8 +187,22 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
     }
 }
 
+// Determine if the given timestamp is within delayThreshold of
+// current system time
+bool VoipPanel::acceptableDelay(QDateTime timestamp) {
+    QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
+    if (currentDateTime.date() == timestamp.date()) { // Matching dates
+        QTime timestampTime = timestamp.time();
+        QTime currentTime = currentDateTime.time();
+        if (timestampTime.msecsTo(currentTime) < delayThreshold) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void VoipPanel::dequeueOutput(QAudio::State state) {
-    // Dequeue audio clip and data regardless of stopped or suspended
+    // Dequeue audio clip when finished playing
     if (state == QAudio::IdleState) {
         qDebug() << "Audio dequeue";
         QAudioOutput *output = outputs.dequeue();

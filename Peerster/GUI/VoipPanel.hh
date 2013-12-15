@@ -27,7 +27,8 @@ class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
-    VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers, QMap<QString, QVariant> *voipStatus);
+    VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers,
+              QMap<QString, QVariant> *voipStatus);
     
     QGroupBox* getButtonGroupBox();
     
@@ -51,6 +52,7 @@ private:
     QSignalMapper *buttonMapper;
     
     // File recording
+    bool listening;
     QAudioInput *audioInput;
     QBuffer inputBuffers[2];
     bool currentBuffer = false;
@@ -72,8 +74,9 @@ private:
     // Audio playback
     QQueue<QFile*> audioFiles;
     QQueue<QAudioOutput*> outputs;
-    bool listening;
     bool muteAll;
+    
+    bool acceptableDelay(QDateTime timestamp);
 };
 
 #endif
