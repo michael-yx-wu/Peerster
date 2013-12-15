@@ -83,7 +83,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
 # pragma mark - Audio Format
 
 void VoipPanel::formatAudio() {
-    format.setSampleRate(512);
+    format.setSampleRate(1000);
     format.setChannels(1);
     format.setSampleSize(8);
     format.setCodec("audio/none");
@@ -107,7 +107,7 @@ void VoipPanel::recordingTimeout() {
     AudioMessage message = AudioMessage(origin, QDateTime::currentDateTimeUtc(), buffer.data());
     sendAudioMessage(message);
     buffer.close();
-    
+
     if (listening) {
         // Start recording into buffer
         buffer.open(QIODevice::WriteOnly|QIODevice::Truncate);
@@ -116,7 +116,6 @@ void VoipPanel::recordingTimeout() {
         // No longer listening -- stop input and timer
         recordingTimer->stop();
         audioInput->stop();
-        
     }
 }
 
