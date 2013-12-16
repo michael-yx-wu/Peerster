@@ -264,8 +264,6 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             quint16 targetPort = originMap->value(dest).second;
             sendAudioPrivMessage(AudioMessage(dest, hoplimit, timestamp, audioData), targetIP, targetPort);
         }
-        
-        
         return;
     }
     
@@ -300,6 +298,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             audioFiles.enqueue(audioFile);
             connect(output, SIGNAL(stateChanged(QAudio::State)), this,
                     SLOT(dequeueOutput(QAudio::State)));
+            audioFile->seek(44);
             output->start(audioFile);
         } else {
             qDebug() << "Group chat muted: mongering, not playing";
