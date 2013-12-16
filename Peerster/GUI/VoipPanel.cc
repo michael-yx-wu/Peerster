@@ -9,7 +9,7 @@ const QString OFF = "QPushButton { background-color: red; }";
 const int recordingTime = 1000;
 const int delayThreshold = 5000;
 
-#pragma mark Constructors
+#pragma mark - Group VoIP Panel
 
 VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
                      std::vector<Peer> *peers,
@@ -21,7 +21,7 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     privChat = false;
     
     // VoIP Panel Setup
-    buttonGroupBox = new QGroupBox("VoIP");
+    buttonGroupBox = new QGroupBox("Group VoIP");
     buttonGroupList = new QVBoxLayout;
     buttonGroupBox->setLayout(buttonGroupList);
     
@@ -54,19 +54,19 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     formatAudio();
 }
 
-#pragma mark - Private chat
+#pragma mark - Private VoIP Panel
 
 VoipPanel::VoipPanel(QString origin, QString destName, QUdpSocket *socket,
-                QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
+                     QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
     hostname = origin;
-    destinationName = destName; 
+    destinationName = destName;
     this->socket = socket;
     this->originMap = originMap;
     hopLimit = 10;
     privChat = true;
     
     // VoIP Panel Setup
-    buttonGroupBox = new QGroupBox("VoIP");
+    buttonGroupBox = new QGroupBox("Private VoIP");
     buttonGroupList = new QVBoxLayout;
     buttonGroupBox->setLayout(buttonGroupList);
     
@@ -99,9 +99,10 @@ VoipPanel::VoipPanel(QString origin, QString destName, QUdpSocket *socket,
     formatAudio();
 }
 
-void VoipPanel::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {
+void VoipPanel::updateDestinationIPandPort(QHostAddress destIP,
+                                           quint16 destPort) {
     destinationIP = destIP;
-    destinationPort = destPort;    
+    destinationPort = destPort;
 }
 
 #pragma mark - Accessor Methods
@@ -115,7 +116,7 @@ QGroupBox* VoipPanel::getButtonGroupBox() {
 void VoipPanel::buttonClicked(QString buttonName) {
     // Microphone toggle
     if (QString::compare(buttonName, startVoIPButtonText) == 0 ||
-         QString::compare(buttonName, startVoIPButtonPrivTxt) == 0) {
+        QString::compare(buttonName, startVoIPButtonPrivTxt) == 0) {
         listening = !listening;
         if (listening) {
             qDebug() << "Voice Chat ON";
@@ -131,7 +132,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
             startVoIPButton->setStyleSheet(OFF);
         }
     } else if (QString::compare(buttonName, muteAllButtonText) == 0 ||
-                QString::compare(buttonName, muteButtonText) == 0) {
+               QString::compare(buttonName, muteButtonText) == 0) {
         muteAll = !muteAll;
         if (muteAll) {
             qDebug() << "Mute All ON";
@@ -177,16 +178,16 @@ void VoipPanel::recordingTimeout() {
     QByteArray data = inputBuffers[otherBuffer].data();
     if (privChat == false) {
         AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(),
-                                        data);
+                                            data);
         sendAudioMessage(message);
     }
-
+    
     else {
         AudioMessage message = AudioMessage(destinationName, hopLimit,
-                                   QDateTime::currentDateTimeUtc(), data);
+                                            QDateTime::currentDateTimeUtc(), data);
         sendAudioPrivMessage(message, destinationIP, destinationPort);
-    }    
-
+    }
+    
     inputBuffers[otherBuffer].close();
     
     if (!listening) {
@@ -228,33 +229,33 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
         QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
         quint32 hoplimit = dataPacket.value(Constants::xHopLimit).toUInt()-1;
-    
+        
         // I am the intended target of the private message
         if (dest == hostname) {
-           if (!muteAll && acceptableDelay(timestamp)) {
-            qDebug() << "Playing audio message";
-            
-            // Write audio data to file
-            QFile *audioFile = new QFile();
-            audioFile->setFileName("./" + QString::number(rand()) +
-                                   QString::number(rand()));
-            audioFile->open(QIODevice::WriteOnly);
-            QDataStream out(audioFile);
-            out << audioData;
-            audioFile->close();
-            
-            audioFile->open(QIODevice::ReadOnly);
-            
-            // Play audio message and enqueue
-            QAudioOutput *output = new QAudioOutput(format, this);
-            outputs.enqueue(output);
-            audioFiles.enqueue(audioFile);
-            connect(output, SIGNAL(stateChanged(QAudio::State)), this,
-                    SLOT(dequeueOutput(QAudio::State)));
-            output->start(audioFile);
+            if (!muteAll && acceptableDelay(timestamp)) {
+                qDebug() << "Playing audio message";
+                
+                // Write audio data to file
+                QFile *audioFile = new QFile();
+                audioFile->setFileName("./" + QString::number(rand()) +
+                                       QString::number(rand()));
+                audioFile->open(QIODevice::WriteOnly);
+                QDataStream out(audioFile);
+                out << audioData;
+                audioFile->close();
+                
+                audioFile->open(QIODevice::ReadOnly);
+                
+                // Play audio message and enqueue
+                QAudioOutput *output = new QAudioOutput(format, this);
+                outputs.enqueue(output);
+                audioFiles.enqueue(audioFile);
+                connect(output, SIGNAL(stateChanged(QAudio::State)), this,
+                        SLOT(dequeueOutput(QAudio::State)));
+                output->start(audioFile);
             } else {
                 qDebug() << "Person muted -- not playing";
-            } 
+            }
         }
         
         // Forward messagehed
@@ -263,11 +264,11 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             quint16 targetPort = originMap->value(dest).second;
             sendAudioPrivMessage(AudioMessage(dest, hoplimit, timestamp, audioData), targetIP, targetPort);
         }
-
-
+        
+        
         return;
     }
-
+    
     // Key is of format origin + timestamp
     QString origin = dataPacket.value(Constants::xOrigin).toString();
     QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();

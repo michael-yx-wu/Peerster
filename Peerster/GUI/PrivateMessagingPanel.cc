@@ -2,7 +2,7 @@
 
 PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
     hostName = hostname;
-    originBox = new QGroupBox("Known Origins");
+    originBox = new QGroupBox("Private Messaging");
     originList = new QVBoxLayout;
     originBox->setLayout(originList);
     buttonMapper = new QSignalMapper(this);
