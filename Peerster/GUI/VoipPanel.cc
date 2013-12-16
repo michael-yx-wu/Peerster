@@ -175,10 +175,6 @@ void VoipPanel::recordingTimeout() {
     
     // Send buffer data
     QByteArray data = inputBuffers[otherBuffer].data();
-    qDebug() << data.size();
-    data = data.remove(9, 1024);
-    data.chop(1024);
-    qDebug() << data.size();
     if (privChat == false) {
         AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(),
                                         data);
