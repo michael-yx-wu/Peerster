@@ -20,6 +20,10 @@ AudioMessage::AudioMessage(const QString audioDest, const quint32 audioHopLimit,
     serializedMessage = serializeAudioPrivMessage();
 }
 
+QDateTime AudioMessage::getTimestamp() {
+    return dateTime;
+}
+
 QByteArray AudioMessage::serializeAudioMessage() {
     QMap<QString, QVariant> datapacket;
     datapacket.insert(Constants::xOrigin, origin);

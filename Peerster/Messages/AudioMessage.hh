@@ -9,6 +9,7 @@ public:
     AudioMessage(const QString origin, const QDateTime dateTime, const QByteArray audioData);
     AudioMessage(const QString audioDest, const quint32 audioHopLimit, QDateTime dateTime, const QByteArray audioData);    
 
+    QDateTime getTimestamp();
 protected:
     QDateTime dateTime;
     QByteArray audioData;

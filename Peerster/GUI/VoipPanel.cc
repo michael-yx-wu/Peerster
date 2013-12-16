@@ -198,6 +198,12 @@ void VoipPanel::recordingTimeout() {
 }
 
 void VoipPanel::sendAudioMessage(AudioMessage message) {
+    // Save audio metadata to voipStatus
+    QString origin = message.getOrigin();
+    QDateTime timestamp = message.getTimestamp();
+    QString key = origin + timestamp.toString();
+    voipStatus->insert(key, QString());
+    
     // Send to all immediate peers
     qDebug() << "Sending Audio Message";
     unsigned i;
