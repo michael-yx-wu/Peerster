@@ -15,10 +15,15 @@ PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
     
     //Encryption
     p = 88951;
-    g = 23;
+    g = 5;
     dlGroup = QCA::DLGroup(p, g);
-    y = rand() % INT_MAX + rand() % INT_MAX;
-    pubKey = QCA::DHPublicKey(dlGroup, y).toPEM();
+    y = rand() % 53;
+    QCA::BigInteger pubKeyInt = 1;
+    for (QCA::BigInteger i = 0; i < y; i+=1) {
+        pubKeyInt *= g;
+    }
+    pubKeyInt%=p;
+    pubKey = pubKeyInt.toString();
 }
 
 QGroupBox* PrivateMessagingPanel::getOriginBox() {
@@ -34,7 +39,6 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
 }
 
 bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
-    
     // Create a new button for previously unknown origins
     if (!originMap.contains(origin)) {
         QPushButton *originButton = new QPushButton(origin);
@@ -145,7 +149,6 @@ void PrivateMessagingPanel::sendDHKeyMessage(DHKeyMessage message) {
 void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapacket){
     QString origin = datapacket.value(Constants::xOrigin).toString();
     QString dest = datapacket.value(Constants::xDest).toString();
-    quint32 hopLimit =datapacket.value(Constants::xDHKeyData).toUInt();
     QString key = datapacket.value(Constants::xDHKeyData).toString();
     
     QCA::BigInteger big(key);
