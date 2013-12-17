@@ -223,37 +223,29 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
 # pragma mark - Audio Output
 
 void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
+    // Refactoring
+    QString origin, dest, key;
+    QDateTime timestamp;
+    QByteArray audioData;
+    quint32 hoplimit;
+    QHostAddress targetIP;
+    quint16 targetPort;
+    
+    origin = dataPacket.value(Constants::xOrigin).toString();
+    timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
+    audioData = dataPacket.value(Constants::xAudioData).toByteArray();
+    key = origin + timestamp.toString();
+    
     //Process private messages
     if (dataPacket.contains(Constants::xDest)) {
-        QString dest = dataPacket.value(Constants::xDest).toString();
-        QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
-        QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
-        quint32 hoplimit = dataPacket.value(Constants::xHopLimit).toUInt()-1;
+        dest = dataPacket.value(Constants::xDest).toString();
+        hoplimit = dataPacket.value(Constants::xHopLimit).toUInt()-1;
         
         // I am the intended target of the private audio message
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing private audio message";
-                
-                // Write audio data to file
-                QFile *audioFile = new QFile();
-                audioFile->setFileName("./" + QString::number(rand()) +
-                                       QString::number(rand()));
-                audioFile->open(QIODevice::WriteOnly);
-                QDataStream out(audioFile);
-                out << audioData;
-                audioFile->close();
-                
-                audioFile->open(QIODevice::ReadOnly);
-                
-                // Play audio message and enqueue
-                QAudioOutput *output = new QAudioOutput(format, this);
-                outputs.enqueue(output);
-                audioFiles.enqueue(audioFile);
-                connect(output, SIGNAL(stateChanged(QAudio::State)), this,
-                        SLOT(dequeueOutput(QAudio::State)));
-                audioFile->seek(44);
-                output->start(audioFile);
+                playAudioMessage(audioData);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
             }
@@ -261,19 +253,19 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         
         // Audio message not for me -- forward message to destination
         else if (hoplimit > 0) {
-            QHostAddress targetIP = originMap->value(dest).first;
-            quint16 targetPort = originMap->value(dest).second;
+            targetIP = originMap->value(dest).first;
+            targetPort = originMap->value(dest).second;
             sendAudioPrivMessage(AudioMessage(dest, hoplimit, timestamp, audioData), targetIP, targetPort);
         }
     }
+    
     // Process group audio messages
     else {
-        
         // Key is of format origin + timestamp
-        QString origin = dataPacket.value(Constants::xOrigin).toString();
-        QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
-        QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
-        QString key = origin + timestamp.toString();
+        origin = dataPacket.value(Constants::xOrigin).toString();
+        timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
+        audioData = dataPacket.value(Constants::xAudioData).toByteArray();
+        key = origin + timestamp.toString();
         
         // Consider playing audio message if we have not yet heard it
         if (!voipStatus->contains(key)) {
@@ -282,26 +274,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             // Play if mute is off and timestamp within accpetable delay threshold
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing audio message";
-                
-                // Write audio data to file
-                QFile *audioFile = new QFile();
-                audioFile->setFileName("./" + QString::number(rand()) +
-                                       QString::number(rand()));
-                audioFile->open(QIODevice::WriteOnly);
-                QDataStream out(audioFile);
-                out << audioData;
-                audioFile->close();
-                
-                audioFile->open(QIODevice::ReadOnly);
-                
-                // Play audio message and enqueue
-                QAudioOutput *output = new QAudioOutput(format, this);
-                outputs.enqueue(output);
-                audioFiles.enqueue(audioFile);
-                connect(output, SIGNAL(stateChanged(QAudio::State)), this,
-                        SLOT(dequeueOutput(QAudio::State)));
-                audioFile->seek(44);
-                output->start(audioFile);
+                playAudioMessage(audioData);
             } else {
                 qDebug() << "Group chat muted: mongering, not playing";
             }
@@ -311,6 +284,27 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
             sendAudioMessage(AudioMessage(origin, timestamp, audioData));
         }
     }
+}
+
+void VoipPanel::playAudioMessage(QByteArray audioData) {
+    // Write audio data to file
+    QFile *audioFile = new QFile();
+    audioFile->setFileName("./" + QString::number(rand()) +
+                           QString::number(rand()));
+    audioFile->open(QIODevice::WriteOnly);
+    QDataStream out(audioFile);
+    out << audioData;
+    audioFile->close();
+    
+    // Play audio message and enqueue
+    audioFile->open(QIODevice::ReadOnly);
+    QAudioOutput *output = new QAudioOutput(format, this);
+    outputs.enqueue(output);
+    audioFiles.enqueue(audioFile);
+    connect(output, SIGNAL(stateChanged(QAudio::State)), this,
+            SLOT(dequeueOutput(QAudio::State)));
+    audioFile->seek(44);
+    output->start(audioFile);
 }
 
 // Determine if the given timestamp is within delayThreshold of

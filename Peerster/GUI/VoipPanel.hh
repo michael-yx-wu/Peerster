@@ -79,6 +79,7 @@ private:
     // Audio playback
     QQueue<QFile*> audioFiles;
     QQueue<QAudioOutput*> outputs;
+    void playAudioMessage(QByteArray audioData);
     bool muteAll;
     
     bool acceptableDelay(QDateTime timestamp);
