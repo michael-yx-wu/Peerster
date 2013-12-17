@@ -7,7 +7,7 @@
 #include <QHostAddress>
 #include <QSignalMapper>
 #include <QVBoxLayout>
-#include "DHKeyMessage.hh"
+#include "Messages/DHKeyMessage.hh"
 
 #include "PrivateChatDialog.hh"
 
