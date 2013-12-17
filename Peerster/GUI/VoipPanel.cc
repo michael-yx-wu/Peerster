@@ -233,7 +233,8 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
     QCA::SecureArray encryptedData = cipher.process(secureData);
     qDebug() << "Size of encrypted data: " + QString::number(encryptedData.size());
     
-    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
+//    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
+    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, message.getData());
     QByteArray datagram = encryptedMessage.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
 }
@@ -275,7 +276,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                 } else {
                     qDebug() << "decrypt failed: " + QString::number(data.size()) + QString::number(audioData.size());
                 }
-                playAudioMessage(data);
+                playAudioMessage(audioData);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
             }
