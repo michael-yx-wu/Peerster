@@ -52,6 +52,11 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     
     // Format audio
     formatAudio();
+    
+    // Set some booleans
+    currentBuffer = false;
+    otherBuffer = true;
+    privChat = false;
 }
 
 #pragma mark - Private VoIP Panel

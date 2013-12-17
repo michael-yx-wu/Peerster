@@ -60,8 +60,8 @@ private:
     bool listening;
     QAudioInput *audioInput;
     QBuffer inputBuffers[2];
-    bool currentBuffer = false;
-    bool otherBuffer = true;
+    bool currentBuffer;
+    bool otherBuffer;
     QAudioDeviceInfo deviceInfo;
     QAudioFormat format;
     QTimer *recordingTimer;
@@ -85,7 +85,7 @@ private:
     bool acceptableDelay(QDateTime timestamp);
 
     //Private chat
-    bool privChat = false;
+    bool privChat;
 
     QHostAddress destinationIP;
     QString destinationName;
