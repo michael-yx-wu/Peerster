@@ -262,12 +262,13 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing private audio message";
-                QByteArray encryptedAUdio = dataPacket.value(Constants::xAudioData).toByteArray();
+                QByteArray encryptedAudio = dataPacket.value(Constants::xAudioData).toByteArray();
                 QCA::InitializationVector iv = QCA::InitializationVector(16);
                 QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
                                                  QCA::Cipher::DefaultPadding, QCA::Decode,
                                                  keyMap->value(origin), iv);
-                audioData = cipher.process(encryptedAUdio).toByteArray();
+                qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
+                audioData = cipher.process(encryptedAudio).toByteArray();
                 if (cipher.ok()) {
                     qDebug() << "Playing private message: " + QString::number(audioData.size());
                 } else {
