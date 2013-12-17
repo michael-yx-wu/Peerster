@@ -7,8 +7,10 @@ PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
     originBox->setLayout(originList);
     buttonMapper = new QSignalMapper(this);
     privateChatMapper = new QSignalMapper(this);
-    connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(buttonClicked(QString)));
-    connect(privateChatMapper, SIGNAL(mapped(QString)), this, SLOT(windowClosed(QString)));
+    connect(buttonMapper, SIGNAL(mapped(QString)), this,
+            SLOT(buttonClicked(QString)));
+    connect(privateChatMapper, SIGNAL(mapped(QString)), this,
+            SLOT(windowClosed(QString)));
 }
 
 QGroupBox* PrivateMessagingPanel::getOriginBox() {
@@ -33,8 +35,8 @@ bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         originList->addWidget(originButton);
     }
     
-    // If last route to origin was direct route, update only if new route is direct route
-    // or if new route has higher seqno
+    // If last route to origin was direct route, update only if new route is
+    // direct route or if new route has higher seqno
     if (origin.contains(origin)) {
         if (seqno >= originDirectIndirectMap.value(origin).first) {
             if (originDirectIndirectMap.value(origin).second && isDirectRoute) {
@@ -89,5 +91,12 @@ void PrivateMessagingPanel::buttonClicked(QString destinationName) {
 void PrivateMessagingPanel::windowClosed(QString destinationName) {
     qDebug() << "Closing private chat with: " + destinationName;
     privateChatDialogs.remove(destinationName);
+}
+
+#pragma mark - Process Private Messages
+
+void PrivateMessagingPanel::processAudioMessage(QString dest, QMap<QString, QVariant> datapacket) {
+    PrivateChatDialog *chatDialog = privateChatDialogs.value(dest);
+    chatDialog->getVoipPanel()->processAudioMessage(datapacket);
 }
 

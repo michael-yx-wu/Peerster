@@ -23,7 +23,7 @@ public:
     void closeEvent(QCloseEvent *event);
     QString getDestinationName();
     void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
-    
+    VoipPanel* getVoipPanel();
 signals:
     void privateChatClosed();
     

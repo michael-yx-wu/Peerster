@@ -35,7 +35,7 @@ ChatDialog::ChatDialog() {
     addHostBox = new Chatbox(this);
     filePanel = new FilePanel(hostname, &peers);
     privateMessagingPanel = new PrivateMessagingPanel(hostname);
-    voipPanel = new VoipPanel(hostname, socket, &peers, &voipStatus); 
+    voipPanel = new VoipPanel(hostname, socket, &peers, &voipStatus);
     
     // Add widgets
 	QGridLayout *layout = new QGridLayout();
@@ -187,7 +187,12 @@ void ChatDialog::processPendingDatagrams() {
 
 void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got audio message";
-    voipPanel->processAudioMessage(datapacket);
+    if (datapacket.contains(Constants::xDest)) {
+        QString dest = datapacket.value(Constants::xDest).toString();
+        privateMessagingPanel->processAudioMessage(dest, datapacket);
+    } else {
+        voipPanel->processAudioMessage(datapacket);
+    }
 }
 
 void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort) {

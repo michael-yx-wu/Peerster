@@ -53,3 +53,7 @@ void PrivateChatDialog::gotReturnPressedChatBox() {
     QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destinationIP, destinationPort);
 }
+
+VoipPanel* PrivateChatDialog::getVoipPanel() {
+    return voipChat;
+}
