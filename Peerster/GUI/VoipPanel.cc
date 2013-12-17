@@ -219,23 +219,23 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 
 void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {
     qDebug() << "Sending private message to " + destIP.toString();
-    QString origin = message.getOrigin();
-    QString dest = message.getDest();
-    QByteArray audioData = message.getData();
-    quint32 hoplimit = message.getHopLimit();
-    QDateTime timestamp = message.getTimestamp();
-    
-    QCA::InitializationVector iv = QCA::InitializationVector(16);
-    QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
-                                     QCA::Cipher::DefaultPadding, QCA::Encode,
-                                     keyMap->value(message.getDest()), iv);
-    QCA::SecureArray secureData = audioData;
-    QCA::SecureArray encryptedData = cipher.process(secureData);
-    qDebug() << "Size of encrypted data: " + QString::number(encryptedData.size());
-    
+//    QString origin = message.getOrigin();
+//    QString dest = message.getDest();
+//    QByteArray audioData = message.getData();
+//    quint32 hoplimit = message.getHopLimit();
+//    QDateTime timestamp = message.getTimestamp();
+//    
+//    QCA::InitializationVector iv = QCA::InitializationVector(16);
+//    QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
+//                                     QCA::Cipher::DefaultPadding, QCA::Encode,
+//                                     keyMap->value(message.getDest()), iv);
+//    QCA::SecureArray secureData = audioData;
+//    QCA::SecureArray encryptedData = cipher.process(secureData);
+//    qDebug() << "Size of encrypted data: " + QString::number(encryptedData.size());
 //    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
-    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, message.getData());
-    QByteArray datagram = encryptedMessage.getSerializedMessage();
+//    AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, message.getData());
+//    QByteArray datagram = encryptedMessage.getSerializedMessage();
+    QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
 }
 
