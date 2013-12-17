@@ -226,19 +226,17 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
     QDateTime timestamp = message.getTimestamp();
     
     QCA::InitializationVector iv = QCA::InitializationVector(16);
-    QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
-                                     QCA::Cipher::DefaultPadding, QCA::Encode,
-                                     keyMap->value(message.getDest()), iv);
+    QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC, QCA::Cipher::DefaultPadding, QCA::Encode, keyMap->value(message.getDest()), iv);
+    QCA::SecureArray secureData = audioData;
+    QCA::SecureArray encryptedData = cipher.process(secureData);
     if (cipher.ok()) {
         qDebug() << "Encrypted";
     } else {
         qDebug() << "Encrypt failed";
     }
-    QCA::SecureArray secureData = audioData;
-    QCA::SecureArray encryptedData = cipher.process(secureData);
-    qDebug() << "Size of encrypted data: " + QString::number(encryptedData.size());
+
     AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
-    QByteArray datagram = message.getSerializedMessage();
+    QByteArray datagram = encryptedMessage.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
 }
 
