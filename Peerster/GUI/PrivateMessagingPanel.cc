@@ -116,6 +116,8 @@ void PrivateMessagingPanel::windowClosed(QString destinationName) {
 #pragma mark - Process Private Messages
 
 void PrivateMessagingPanel::processAudioMessage(QMap<QString, QVariant> datapacket) {
+    // do hostname check here no private message mongering in voip panel
+    
     QString origin = datapacket.value(Constants::xOrigin).toString();
     PrivateChatDialog *chatDialog;
     if (!privateChatDialogs.contains(origin)) {
