@@ -27,6 +27,7 @@ public:
     public slots:
     void buttonClicked(QString destinationName);
     void windowClosed(QString destinationName);
+    void processDHKeyMessage(QMap<QString, QVariant> datapacket);
     
 private:
     QString hostName;
@@ -47,7 +48,7 @@ private:
     QString pubKey;    //public key to be sent
     QMap<QString, QCA::SymmetricKey> keyMap;
     void sendDHKeyMessage(DHKeyMessage message);
-    void processDHKeyMessage(QMap<QString, QVariant> datapacket);
+    
 };
 
 #endif

@@ -148,17 +148,11 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     quint32 hopLimit =datapacket.value(Constants::xDHKeyData).toUInt();
     QString key = datapacket.value(Constants::xDHKeyData).toString();
     
-    if (dest == hostName) {
-        QCA::BigInteger big(key);
-        QCA::DHPrivateKey privKey(dlGroup, big, y);
-        QByteArray privBytes(privKey.toPEM().toAscii());
-        QCA::SymmetricKey symKey(privBytes);
-        
-        //insert
-        keyMap.insert(origin, symKey);
-    } else if (hopLimit > 0) {
-        // forward message
-        DHKeyMessage message(origin, dest, hopLimit-1, key);
-        sendDHKeyMessage(message);
-    }
+    QCA::BigInteger big(key);
+    QCA::DHPrivateKey privKey(dlGroup, big, y);
+    QByteArray privBytes(privKey.toPEM().toAscii());
+    QCA::SymmetricKey symKey(privBytes);
+    
+    //insert
+    keyMap.insert(origin, symKey);
 }
