@@ -24,6 +24,7 @@ public:
     static const QString xMatchIDs;
     static const QString xTimestamp;
     static const QString xAudioData;
+    static const QString xDHKeyData;
     
     // Application constants
     static const qint64 BLOCKSIZE;

@@ -18,6 +18,7 @@ const QString Constants::xMatchNames = "MatchNames";
 const QString Constants::xMatchIDs = "MatchIDs";
 const QString Constants::xTimestamp = "Timestamp";
 const QString Constants::xAudioData = "AudioData";
+const QString Constants::xDHKeyData = "DHKey";
 
 const qint64 Constants::BLOCKSIZE = 8192;
 const int Constants::HASHSIZE = 32;

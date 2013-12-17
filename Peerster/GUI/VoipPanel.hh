@@ -6,6 +6,7 @@
 #include <QAudioFormat>
 #include <QAudioOutput>
 #include <QBuffer>
+#include <QtCrypto>
 #include <QFile>
 #include <QTimer>
 
@@ -31,7 +32,8 @@ public:
               QMap<QString, QVariant> *voipStatus);
 
     VoipPanel(QString someOrigin, QString destName, QUdpSocket *socket,
-            QMap<QString, QPair<QHostAddress, quint16> > *originMap);
+              QMap<QString, QPair<QHostAddress, quint16> > *originMap,
+              QMap<QString, QCA::SymmetricKey> *keyMap);
     
     QGroupBox* getButtonGroupBox();
     
@@ -75,6 +77,8 @@ private:
     // Audio Messaging
     QUdpSocket *socket;
     void sendAudioMessage(AudioMessage message);
+    void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP,
+                              quint16 destPort);
     
     // Audio playback
     QQueue<QFile*> audioFiles;
@@ -86,14 +90,12 @@ private:
 
     //Private chat
     bool privChat = false;
-
     QHostAddress destinationIP;
     QString destinationName;
     quint16 destinationPort;
     quint32 hopLimit;
     QMap<QString, QPair<QHostAddress, quint16> > *originMap;
-
-    void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort);
+    QMap<QString, QCA::SymmetricKey> *keyMap;
 };
 
 #endif

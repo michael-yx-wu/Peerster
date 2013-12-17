@@ -19,6 +19,7 @@
 		50F1A0A6C62C20D272991B90 /* moc_PeersterFile.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = E3C7A882E505E70D8DC72F67 /* moc_PeersterFile.cpp */; settings = {ATTRIBUTES = (); }; };
 		522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		57B23F2CFC96625AC58C1F8F /* VoipPanel.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = B6D66755B73848DC55D2E61E /* VoipPanel.cc */; settings = {ATTRIBUTES = (); }; };
+		62C2B1D162C36C767A49E209 /* DHKeyMessage.cc in Build Sources */ = {isa = PBXBuildFile; fileRef = 8C624800C9D28A9D00E29901 /* DHKeyMessage.cc */; settings = {ATTRIBUTES = (); }; };
 		64A33A9558C33BD514ED753F /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 883EF222A803862A8D41343B /* QtNetwork.framework */; };
 		6AFFA5CC440B7A45A7B1BFFC /* CoreAudio.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 5047022CEBDAD3272EE3C4D2 /* CoreAudio.framework */; };
 		6FFE813FFE36D19F0C307231 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = AA9D9004ACE84CD1D55FED5F /* QtGui.framework */; };
@@ -58,7 +59,7 @@
 		41BA27C6A5B07B2EDD1E5699 /* moc_FilePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_FilePanel.cpp; sourceTree = SOURCE_ROOT; };
 		453E80AD538D7B6495C54E54 /* peerster.pro */ = {isa = PBXFileReference; lastKnownFileType = text; path = peerster.pro; sourceTree = SOURCE_ROOT; };
 		4BF8915F4A4CED4C258BF8E9 /* Socket.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Socket.hh; sourceTree = SOURCE_ROOT; };
-		4C108DB7185ECED700BA2600 /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1D4AEF186104FF008C8C9C /* Peerster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2C0F4C926D8A65CB56838D /* Messages.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Messages.hh; sourceTree = SOURCE_ROOT; };
 		5047022CEBDAD3272EE3C4D2 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		5A5E07CEF4D0A51E8FE3D953 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
@@ -72,8 +73,10 @@
 		7B2CA41EBBE1C5DE94428332 /* FilePanel.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FilePanel.hh; path = GUI/FilePanel.hh; sourceTree = SOURCE_ROOT; };
 		7DE906D1ECF664B05D56C61C /* moc_PrivateChatDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateChatDialog.cpp; sourceTree = SOURCE_ROOT; };
 		7EC1F9F30D623D7245B57D30 /* QtMultimedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMultimedia.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtMultimedia.framework; sourceTree = "<absolute>"; };
+		86FAAE1AB5D944CB0C72A262 /* DHKeyMessage.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = DHKeyMessage.hh; path = Messages/DHKeyMessage.hh; sourceTree = SOURCE_ROOT; };
 		883EF222A803862A8D41343B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /usr/local/Cellar/qt/4.8.5/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
 		889294B69789F4487B51D91D /* moc_PrivateMessagingPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = moc_PrivateMessagingPanel.cpp; sourceTree = SOURCE_ROOT; };
+		8C624800C9D28A9D00E29901 /* DHKeyMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DHKeyMessage.cc; path = Messages/DHKeyMessage.cc; sourceTree = SOURCE_ROOT; };
 		8F4D43B6AF93B867F58C5CC8 /* Constants.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hh; sourceTree = SOURCE_ROOT; };
 		98DDAEC184A723DABF37678E /* Constants.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cc; sourceTree = SOURCE_ROOT; };
 		A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SearchRequestMessage.cc; path = Messages/SearchRequestMessage.cc; sourceTree = SOURCE_ROOT; };
@@ -131,7 +134,7 @@
 				883D7615C4D2DE3FA1218F12 /* Headers */,
 				7CABE3C80E79AD2B307756D2 /* Sources [qmake] */,
 				ED1E82605DD74B483AF3C982 /* External Frameworks and Libraries */,
-				4C108DB8185ECED700BA2600 /* Products */,
+				4C1D4AF0186104FF008C8C9C /* Products */,
 			);
 			name = Peerster;
 			sourceTree = "<Group>";
@@ -163,10 +166,10 @@
 			name = "Temporary Sources";
 			sourceTree = "<Group>";
 		};
-		4C108DB8185ECED700BA2600 /* Products */ = {
+		4C1D4AF0186104FF008C8C9C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C108DB7185ECED700BA2600 /* Peerster.app */,
+				4C1D4AEF186104FF008C8C9C /* Peerster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				EEA1B92AEFFCBBCC62F39C1A /* AudioMessage.cc */,
 				5C94018625A99BEBABE1F8FB /* BlockReplyMessage.cc */,
 				7517BF99384862A85367FB95 /* BlockRequestMessage.cc */,
+				8C624800C9D28A9D00E29901 /* DHKeyMessage.cc */,
 				705E536B508D27DF51691DCA /* Message.cc */,
 				D6C4748E93948F6970358485 /* SearchReplyMessage.cc */,
 				A574E41F3411DAA24B417E9D /* SearchRequestMessage.cc */,
@@ -213,6 +217,7 @@
 				6FD800161B6B22379E95E7EB /* AudioMessage.hh */,
 				F3AFBE020864EC80D6EE4A8E /* BlockReplyMessage.hh */,
 				B31C1B2A87B91FBCEEF39C1A /* BlockRequestMessage.hh */,
+				86FAAE1AB5D944CB0C72A262 /* DHKeyMessage.hh */,
 				D06B10E7FEE48B264D2B821B /* Message.hh */,
 				E053DB79E08E889603079086 /* SearchReplyMessage.hh */,
 				24A8DD62E000C3CB83BE9741 /* SearchRequestMessage.hh */,
@@ -284,7 +289,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		856CF5836FB6CF0CBEEFA0F6 /* Peerster */ = {
+		C27F2ECBE8B8F21B30364226 /* Peerster */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "Peerster" */;
 			buildPhases = (
@@ -300,7 +305,7 @@
 			);
 			name = Peerster;
 			productName = Peerster;
-			productReference = 4C108DB7185ECED700BA2600 /* Peerster.app */;
+			productReference = 4C1D4AEF186104FF008C8C9C /* Peerster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -319,11 +324,11 @@
 				en,
 			);
 			mainGroup = 05596AB53D8D521C69802C27 /* Peerster */;
-			productRefGroup = 4C108DB8185ECED700BA2600 /* Products */;
+			productRefGroup = 4C1D4AF0186104FF008C8C9C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				856CF5836FB6CF0CBEEFA0F6 /* Peerster */,
+				C27F2ECBE8B8F21B30364226 /* Peerster */,
 			);
 		};
 /* End PBXProject section */
@@ -348,7 +353,7 @@
 			name = "Qt Preprocessors";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster -f 'Peerster.xcodeproj/qt_preprocess.mak'";
+			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/Peerster/Peerster -f 'Peerster.xcodeproj/qt_preprocess.mak'";
 		};
 		D7BA7D76DAB5DD13389D6332 /* Qt Qmake */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -358,7 +363,7 @@
 			name = "Qt Qmake";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/peerster/Peerster -f 'Peerster.xcodeproj/qt_makeqmake.mak'";
+			shellScript = "make -C /Users/Michael/Documents/Yale/Junior/Fall/CPSC426/Peerster/Peerster -f 'Peerster.xcodeproj/qt_makeqmake.mak'";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -382,6 +387,7 @@
 				39C8D0FF8B9D434F8302D68D /* AudioMessage.cc in Build Sources */,
 				80E6030A5A227409AEB461D4 /* BlockReplyMessage.cc in Build Sources */,
 				2DF425D22AF0ABFCC22067E3 /* BlockRequestMessage.cc in Build Sources */,
+				62C2B1D162C36C767A49E209 /* DHKeyMessage.cc in Build Sources */,
 				76356B4B41D599A6B6D1DA8D /* Message.cc in Build Sources */,
 				1CFE0C78A64F3E598E833754 /* SearchReplyMessage.cc in Build Sources */,
 				522FF07A82AF3B592BA63B2B /* SearchRequestMessage.cc in Build Sources */,

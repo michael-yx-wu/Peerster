@@ -266,8 +266,10 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
+    // remember to process dhkey priv msgs!!!!!!!
+    
     Message privateMessage;
-    QString origin, dest, message, searchReply;
+    QString origin, dest, message, searchReply, dhKey;
     quint32 hoplimit;
     QByteArray blockRequest, blockReply, data;
     QVariantList matchNames, matchIDs;
@@ -303,6 +305,9 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     if (datapacket.contains(Constants::xOrigin)) {
         origin = datapacket.value(Constants::xOrigin).toString();
     }
+    if (datapacket.contains(Constants::xDHKeyData)) {
+        dhKey = datapacket.value(Constants::xDHKeyData).toString();
+    }
     
     // Determine type of message to forward
     if (!blockReply.isEmpty()) {
@@ -314,6 +319,10 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     else if (!searchReply.isEmpty()) {
         privateMessage = SearchReplyMessage(origin, dest, hoplimit, searchReply, matchNames, matchIDs);
     }
+    else if (!dhKey.isEmpty()) {
+        qDebug() << "Got DH Key message";
+        privateMessage = DHKeyMessage(origin, dest, hoplimit, dhKey);
+    }
     else if (!message.isEmpty()) {
         privateMessage = Message(origin, dest, message, hoplimit);
     }
@@ -322,9 +331,12 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     if (dest == hostname) {
         if (datapacket.contains(Constants::xChatText)) {
             // Send text to privateMessagingPanel to process
-//            message = datapacket.value(Constants::xChatText).toString();
-//            textview->append(message);
             privateMessagingPanel->processChatMessage(datapacket);
+        }
+        // Process dh key
+        else if (!dhKey.isEmpty()) {
+            qDebug() << "Process DH Key Message";
+            privateMessagingPanel->processDHKeyMessage(datapacket);
         }
         // Process block reply
         else if (!blockReply.isEmpty()) {

@@ -17,7 +17,8 @@ class PrivateChatDialog : public QDialog {
 public:
     PrivateChatDialog() {};
     PrivateChatDialog(QString hostName, QString destName, QUdpSocket *parentSocket,
-                    QMap<QString, QPair<QHostAddress, quint16> > *originMap);
+                    QMap<QString, QPair<QHostAddress, quint16> > *originMap,
+                    QMap<QString, QCA::SymmetricKey> *keyMap);
     ~PrivateChatDialog();
     
     void closeEvent(QCloseEvent *event);

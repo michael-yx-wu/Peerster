@@ -1,14 +1,16 @@
 #include "PrivateChatDialog.hh"
 
-PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName, QUdpSocket *parentSocket,
-                                QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
+PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName,
+                                    QUdpSocket *parentSocket,
+                                    QMap<QString, QPair<QHostAddress, quint16> >
+                                     *originMap, QMap<QString, QCA::SymmetricKey> *keyMap) {
     destinationName = destName;
     socket = parentSocket;
     hopLimit = 10;
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Chatbox(this);
-    voipChat = new VoipPanel(hostName, destName, socket, originMap);
+    voipChat = new VoipPanel(hostName, destName, socket, originMap, keyMap);
     origin = hostName;
     
     layout = new QGridLayout();

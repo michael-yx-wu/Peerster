@@ -57,11 +57,13 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
 #pragma mark - Private VoIP Panel
 
 VoipPanel::VoipPanel(QString origin, QString destName, QUdpSocket *socket,
-                     QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
+                     QMap<QString, QPair<QHostAddress, quint16> > *originMap,
+                     QMap<QString, QCA::SymmetricKey> *keyMap) {
     hostname = origin;
     destinationName = destName;
     this->socket = socket;
     this->originMap = originMap;
+    this->keyMap = keyMap;
     hopLimit = 10;
     privChat = true;
     
@@ -216,8 +218,21 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
 }
 
 void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {
+    // Save audio metadata to voipStatus
+    QString origin = message.getOrigin();
+    QDateTime timestamp = message.getTimestamp();
+    QString key = origin + timestamp.toString();
+    voipStatus->insert(key, QString());
+    
+    qDebug() << "Sending private message";
     QByteArray datagram = message.getSerializedMessage();
-    socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
+    QCA::InitializationVector iv = QCA::InitializationVector(16);
+    QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
+                                     QCA::Cipher::DefaultPadding, QCA::Encode,
+                                     keyMap->value(message.getDest()), iv);
+    QCA::SecureArray secureData = datagram;
+    QCA::SecureArray encryptedData = cipher.process(secureData);
+    socket->writeDatagram(encryptedData.data(), encryptedData.size(), destIP, destPort);
 }
 
 # pragma mark - Audio Output
@@ -245,6 +260,17 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing private audio message";
+                QByteArray encryptedAUdio = dataPacket.value(Constants::xAudioData).toByteArray();
+                QCA::InitializationVector iv = QCA::InitializationVector(16);
+                QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
+                                                 QCA::Cipher::DefaultPadding, QCA::Encode,
+                                                 keyMap->value(origin), iv);
+                audioData = cipher.process(encryptedAUdio).toByteArray();
+                if (cipher.ok()) {
+                    qDebug() << "decrypted";
+                } else {
+                    qDebug() << "decrypt failed";
+                }
                 playAudioMessage(audioData);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";

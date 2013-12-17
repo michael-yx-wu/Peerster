@@ -75,6 +75,7 @@ protected:
     bool blockReplyMessage;
     bool blockRequestMessage;
     bool chatMessage;
+    bool dhKeyMessage;
     bool hasLastIPandPort;
     bool routeMessage;
     bool privateMessage;

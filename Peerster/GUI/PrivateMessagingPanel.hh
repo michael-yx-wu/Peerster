@@ -7,6 +7,7 @@
 #include <QHostAddress>
 #include <QSignalMapper>
 #include <QVBoxLayout>
+#include "Messages/DHKeyMessage.hh"
 
 #include "PrivateChatDialog.hh"
 
@@ -26,6 +27,7 @@ public:
     public slots:
     void buttonClicked(QString destinationName);
     void windowClosed(QString destinationName);
+    void processDHKeyMessage(QMap<QString, QVariant> datapacket);
     
 private:
     QString hostName;
@@ -35,9 +37,18 @@ private:
     QMap<QString, QPair<QHostAddress, quint16> > originMap;
     QMap<QString, QPair<quint32, bool> > originDirectIndirectMap;
     QMap<QString, PrivateChatDialog*> privateChatDialogs;
-    // Qmap<hostname, keys>
     QSignalMapper *privateChatMapper;
     QUdpSocket *socket;
+    
+    //Encryption
+    QCA::BigInteger p;          //public mod value (same for all clients)
+    QCA::BigInteger g;          //public generator value (same for all clients)
+    QCA::DLGroup dlGroup;       //public dlGroup (same for all clients)
+    QCA::BigInteger y;          //private random value
+    QString pubKey;             //public key to be sent
+    QMap<QString, QCA::SymmetricKey> keyMap;
+    void sendDHKeyMessage(DHKeyMessage message);
+    
 };
 
 #endif
