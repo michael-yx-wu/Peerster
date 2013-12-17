@@ -40,6 +40,7 @@ private:
     QGridLayout *layout;
     QUdpSocket *socket;
     QTextEdit *textview;
+    QString origin;
 
     //VoIP
     QMap<QString, QPair<QHostAddress, quint16> > *originMap;

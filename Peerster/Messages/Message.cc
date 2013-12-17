@@ -42,9 +42,10 @@ Message::Message(const QString someOrigin, const quint32 someSeqno, const QStrin
     serializedMessage = serializeChatMessage();
 }
 
-Message::Message(const QString someDest, const QString someMessage, const quint32 someHopLimit) {
+Message::Message(const QString someOrigin, const QString someDest, const QString someMessage, const quint32 someHopLimit) {
     defaultBoolValues();
     privateMessage = true;
+    origin = someOrigin;
     dest = someDest;
     message = someMessage;
     hopLimit = someHopLimit;
@@ -70,6 +71,7 @@ QByteArray Message::serializeChatMessage() {
 
 QByteArray Message::serializePrivateMessage() {
     QMap<QString, QVariant> datapacket;
+    datapacket.insert(Constants::xOrigin, origin);
     datapacket.insert(Constants::xDest, dest);
     datapacket.insert(Constants::xChatText, message);
     datapacket.insert(Constants::xHopLimit, hopLimit);

@@ -315,7 +315,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         privateMessage = SearchReplyMessage(origin, dest, hoplimit, searchReply, matchNames, matchIDs);
     }
     else if (!message.isEmpty()) {
-        privateMessage = Message(dest, message, hoplimit);
+        privateMessage = Message(origin, dest, message, hoplimit);
     }
     
     // I am the intended target of the private message

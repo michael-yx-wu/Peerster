@@ -23,7 +23,7 @@ public:
     Message(const QString someOrigin, const quint32 someSeqno, const QString someMessage, const quint32 someIP, const quint16 somePort);
     
     // Private Chat Message
-    Message(const QString someDest, const QString someMessage, const quint32 someHopLimit);
+    Message(const QString someOrigin, const QString someDest, const QString someMessage, const quint32 someHopLimit);
     
 #pragma mark - Accessor methods
     

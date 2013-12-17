@@ -8,7 +8,8 @@ PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName, QUdpSoc
     textview = new QTextEdit(this);
     textview->setReadOnly(true);
     chatbox = new Chatbox(this);
-    voipChat = new VoipPanel(hostName, destName, socket, originMap); 
+    voipChat = new VoipPanel(hostName, destName, socket, originMap);
+    origin = hostName;
     
     layout = new QGridLayout();
     layout->addWidget(textview);
@@ -47,7 +48,7 @@ void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 
 }
 
 void PrivateChatDialog::gotReturnPressedChatBox() {
-    Message message = Message(destinationName, chatbox->toPlainText(), hopLimit);
+    Message message = Message(origin, destinationName, chatbox->toPlainText(), hopLimit);
     textview->append(message.getMessage());
     chatbox->clear();
     QByteArray datagram = message.getSerializedMessage();
