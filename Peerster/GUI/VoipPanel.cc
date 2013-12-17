@@ -126,8 +126,7 @@ void VoipPanel::buttonClicked(QString buttonName) {
         if (listening) {
             qDebug() << "Voice Chat ON";
             recordingTimer->start(recordingTime);
-            inputBuffers[currentBuffer].open(QIODevice::ReadWrite |
-                                             QIODevice::Truncate);
+            inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
             audioInput->start(&inputBuffers[currentBuffer]);
             recordingTimeout();
             startVoIPButton->setStyleSheet(ON);
