@@ -183,7 +183,7 @@ void VoipPanel::recordingTimeout() {
     }
     
     else {
-        AudioMessage message = AudioMessage(destinationName, hopLimit,
+        AudioMessage message = AudioMessage(hostname, destinationName, hopLimit,
                                             QDateTime::currentDateTimeUtc(), data);
         sendAudioPrivMessage(message, destinationIP, destinationPort);
     }
@@ -255,7 +255,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         else if (hoplimit > 0) {
             targetIP = originMap->value(dest).first;
             targetPort = originMap->value(dest).second;
-            sendAudioPrivMessage(AudioMessage(dest, hoplimit-1, timestamp, audioData), targetIP, targetPort);
+            sendAudioPrivMessage(AudioMessage(origin, dest, hoplimit-1, timestamp, audioData), targetIP, targetPort);
         }
     }
     
