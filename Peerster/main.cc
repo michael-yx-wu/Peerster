@@ -188,6 +188,7 @@ void ChatDialog::processPendingDatagrams() {
 void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got audio message";
     if (datapacket.contains(Constants::xDest)) {
+        qDebug() << "Got private audio message";
         QString dest = datapacket.value(Constants::xDest).toString();
         privateMessagingPanel->processAudioMessage(datapacket);
     } else {
