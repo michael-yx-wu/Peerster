@@ -236,7 +236,7 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
     }
 
     AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
-    QByteArray datagram = encryptedMessage.getSerializedMessage();
+    QByteArray datagram = message.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
 }
 
@@ -272,11 +272,6 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                                                  keyMap->value(origin), iv);
                 qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
                 QByteArray data = cipher.process(encryptedAudio).toByteArray();
-                if (cipher.ok()) {
-                    qDebug() << "Playing private message: " + QString::number(data.size());
-                } else {
-                    qDebug() << "decrypt failed: " + QString::number(data.size()) + QString::number(audioData.size());
-                }
                 playAudioMessage(audioData);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
