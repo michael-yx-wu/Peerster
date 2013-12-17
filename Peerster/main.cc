@@ -320,6 +320,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         privateMessage = SearchReplyMessage(origin, dest, hoplimit, searchReply, matchNames, matchIDs);
     }
     else if (!dhKey.isEmpty()) {
+        qDebug() << "Got DH Key message";
         privateMessage = DHKeyMessage(origin, dest, hoplimit, dhKey);
     }
     else if (!message.isEmpty()) {
@@ -334,6 +335,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
         }
         // Process dh key
         else if (!dhKey.isEmpty()) {
+            qDebug() << "Process DH Key Message";
             privateMessagingPanel->processDHKeyMessage(datapacket);
         }
         // Process block reply
