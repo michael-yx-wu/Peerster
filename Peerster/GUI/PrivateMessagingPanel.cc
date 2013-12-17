@@ -171,6 +171,4 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     
     //insert
     keyMap.insert(origin, symKey);
-    
-    qDebug() << "
 }
