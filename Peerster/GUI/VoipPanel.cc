@@ -265,7 +265,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                 QByteArray encryptedAUdio = dataPacket.value(Constants::xAudioData).toByteArray();
                 QCA::InitializationVector iv = QCA::InitializationVector(16);
                 QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
-                                                 QCA::Cipher::DefaultPadding, QCA::Encode,
+                                                 QCA::Cipher::DefaultPadding, QCA::Decode,
                                                  keyMap->value(origin), iv);
                 audioData = cipher.process(encryptedAUdio).toByteArray();
                 if (cipher.ok()) {
