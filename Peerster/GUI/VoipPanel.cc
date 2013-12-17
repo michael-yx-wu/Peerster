@@ -269,7 +269,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                                                  keyMap->value(origin), iv);
                 audioData = cipher.process(encryptedAUdio).toByteArray();
                 if (cipher.ok()) {
-                    qDebug() << "decrypted";
+                    qDebug() << "Playing private message: " + QString::number(audioData.size());
                 } else {
                     qDebug() << "decrypt failed";
                 }
