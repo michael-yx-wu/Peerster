@@ -97,6 +97,10 @@ void PrivateMessagingPanel::windowClosed(QString destinationName) {
 
 void PrivateMessagingPanel::processAudioMessage(QString dest, QMap<QString, QVariant> datapacket) {
     PrivateChatDialog *chatDialog = privateChatDialogs.value(dest);
+    if (dest == NULL) {
+        buttonClicked(dest);
+        chatDialog = privateChatDialogs.value(dest);
+    }
     chatDialog->getVoipPanel()->processAudioMessage(datapacket);
 }
 

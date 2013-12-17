@@ -223,17 +223,17 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
 # pragma mark - Audio Output
 
 void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
-    //Processing private messages
+    //Process private messages
     if (dataPacket.contains(Constants::xDest)) {
         QString dest = dataPacket.value(Constants::xDest).toString();
         QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
         QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
         quint32 hoplimit = dataPacket.value(Constants::xHopLimit).toUInt()-1;
         
-        // I am the intended target of the private message
+        // I am the intended target of the private audio message
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
-                qDebug() << "Playing audio message";
+                qDebug() << "Playing private audio message";
                 
                 // Write audio data to file
                 QFile *audioFile = new QFile();
@@ -254,59 +254,61 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                         SLOT(dequeueOutput(QAudio::State)));
                 output->start(audioFile);
             } else {
-                qDebug() << "Person muted -- not playing";
+                qDebug() << "Person muted -- not playing (or delay too long)";
             }
         }
         
-        // Forward messagehed
+        // Audio message not for me -- forward message to destination
         else if (hoplimit > 0) {
             QHostAddress targetIP = originMap->value(dest).first;
             quint16 targetPort = originMap->value(dest).second;
             sendAudioPrivMessage(AudioMessage(dest, hoplimit, timestamp, audioData), targetIP, targetPort);
         }
-        return;
     }
-    
-    // Key is of format origin + timestamp
-    QString origin = dataPacket.value(Constants::xOrigin).toString();
-    QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
-    QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
-    QString key = origin + timestamp.toString();
-    
-    // Consider playing audio message if we have not yet heard it
-    if (!voipStatus->contains(key)) {
-        voipStatus->insert(key, QString());
+    // Process group audio messages
+    else {
         
-        // Play if mute is off and timestamp within accpetable delay threshold
-        if (!muteAll && acceptableDelay(timestamp)) {
-            qDebug() << "Playing audio message";
+        // Key is of format origin + timestamp
+        QString origin = dataPacket.value(Constants::xOrigin).toString();
+        QDateTime timestamp = dataPacket.value(Constants::xTimestamp).toDateTime();
+        QByteArray audioData = dataPacket.value(Constants::xAudioData).toByteArray();
+        QString key = origin + timestamp.toString();
+        
+        // Consider playing audio message if we have not yet heard it
+        if (!voipStatus->contains(key)) {
+            voipStatus->insert(key, QString());
             
-            // Write audio data to file
-            QFile *audioFile = new QFile();
-            audioFile->setFileName("./" + QString::number(rand()) +
-                                   QString::number(rand()));
-            audioFile->open(QIODevice::WriteOnly);
-            QDataStream out(audioFile);
-            out << audioData;
-            audioFile->close();
+            // Play if mute is off and timestamp within accpetable delay threshold
+            if (!muteAll && acceptableDelay(timestamp)) {
+                qDebug() << "Playing audio message";
+                
+                // Write audio data to file
+                QFile *audioFile = new QFile();
+                audioFile->setFileName("./" + QString::number(rand()) +
+                                       QString::number(rand()));
+                audioFile->open(QIODevice::WriteOnly);
+                QDataStream out(audioFile);
+                out << audioData;
+                audioFile->close();
+                
+                audioFile->open(QIODevice::ReadOnly);
+                
+                // Play audio message and enqueue
+                QAudioOutput *output = new QAudioOutput(format, this);
+                outputs.enqueue(output);
+                audioFiles.enqueue(audioFile);
+                connect(output, SIGNAL(stateChanged(QAudio::State)), this,
+                        SLOT(dequeueOutput(QAudio::State)));
+                audioFile->seek(44);
+                output->start(audioFile);
+            } else {
+                qDebug() << "Group chat muted: mongering, not playing";
+            }
             
-            audioFile->open(QIODevice::ReadOnly);
-            
-            // Play audio message and enqueue
-            QAudioOutput *output = new QAudioOutput(format, this);
-            outputs.enqueue(output);
-            audioFiles.enqueue(audioFile);
-            connect(output, SIGNAL(stateChanged(QAudio::State)), this,
-                    SLOT(dequeueOutput(QAudio::State)));
-            audioFile->seek(44);
-            output->start(audioFile);
-        } else {
-            qDebug() << "Group chat muted: mongering, not playing";
+            // Monger the audio message to peers
+            qDebug() << "Mongering audio message to peers";
+            sendAudioMessage(AudioMessage(origin, timestamp, audioData));
         }
-        
-        // Monger the audio message to peers
-        qDebug() << "Mongering audio message to peers";
-        sendAudioMessage(AudioMessage(origin, timestamp, audioData));
     }
 }
 
