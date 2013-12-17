@@ -189,7 +189,7 @@ void ChatDialog::processAudioMessage(QMap<QString, QVariant> datapacket) {
     qDebug() << "Got audio message";
     if (datapacket.contains(Constants::xDest)) {
         QString dest = datapacket.value(Constants::xDest).toString();
-        privateMessagingPanel->processAudioMessage(dest, datapacket);
+        privateMessagingPanel->processAudioMessage(datapacket);
     } else {
         voipPanel->processAudioMessage(datapacket);
     }
@@ -324,7 +324,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
             // Send text to privateMessagingPanel to process
 //            message = datapacket.value(Constants::xChatText).toString();
 //            textview->append(message);
-            privateMessagingPanel->processChatMessage(dest, datapacket);
+            privateMessagingPanel->processChatMessage(datapacket);
         }
         // Process block reply
         else if (!blockReply.isEmpty()) {

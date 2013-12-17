@@ -20,8 +20,8 @@ public:
     QMap<QString, QPair<QHostAddress, quint16> > getOriginMap();
     void setSocket(QUdpSocket *parentSocket);
     bool updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
-    void processAudioMessage(QString dest, QMap<QString, QVariant> datapacket);
-    void processChatMessage(QString dest, QMap<QString, QVariant> datapacket);
+    void processAudioMessage(QMap<QString, QVariant> datapacket);
+    void processChatMessage(QMap<QString, QVariant> datapacket);
     
     public slots:
     void buttonClicked(QString destinationName);

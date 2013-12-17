@@ -94,21 +94,23 @@ void PrivateMessagingPanel::windowClosed(QString destinationName) {
 
 #pragma mark - Process Private Messages
 
-void PrivateMessagingPanel::processAudioMessage(QString dest, QMap<QString, QVariant> datapacket) {
+void PrivateMessagingPanel::processAudioMessage(QMap<QString, QVariant> datapacket) {
+    QString origin = datapacket.value(Constants::xOrigin).toString();
     PrivateChatDialog *chatDialog;
-    if (!privateChatDialogs.contains(dest)) {
-        buttonClicked(dest);
+    if (!privateChatDialogs.contains(origin)) {
+        buttonClicked(origin);
     }
-    chatDialog = privateChatDialogs.value(dest);
+    chatDialog = privateChatDialogs.value(origin);
     chatDialog->getVoipPanel()->processAudioMessage(datapacket);
 }
 
-void PrivateMessagingPanel::processChatMessage(QString dest, QMap<QString, QVariant> datapacket) {
+void PrivateMessagingPanel::processChatMessage(QMap<QString, QVariant> datapacket) {
+    QString origin = datapacket.value(Constants::xOrigin).toString();
     PrivateChatDialog *chatDialog;
-    if (!privateChatDialogs.contains(dest)) {
-        buttonClicked(dest);
+    if (!privateChatDialogs.contains(origin)) {
+        buttonClicked(origin);
     }
-    chatDialog = privateChatDialogs.value(dest);
+    chatDialog = privateChatDialogs.value(origin);
     chatDialog->addTextToPrivateChat(datapacket.value(Constants::xChatText).toString());
 }
 
