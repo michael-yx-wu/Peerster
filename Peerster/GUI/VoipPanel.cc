@@ -252,6 +252,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                 audioFiles.enqueue(audioFile);
                 connect(output, SIGNAL(stateChanged(QAudio::State)), this,
                         SLOT(dequeueOutput(QAudio::State)));
+                audioFile->seek(44);
                 output->start(audioFile);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
