@@ -27,20 +27,23 @@ class VoipPanel : public QObject {
     Q_OBJECT
     
 public:
+    // Group VoIP Panel Constructor
     VoipPanel(QString someOrigin, QUdpSocket *socket, std::vector<Peer> *peers,
               QMap<QString, QVariant> *voipStatus);
 
+    // Private VoIP Panel Constructor
     VoipPanel(QString someOrigin, QString destName, QUdpSocket *socket,
-            QMap<QString, QPair<QHostAddress, quint16> > *originMap);
+              QMap<QString, QPair<QHostAddress, quint16> > *originMap);
     
     QGroupBox* getButtonGroupBox();
     
-    void processAudioMessage(QMap<QString, QVariant> dataPacket);
-    
+    // Private VoIP Target IP/Port update
     void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
 
-    public slots:
+    // Process Audio Message
+    void processAudioMessage(QMap<QString, QVariant> dataPacket);
     
+    public slots:
     void buttonClicked(QString buttonName);
     void dequeueOutput(QAudio::State state);
     void recordingTimeout();    
@@ -75,6 +78,9 @@ private:
     // Audio Messaging
     QUdpSocket *socket;
     void sendAudioMessage(AudioMessage message);
+    void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP,
+                              quint16 destPort);
+
     
     // Audio playback
     QQueue<QFile*> audioFiles;
@@ -82,18 +88,16 @@ private:
     void playAudioMessage(QByteArray audioData);
     bool muteAll;
     
+    // Calculate if delay acceptable
     bool acceptableDelay(QDateTime timestamp);
 
-    //Private chat
+    // Private chat metadata 
     bool privChat;
-
     QHostAddress destinationIP;
     QString destinationName;
     quint16 destinationPort;
     quint32 hopLimit;
     QMap<QString, QPair<QHostAddress, quint16> > *originMap;
-
-    void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort);
 };
 
 #endif
