@@ -57,3 +57,7 @@ void PrivateChatDialog::gotReturnPressedChatBox() {
 VoipPanel* PrivateChatDialog::getVoipPanel() {
     return voipChat;
 }
+
+void PrivateChatDialog::addTextToPrivateChat(QString text) {
+    textview->append(text);
+}

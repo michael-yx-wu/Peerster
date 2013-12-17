@@ -24,6 +24,7 @@ public:
     QString getDestinationName();
     void updateDestinationIPandPort(QHostAddress destIP, quint16 destPort);
     VoipPanel* getVoipPanel();
+    void addTextToPrivateChat(QString text);
 signals:
     void privateChatClosed();
     

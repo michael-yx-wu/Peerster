@@ -321,8 +321,10 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
     // I am the intended target of the private message
     if (dest == hostname) {
         if (datapacket.contains(Constants::xChatText)) {
-            message = datapacket.value(Constants::xChatText).toString();
-            textview->append(message);
+            // Send text to privateMessagingPanel to process
+//            message = datapacket.value(Constants::xChatText).toString();
+//            textview->append(message);
+            
         }
         // Process block reply
         else if (!blockReply.isEmpty()) {

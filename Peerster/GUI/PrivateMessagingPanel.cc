@@ -74,7 +74,6 @@ bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
         }
         return true;
     }
-    
     return false;
 }
 
@@ -102,5 +101,14 @@ void PrivateMessagingPanel::processAudioMessage(QString dest, QMap<QString, QVar
     }
     chatDialog = privateChatDialogs.value(dest);
     chatDialog->getVoipPanel()->processAudioMessage(datapacket);
+}
+
+void PrivateMessagingPanel::processChatMessage(QString dest, QMap<QString, QVariant> datapacket) {
+    PrivateChatDialog *chatDialog;
+    if (!privateChatDialogs.contains(dest)) {
+        buttonClicked(dest);
+    }
+    chatDialog = privateChatDialogs.value(dest);
+    chatDialog->addTextToPrivateChat(datapacket.value(Constants::xChatText).toString());
 }
 

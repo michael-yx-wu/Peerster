@@ -21,6 +21,8 @@ public:
     void setSocket(QUdpSocket *parentSocket);
     bool updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute);
     void processAudioMessage(QString dest, QMap<QString, QVariant> datapacket);
+    void processChatMessage(QString dest, QMap<QString, QVariant> datapacket);
+    
     public slots:
     void buttonClicked(QString destinationName);
     void windowClosed(QString destinationName);
