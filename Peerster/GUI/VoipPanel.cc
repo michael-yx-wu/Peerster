@@ -179,14 +179,14 @@ void VoipPanel::recordingTimeout() {
     // Send buffer data
     QByteArray data = inputBuffers[otherBuffer].data();
     if (privChat == false) {
-        AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(),
-                                            data);
+        AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(), data);
         sendAudioMessage(message);
     }
     
     else {
-        AudioMessage message = AudioMessage(hostname, destinationName, hopLimit,
-                                            QDateTime::currentDateTimeUtc(), data);
+        AudioMessage message = AudioMessage(hostname, destinationName, hopLimit, QDateTime::currentDateTimeUtc(), data);
+        destinationIP = originMap->value(destinationName).first;
+        destinationPort = originMap->value(destinationName).second;
         sendAudioPrivMessage(message, destinationIP, destinationPort);
     }
     
@@ -217,8 +217,8 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     }
 }
 
-void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {    
-    qDebug() << "Sending private message";
+void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {
+    qDebug() << "Sending private message to " + destIP.toString();
     QByteArray datagram = message.getSerializedMessage();
     QCA::InitializationVector iv = QCA::InitializationVector(16);
     QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
