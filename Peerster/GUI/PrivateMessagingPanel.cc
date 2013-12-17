@@ -94,8 +94,7 @@ void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
     
     // only open if i've calculated symmetric key with this destinationName
-    if(!keyMap.contains(destinationName))
-    {
+    if(!keyMap.contains(destinationName)) {
         DHKeyMessage message(hostName, destinationName, Constants::HOPLIMIT, pubKey);
         sendDHKeyMessage(message);
         return;
@@ -158,15 +157,20 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     }
     privKey%=p;
     
+    qDebug() << privKey.toString();
+    
     QByteArray privBytes(privKey.toString().toAscii());
     QCA::SymmetricKey symKey(privBytes);
+    
     
     if (!keyMap.contains(origin)) {
         // respond
         DHKeyMessage response(hostName, origin, Constants::HOPLIMIT, pubKey);
         sendDHKeyMessage(response);
     }
-
+    
     //insert
-    keyMap.insert(origin, symKey);    
+    keyMap.insert(origin, symKey);
+    
+    qDebug() << "
 }
