@@ -164,6 +164,7 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     
     if (!keyMap.contains(origin)) {
         // respond
+        qDebug() << "Send DH key back";
         DHKeyMessage response(hostName, origin, Constants::HOPLIMIT, pubKey);
         sendDHKeyMessage(response);
     }
