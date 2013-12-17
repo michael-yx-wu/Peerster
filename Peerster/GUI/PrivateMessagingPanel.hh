@@ -45,7 +45,7 @@ private:
     QCA::BigInteger g;          //public generator value (same for all clients)
     QCA::DLGroup dlGroup;       //public dlGroup (same for all clients)
     QCA::BigInteger y;          //private random value
-    QString pubKey;    //public key to be sent
+    QString pubKey;             //public key to be sent
     QMap<QString, QCA::SymmetricKey> keyMap;
     void sendDHKeyMessage(DHKeyMessage message);
     

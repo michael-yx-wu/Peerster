@@ -34,7 +34,8 @@ public:
 
     // Private VoIP Panel Constructor
     VoipPanel(QString someOrigin, QString destName, QUdpSocket *socket,
-              QMap<QString, QPair<QHostAddress, quint16> > *originMap);
+              QMap<QString, QPair<QHostAddress, quint16> > *originMap,
+              QMap<QString, QCA::SymmetricKey> *keyMap);
     
     QGroupBox* getButtonGroupBox();
     
@@ -81,7 +82,6 @@ private:
     void sendAudioMessage(AudioMessage message);
     void sendAudioPrivMessage(AudioMessage message, QHostAddress destIP,
                               quint16 destPort);
-
     
     // Audio playback
     QQueue<QFile*> audioFiles;
@@ -99,6 +99,7 @@ private:
     quint16 destinationPort;
     quint32 hopLimit;
     QMap<QString, QPair<QHostAddress, quint16> > *originMap;
+    QMap<QString, QCA::SymmetricKey> *keyMap;
 };
 
 #endif

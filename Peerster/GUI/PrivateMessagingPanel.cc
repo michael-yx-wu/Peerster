@@ -100,7 +100,7 @@ void PrivateMessagingPanel::buttonClicked(QString destinationName) {
         return;
     }
     
-    PrivateChatDialog *privateChat = new PrivateChatDialog(hostName, destinationName, socket, &originMap);
+    PrivateChatDialog *privateChat = new PrivateChatDialog(hostName, destinationName, socket, &originMap, &keyMap);
     privateChat->updateDestinationIPandPort(originMap.value(destinationName).first, originMap.value(destinationName).second);
     privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
     connect(privateChat, SIGNAL(privateChatClosed()), privateChatMapper, SLOT(map()));
@@ -157,11 +157,10 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     }
     privKey%=p;
     
-    qDebug() << privKey.toString();
+    qDebug() << privKey.toString(); // check if the private keys are the same
     
     QByteArray privBytes(privKey.toString().toAscii());
     QCA::SymmetricKey symKey(privBytes);
-    
     
     if (!keyMap.contains(origin)) {
         // respond
