@@ -6,6 +6,7 @@
 #include <QAudioFormat>
 #include <QAudioOutput>
 #include <QBuffer>
+#include <QtCrypto>
 #include <QFile>
 #include <QTimer>
 

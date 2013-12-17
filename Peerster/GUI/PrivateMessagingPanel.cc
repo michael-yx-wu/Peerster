@@ -1,4 +1,5 @@
 #include "PrivateMessagingPanel.hh"
+#include <qmath.h>
 
 PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
     hostName = hostname;
@@ -11,6 +12,13 @@ PrivateMessagingPanel::PrivateMessagingPanel(QString hostname) {
             SLOT(buttonClicked(QString)));
     connect(privateChatMapper, SIGNAL(mapped(QString)), this,
             SLOT(windowClosed(QString)));
+    
+    //Encryption
+    p = 88951;
+    g = 23;
+    dlGroup = QCA::DLGroup(p, g);
+    y = rand() % INT_MAX + rand() % INT_MAX;
+    pubKey = QCA::DHPublicKey(dlGroup, y).toPEM();
 }
 
 QGroupBox* PrivateMessagingPanel::getOriginBox() {
@@ -27,7 +35,7 @@ void PrivateMessagingPanel::setSocket(QUdpSocket *parentSocket) {
 
 bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, quint16 port, quint32 seqno, bool isDirectRoute) {
     
-    // Create a new button for previously unkonwn origins
+    // Create a new button for previously unknown origins
     if (!originMap.contains(origin)) {
         QPushButton *originButton = new QPushButton(origin);
         buttonMapper->setMapping(originButton, originButton->text());
@@ -82,6 +90,12 @@ void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
     
     // only open if i've calculated symmetric key with this destinationName
+    if(!keyMap.contains(destinationName))
+    {
+        DHKeyMessage message(hostName, destinationName, Constants::HOPLIMIT, pubKey);
+        sendDHKeyMessage(message);
+        return;
+    }
     
     PrivateChatDialog *privateChat = new PrivateChatDialog(hostName, destinationName, socket, &originMap);
     privateChat->updateDestinationIPandPort(originMap.value(destinationName).first, originMap.value(destinationName).second);
@@ -118,3 +132,33 @@ void PrivateMessagingPanel::processChatMessage(QMap<QString, QVariant> datapacke
     chatDialog->addTextToPrivateChat(datapacket.value(Constants::xChatText).toString());
 }
 
+void PrivateMessagingPanel::sendDHKeyMessage(DHKeyMessage message) {
+    qDebug() << "Sending DHKeyMessage";
+    QByteArray datagram = message.getSerializedMessage();
+    QString dest = message.getDest();
+    QHostAddress destIP = originMap.value(dest).first;
+    quint16 destPort = originMap.value(dest).second;
+    
+    socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
+}
+
+void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapacket){
+    QString origin = datapacket.value(Constants::xOrigin).toString();
+    QString dest = datapacket.value(Constants::xDest).toString();
+    quint32 hopLimit =datapacket.value(Constants::xDHKeyData).toUInt();
+    QString key = datapacket.value(Constants::xDHKeyData).toString();
+    
+    if (dest == hostName) {
+        QCA::BigInteger big(key);
+        QCA::DHPrivateKey privKey(dlGroup, big, y);
+        QByteArray privBytes(privKey.toPEM().toAscii());
+        QCA::SymmetricKey symKey(privBytes);
+        
+        //insert
+        keyMap.insert(origin, symKey);
+    } else if (hopLimit > 0) {
+        // forward message
+        DHKeyMessage message(origin, dest, hopLimit-1, key);
+        sendDHKeyMessage(message);
+    }
+}

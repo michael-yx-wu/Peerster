@@ -266,6 +266,8 @@ void ChatDialog::processRumorMessage(QMap<QString, QVariant> datapacket, QHostAd
 }
 
 void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
+    // remember to process dhkey priv msgs!!!!!!!
+    
     Message privateMessage;
     QString origin, dest, message, searchReply;
     quint32 hoplimit;

@@ -89,6 +89,7 @@ private:
     VoipPanel *voipPanel;
     
     bool bind();
+    void processDHKeyMessage(QMap<QString, QVariant> datapacket);
     void processAudioMessage(QMap<QString, QVariant> datapacket);
     void processRumorMessage(QMap<QString, QVariant> datapacket, QHostAddress sender, quint16 senderPort);
     void processPrivateMessage(QMap<QString, QVariant> datapacket);
