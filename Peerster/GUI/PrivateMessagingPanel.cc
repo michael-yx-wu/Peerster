@@ -151,9 +151,14 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     QString dest = datapacket.value(Constants::xDest).toString();
     QString key = datapacket.value(Constants::xDHKeyData).toString();
     
-    QCA::BigInteger big(key);
-    QCA::DHPrivateKey privKey(dlGroup, big, y);
-    QByteArray privBytes(privKey.toPEM().toAscii());
+    QCA::BigInteger keyInt(key);
+    QCA::BigInteger privKey = 1;
+    for (QCA::BigInteger i = 0; i < y; i+=1) {
+        privKey *= keyInt;
+    }
+    privKey%=p;
+    
+    QByteArray privBytes(privKey.toString().toAscii());
     QCA::SymmetricKey symKey(privBytes);
     
     //insert
