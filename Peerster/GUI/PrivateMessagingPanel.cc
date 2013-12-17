@@ -161,10 +161,12 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     QByteArray privBytes(privKey.toString().toAscii());
     QCA::SymmetricKey symKey(privBytes);
     
+    if (!keyMap.contains(origin)) {
+        // respond
+        DHKeyMessage response(hostName, origin, Constants::HOPLIMIT, pubKey);
+        sendDHKeyMessage(response);
+    }
+
     //insert
-    keyMap.insert(origin, symKey);
-    
-    // respond
-    DHKeyMessage response(hostName, origin, Constants::HOPLIMIT, pubKey);
-    sendDHKeyMessage(response);
+    keyMap.insert(origin, symKey);    
 }
