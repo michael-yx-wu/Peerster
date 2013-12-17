@@ -255,7 +255,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         else if (hoplimit > 0) {
             targetIP = originMap->value(dest).first;
             targetPort = originMap->value(dest).second;
-            sendAudioPrivMessage(AudioMessage(dest, hoplimit, timestamp, audioData), targetIP, targetPort);
+            sendAudioPrivMessage(AudioMessage(dest, hoplimit-1, timestamp, audioData), targetIP, targetPort);
         }
     }
     
