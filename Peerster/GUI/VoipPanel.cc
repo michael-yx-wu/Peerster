@@ -224,14 +224,15 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
     QByteArray audioData = message.getData();
     quint32 hoplimit = message.getHopLimit();
     QDateTime timestamp = message.getTimestamp();
-
+    
     QCA::InitializationVector iv = QCA::InitializationVector(16);
     QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
                                      QCA::Cipher::DefaultPadding, QCA::Encode,
                                      keyMap->value(message.getDest()), iv);
     QCA::SecureArray secureData = audioData;
     QCA::SecureArray encryptedData = cipher.process(secureData);
-
+    qDebug() << "Size of encrypted data: " + QString::number(encryptedData.size());
+    
     AudioMessage encryptedMessage = AudioMessage(origin, dest, hoplimit, timestamp, encryptedData.data());
     QByteArray datagram = encryptedMessage.getSerializedMessage();
     socket->writeDatagram(datagram.data(), datagram.size(), destIP, destPort);
@@ -262,19 +263,19 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing private audio message";
-                QByteArray encryptedAudio = dataPacket.value(Constants::xAudioData).toByteArray();
+                QByteArray encryptedAudio = audioData;
                 QCA::InitializationVector iv = QCA::InitializationVector(16);
                 QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
                                                  QCA::Cipher::DefaultPadding, QCA::Decode,
                                                  keyMap->value(origin), iv);
                 qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
-                audioData = cipher.process(encryptedAudio).toByteArray();
+                QByteArray data = cipher.process(encryptedAudio).toByteArray();
                 if (cipher.ok()) {
-                    qDebug() << "Playing private message: " + QString::number(audioData.size());
+                    qDebug() << "Playing private message: " + QString::number(data.size());
                 } else {
-                    qDebug() << "decrypt failed";
+                    qDebug() << "decrypt failed: " + QString::number(data.size()) + QString::number(audioData.size());
                 }
-                playAudioMessage(audioData);
+                playAudioMessage(data);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
             }
