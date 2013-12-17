@@ -226,7 +226,7 @@ void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, 
     QDateTime timestamp = message.getTimestamp();
     
     QCA::InitializationVector iv = QCA::InitializationVector(16);
-    QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
+    QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
                                      QCA::Cipher::DefaultPadding, QCA::Encode,
                                      keyMap->value(message.getDest()), iv);
     QCA::SecureArray secureData = audioData;
@@ -265,7 +265,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
                 qDebug() << "Playing private audio message";
                 QByteArray encryptedAudio = audioData;
                 QCA::InitializationVector iv = QCA::InitializationVector(16);
-                QCA::Cipher cipher = QCA::Cipher(QString("aes128"), QCA::Cipher::CBC,
+                QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
                                                  QCA::Cipher::DefaultPadding, QCA::Decode,
                                                  keyMap->value(origin), iv);
                 qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
