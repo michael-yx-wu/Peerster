@@ -1,9 +1,7 @@
 #include "PrivateChatDialog.hh"
 
-PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName,
-                                    QUdpSocket *parentSocket,
-                                    QMap<QString, QPair<QHostAddress, quint16> >
-                                     *originMap) {
+PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName, QUdpSocket *parentSocket,
+                                QMap<QString, QPair<QHostAddress, quint16> > *originMap) {
     destinationName = destName;
     socket = parentSocket;
     hopLimit = 10;
@@ -23,8 +21,7 @@ PrivateChatDialog::PrivateChatDialog(QString hostName, QString destName,
     setLayout(layout);
     setWindowTitle("Private Chat with " + destinationName);
     
-    connect(chatbox, SIGNAL(enterPressed()), this,
-            SLOT(gotReturnPressedChatBox()));
+    connect(chatbox, SIGNAL(enterPressed()), this, SLOT(gotReturnPressedChatBox()));
 }
 
 PrivateChatDialog::~PrivateChatDialog() {
@@ -43,21 +40,19 @@ QString PrivateChatDialog::getDestinationName() {
     return destinationName;
 }
 
-void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP,
-                                                   quint16 destPort) {
+void PrivateChatDialog::updateDestinationIPandPort(QHostAddress destIP, quint16 destPort) {
     destinationIP = destIP;
     destinationPort = destPort;
+
     voipChat->updateDestinationIPandPort(destIP, destPort);    
 }
 
 void PrivateChatDialog::gotReturnPressedChatBox() {
-    Message message = Message(origin, destinationName, chatbox->toPlainText(),
-                              hopLimit);
+    Message message = Message(origin, destinationName, chatbox->toPlainText(), hopLimit);
     textview->append(message.getMessage());
     chatbox->clear();
     QByteArray datagram = message.getSerializedMessage();
-    socket->writeDatagram(datagram.data(), datagram.size(), destinationIP,
-                          destinationPort);
+    socket->writeDatagram(datagram.data(), datagram.size(), destinationIP, destinationPort);
 }
 
 VoipPanel* PrivateChatDialog::getVoipPanel() {

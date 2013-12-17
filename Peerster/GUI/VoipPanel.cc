@@ -52,11 +52,6 @@ VoipPanel::VoipPanel(QString origin, QUdpSocket *socket,
     
     // Format audio
     formatAudio();
-    
-    // Set some booleans
-    currentBuffer = false;
-    otherBuffer = true;
-    privChat = false;
 }
 
 #pragma mark - Private VoIP Panel
@@ -126,7 +121,8 @@ void VoipPanel::buttonClicked(QString buttonName) {
         if (listening) {
             qDebug() << "Voice Chat ON";
             recordingTimer->start(recordingTime);
-            inputBuffers[currentBuffer].open(QIODevice::ReadWrite|QIODevice::Truncate);
+            inputBuffers[currentBuffer].open(QIODevice::ReadWrite |
+                                             QIODevice::Truncate);
             audioInput->start(&inputBuffers[currentBuffer]);
             recordingTimeout();
             startVoIPButton->setStyleSheet(ON);
@@ -181,13 +177,12 @@ void VoipPanel::recordingTimeout() {
     // Send buffer data
     QByteArray data = inputBuffers[otherBuffer].data();
     if (privChat == false) {
-        AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(), data);
+        AudioMessage message = AudioMessage(hostname, QDateTime::currentDateTimeUtc(),
+                                            data);
         sendAudioMessage(message);
     }
     
     else {
-        destinationIP = originMap->value(destinationName).first;
-        destinationPort = originMap->value(destinationName).second;
         AudioMessage message = AudioMessage(hostname, destinationName, hopLimit,
                                             QDateTime::currentDateTimeUtc(), data);
         sendAudioPrivMessage(message, destinationIP, destinationPort);
@@ -215,9 +210,8 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     unsigned i;
     QByteArray datagram = message.getSerializedMessage();
     for (i = 0; i < peers->size(); i++) {
-        QHostAddress ip = peers->at(i).address;
-        quint16 port = peers->at(i).port;
-        socket->writeDatagram(datagram.data(), datagram.size(), ip, port);
+        socket->writeDatagram(datagram.data(), datagram.size(),
+                              peers->at(i).address, peers->at(i).port);
     }
 }
 
@@ -261,9 +255,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         else if (hoplimit > 0) {
             targetIP = originMap->value(dest).first;
             targetPort = originMap->value(dest).second;
-            AudioMessage message = AudioMessage(origin, dest, hoplimit-1,
-                                                timestamp, audioData);
-            sendAudioPrivMessage(message, targetIP, targetPort);
+            sendAudioPrivMessage(AudioMessage(origin, dest, hoplimit-1, timestamp, audioData), targetIP, targetPort);
         }
     }
     
@@ -279,7 +271,7 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         if (!voipStatus->contains(key)) {
             voipStatus->insert(key, QString());
             
-            // Play if mute is off and timestamp within delay threshold
+            // Play if mute is off and timestamp within accpetable delay threshold
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing audio message";
                 playAudioMessage(audioData);
