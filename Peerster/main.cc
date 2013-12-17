@@ -324,7 +324,7 @@ void ChatDialog::processPrivateMessage(QMap<QString, QVariant> datapacket) {
             // Send text to privateMessagingPanel to process
 //            message = datapacket.value(Constants::xChatText).toString();
 //            textview->append(message);
-            
+            privateMessagingPanel->processChatMessage(dest, datapacket);
         }
         // Process block reply
         else if (!blockReply.isEmpty()) {
