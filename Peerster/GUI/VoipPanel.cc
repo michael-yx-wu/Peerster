@@ -217,13 +217,7 @@ void VoipPanel::sendAudioMessage(AudioMessage message) {
     }
 }
 
-void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {
-    // Save audio metadata to voipStatus
-    QString origin = message.getOrigin();
-    QDateTime timestamp = message.getTimestamp();
-    QString key = origin + timestamp.toString();
-    voipStatus->insert(key, QString());
-    
+void VoipPanel::sendAudioPrivMessage(AudioMessage message, QHostAddress destIP, quint16 destPort) {    
     qDebug() << "Sending private message";
     QByteArray datagram = message.getSerializedMessage();
     QCA::InitializationVector iv = QCA::InitializationVector(16);
