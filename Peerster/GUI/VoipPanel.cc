@@ -264,18 +264,18 @@ void VoipPanel::processAudioMessage(QMap<QString, QVariant> dataPacket) {
         if (dest == hostname) {
             if (!muteAll && acceptableDelay(timestamp)) {
                 qDebug() << "Playing private audio message";
-                QByteArray encryptedAudio = audioData;
-                QCA::InitializationVector iv = QCA::InitializationVector(16);
-                QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
-                                                 QCA::Cipher::DefaultPadding, QCA::Decode,
-                                                 keyMap->value(origin), iv);
-                qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
-                QByteArray data = cipher.process(encryptedAudio).toByteArray();
-                if (cipher.ok()) {
-                    qDebug() << "Playing private message: " + QString::number(data.size());
-                } else {
-                    qDebug() << "decrypt failed: " + QString::number(data.size()) + QString::number(audioData.size());
-                }
+//                QByteArray encryptedAudio = audioData;
+//                QCA::InitializationVector iv = QCA::InitializationVector(16);
+//                QCA::Cipher cipher = QCA::Cipher(QString("des"), QCA::Cipher::CBC,
+//                                                 QCA::Cipher::DefaultPadding, QCA::Decode,
+//                                                 keyMap->value(origin), iv);
+//                qDebug() << "using key: " + QString(keyMap->value(origin).toByteArray());
+//                QByteArray data = cipher.process(encryptedAudio).toByteArray();
+//                if (cipher.ok()) {
+//                    qDebug() << "Playing private message: " + QString::number(data.size());
+//                } else {
+//                    qDebug() << "decrypt failed: " + QString::number(data.size()) + QString::number(audioData.size());
+//                }
                 playAudioMessage(audioData);
             } else {
                 qDebug() << "Person muted -- not playing (or delay too long)";
