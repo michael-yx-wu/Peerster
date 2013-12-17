@@ -35,6 +35,7 @@ private:
     QMap<QString, QPair<QHostAddress, quint16> > originMap;
     QMap<QString, QPair<quint32, bool> > originDirectIndirectMap;
     QMap<QString, PrivateChatDialog*> privateChatDialogs;
+    // Qmap<hostname, keys>
     QSignalMapper *privateChatMapper;
     QUdpSocket *socket;
 };

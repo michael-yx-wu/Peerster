@@ -77,8 +77,12 @@ bool PrivateMessagingPanel::updateOrigins(QString origin, QHostAddress address, 
     return false;
 }
 
+// Open new chat dialog window on button click
 void PrivateMessagingPanel::buttonClicked(QString destinationName) {
     qDebug() << "Starting private chat with " + destinationName;
+    
+    // only open if i've calculated symmetric key with this destinationName
+    
     PrivateChatDialog *privateChat = new PrivateChatDialog(hostName, destinationName, socket, &originMap);
     privateChat->updateDestinationIPandPort(originMap.value(destinationName).first, originMap.value(destinationName).second);
     privateChatMapper->setMapping(privateChat, privateChat->getDestinationName());
