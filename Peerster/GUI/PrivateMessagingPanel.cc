@@ -163,4 +163,8 @@ void PrivateMessagingPanel::processDHKeyMessage(QMap<QString, QVariant> datapack
     
     //insert
     keyMap.insert(origin, symKey);
+    
+    // respond
+    DHKeyMessage response(hostName, origin, Constants::HOPLIMIT, pubKey);
+    sendDHKeyMessage(response);
 }
