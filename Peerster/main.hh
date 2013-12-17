@@ -69,10 +69,6 @@ private:
     quint32 messageNo;
     
     // Voip Mongering
-    /* insert new variables here */
-    // <origin, timestamp>
-    // if message in table, stop mongering, else
-    // add to table, monger to peers
     QMap<QString, QVariant> voipStatus;
     
     // Rumor Mongering
